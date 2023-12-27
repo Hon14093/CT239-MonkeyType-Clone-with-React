@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from './pages/Login';
+import LoginPage from './pages/LoginPage';
 
 import {
   createBrowserRouter,
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: "Login",
-    element: <Login />,
+    element: <LoginPage />,
   },
 ]);
 

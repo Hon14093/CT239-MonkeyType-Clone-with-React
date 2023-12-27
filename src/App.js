@@ -1,14 +1,13 @@
 import './App.css';
-import MTlogo from './Components/MTlogo';
-import LoginIcon from './Components/LoginIcon';
+import MTheader from './Components/MTheader';
 
 function App() {
   return (
-    <header className='text-white font-mT flex justify-between'>
+    <header className='text-white font-mT'>
       
-      <MTlogo />
+      <MTheader />
       
-      <LoginIcon />
+      {/* <LoginIcon /> */}
       
     </header>
   );

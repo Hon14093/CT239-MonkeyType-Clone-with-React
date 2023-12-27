@@ -25,6 +25,22 @@ code {
   position: absolute;
 }
 
+.chaosInput {
+  background-color: rgba(30,29,47,255);
+}
+
+.Ani {
+  @apply transition ease-out hover:text-white;
+}
+
+.loginInput {
+  @apply placeholder-slate-500 mb-2 p-1.5 pl-2 rounded-lg w-60;
+}
+
+.navIcons {
+  margin-right: -1rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
