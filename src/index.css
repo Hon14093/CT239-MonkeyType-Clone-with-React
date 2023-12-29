@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   @apply bg-MTbg;
   margin: 0;
@@ -34,7 +38,7 @@ code {
 }
 
 .loginInput {
-  @apply placeholder-slate-500 mb-2 p-1.5 pl-2 rounded-lg w-60;
+  @apply placeholder-slate-500 mb-2 p-1.5 pl-2 rounded-lg w-60 text-white;
 }
 
 .navIcons {
