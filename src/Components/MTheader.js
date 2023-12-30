@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 class MTheader extends Component {
     render() {
         return (
-
             <div className='flex justify-between'>
                 <div className='pt-7 pl-44 text-white flex'>
                     <Link id="logo" to="/" className='items-center'>
