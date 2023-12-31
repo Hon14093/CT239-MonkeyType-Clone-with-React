@@ -80,13 +80,12 @@ class MTmain extends Component {
             
         </section>
 
+        {/* typing box */}
         <section>
             Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:list-inside to only apply the list-inside utility on hover.
         </section>
 
-        <section className='size-5 '>
-
-        </section></>
+        <section className='size-5'></section></>
         )
     }
 }
