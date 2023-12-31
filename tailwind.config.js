@@ -14,6 +14,8 @@ module.exports = {
         MTbg: '#141221',
         sub_color: '#f3e03b',
         chaosBG: 'rgba(30,29,47,255)',
+        chaosTxt: '#656c87',
+        chaosSecond: '#1e1d2f',
         pastel: {
           100: '#ab92e1', // purple
           200: '#f3ea5d', // yellow
