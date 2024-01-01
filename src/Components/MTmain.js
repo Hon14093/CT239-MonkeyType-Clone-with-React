@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import English from './languages/English'
+import CapsLockWarning from './functions/CapLockDetect'
 
 class MTmain extends Component {
     render() {
@@ -81,8 +83,22 @@ class MTmain extends Component {
         </section>
 
         {/* typing box */}
-        <section>
-            Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:list-inside to only apply the list-inside utility on hover.
+        <section className='text-chaosTxt text-justify'>
+            <CapsLockWarning />
+
+            <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg'>
+                <i className='fa-solid fa-earth-asia pr-3'></i>
+                english
+            </div>
+
+            <div className='text-2xl h-28'>
+                <English />
+            </div>
+
+            <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg'>
+                <i className='fa-solid fa-arrow-rotate-right'></i>
+            </button>
+            
         </section>
 
         <section className='size-5'></section></>

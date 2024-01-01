@@ -16,6 +16,7 @@ module.exports = {
         chaosBG: 'rgba(30,29,47,255)',
         chaosTxt: '#656c87',
         chaosSecond: '#1e1d2f',
+        chaosPink: '#e769c3',
         pastel: {
           100: '#ab92e1', // purple
           200: '#f3ea5d', // yellow
