@@ -5,17 +5,22 @@ import MTfooter from '../Components/MTfooter'
 
 function Test() {
     return (
-        <><header className='text-white font-mT'>
-            <MTheader />
-        </header>
-        
-        <main className='text-white font-mono pt-28 content-center grid'>
-            <LoginBody />
-        </main>
-        
-        <footer>
-            <MTfooter />
-        </footer></>
+        <div id='app' className='wide125'>
+            <div className='contentWrapper wide125'>
+                <header className='text-white font-mT'>
+                    <MTheader />
+                </header>
+                
+                <main className='text-white font-mono content-center grid'>
+                    <LoginBody />
+                </main>
+                
+                <footer>
+                    <MTfooter />
+                </footer>
+            </div>
+        </div>
+
     )
 }
 

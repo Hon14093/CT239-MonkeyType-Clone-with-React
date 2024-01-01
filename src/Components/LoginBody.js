@@ -4,7 +4,7 @@ class LoginBody extends Component {
     render() {
         return (
         <div className='flex justify-around items-center'>
-            <section className='gap-2 grid grid-cols-1 pl-28'>
+            <section className='gap-2 grid grid-cols-1'>
                 <div className='text-white'>register</div>
 
                 <form>
@@ -32,7 +32,7 @@ class LoginBody extends Component {
                 </form>
             </section>
 
-            <section className='grid gap-1 grid-cols-1 pr-28'>
+            <section className='grid gap-1 grid-cols-1'>
                 <div className='text-white flex justify-between'>
                     <p>login</p>
                     <button className='text-slate-500 hover:text-white Ani duration-400'>Forgot password?</button>
