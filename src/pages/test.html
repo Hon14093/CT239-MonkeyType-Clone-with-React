@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .toggle-button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .toggled {
+      background-color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+<button id="myButton" class="toggle-button">Click me</button>
+
+<script>
+  const button = document.getElementById('myButton');
+
+  // Add a click event listener to the button
+  button.addEventListener('click', () => {
+    // Toggle the 'toggled' class on the button
+    button.classList.toggle('toggled');
+  });
+</script>
+
+</body>
+</html>

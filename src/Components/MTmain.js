@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 import English from './languages/English'
 import CapsLockWarning from './functions/CapLockDetect'
+import { checkQuoteClicked } from './functions/QuoteFunction'
 
 class MTmain extends Component {
+    componentDidMount() {
+        checkQuoteClicked();
+    }
+
+    // transition-all ease-in duration-1000
     render() {
         return (
         <>
         {/* config bar */}
         <section className='grid grid-flow-col justify-around text-chaosTxt h-10 gap-3 text-xs'>
             <div className='flex items-center px-4 gap-3 justify-around bg-chaosSecond rounded-lg'>
-                <article className='flex gap-4'>
-                    <button id='myButton'>
+
+                <article id='puncAndNum' className='flex gap-4 '>
+                    <button>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-at mr-2'></i>
                             punctuation
@@ -24,9 +31,9 @@ class MTmain extends Component {
                     </button>
                 </article>
 
-                <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg'></div>
+                <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
-                <article className='flex gap-4'>
+                <article className='flex gap-4' id='mode'>
                     <button id='myButton'>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-clock mr-2'></i>
@@ -40,7 +47,7 @@ class MTmain extends Component {
                         </div>
                     </button>
                     <button>
-                        <div className='Ani duration-400'>
+                        <div className='Ani duration-400' id='quote'>
                             <i className='fa-solid fa-quote-left mr-2'></i>
                             quote
                         </div>
@@ -61,7 +68,7 @@ class MTmain extends Component {
 
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg'></div>
                 
-                <section className='flex gap-4'>
+                <section className='flex gap-4' id='time'>
                     <button className='Ani duration-400'>
                         10
                     </button>

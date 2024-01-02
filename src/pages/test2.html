@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for the sliding menu */
+    #menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      position: fixed;
+      top: 0;
+      right: 50%;
+      /* width: 250px; Adjust width as needed */
+      background-color: #333;
+      padding: 20px;
+      box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    #toggleMenu {
+      position: fixed;
+      top: 0;
+      right: 50%;
+      z-index: 1000;
+    }
+  </style>
+  <title>Slide-out Menu</title>
+</head>
+<body class="bg-gray-400">
+
+    <div class="flex bg-slate-300">
+        <a href="#" id="toggleMenu" class="p-4 bg-blue-500 text-white">Toggle Menu</a>
+
+        <div id="menu" class="text-white flex gap-2">
+            <!-- Your menu content goes here -->
+            <p class="mb-4">Menu Item 1</p>
+            <p class="mb-4">Menu Item 2</p>
+            <p class="mb-4">Menu Item 3</p>
+            <!-- Add more menu items as needed -->
+        </div>
+    </div>
+
+    <script>
+        const toggleMenuButton = document.getElementById('toggleMenu');
+        const menu = document.getElementById('menu');
+
+        toggleMenuButton.addEventListener('click', () => {
+        const isOpen = menu.style.transform === 'translateX(-45%)';
+        menu.style.transform = isOpen ? 'translateX(100%)' : 'translateX(-45%)';
+        });
+    </script>
+
+</body>
+</html>
