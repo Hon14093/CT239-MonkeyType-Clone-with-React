@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import English from './languages/English'
 import CapsLockWarning from './functions/CapLockDetect'
-import { checkQuoteClicked } from './functions/QuoteFunction'
+import QuoteFunction from './functions/QuoteFunction'
+import WordsFunction from './functions/WordsFunction'
+import ZenFunction from './functions/ZenFunction'
+import TimeFunction from './functions/TimeFunction'
+
+import WordsNumbers from './modeComponent/WordsNumbers'
+import QuoteLength from './modeComponent/QuoteLength'
+import TimeNumber from './modeComponent/TimeNumber'
 
 class MTmain extends Component {
-    componentDidMount() {
-        checkQuoteClicked();
-    }
-
-    // transition-all ease-in duration-1000
     render() {
         return (
         <>
         {/* config bar */}
-        <section className='grid grid-flow-col justify-around text-chaosTxt h-10 gap-3 text-xs'>
+        <section className='grid grid-flow-col justify-around text-chaosTxt h-10 gap-3 text-[0.75rem]'>
             <div className='flex items-center px-4 gap-3 justify-around bg-chaosSecond rounded-lg'>
 
                 <article id='puncAndNum' className='flex gap-4 '>
@@ -34,30 +36,15 @@ class MTmain extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
                 <article className='flex gap-4' id='mode'>
-                    <button id='myButton'>
-                        <div className='Ani duration-400'>
-                            <i className='fa-solid fa-clock mr-2'></i>
-                            time
-                        </div>
-                    </button>
-                    <button>
-                        <div className='Ani duration-400'>
-                            <i className='fa-solid fa-a mr-2'></i>
-                            words
-                        </div>
-                    </button>
-                    <button>
-                        <div className='Ani duration-400' id='quote'>
-                            <i className='fa-solid fa-quote-left mr-2'></i>
-                            quote
-                        </div>
-                    </button>
-                    <button>
-                        <div className='Ani duration-400'>
-                            <i className='fas fa-fw fa-mountain mr-2'></i>
-                            zen
-                        </div>
-                    </button>
+
+                    <TimeFunction />
+
+                    <WordsFunction />
+
+                    <QuoteFunction />
+
+                    <ZenFunction />
+                    
                     <button>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-wrench mr-2'></i>
@@ -66,24 +53,20 @@ class MTmain extends Component {
                     </button>
                 </article>
 
-                <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg'></div>
+                <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='rightBorder'></div>
                 
-                <section className='flex gap-4' id='time'>
-                    <button className='Ani duration-400'>
-                        10
-                    </button>
-                    <button className='Ani duration-400'>
-                        25
-                    </button>
-                    <button className='Ani duration-400'>
-                        50
-                    </button>
-                    <button className='Ani duration-400'>
-                        100
-                    </button>
-                    <button className='Ani duration-400'>
-                        <i className='fa-solid fa-screwdriver-wrench'></i>
-                    </button>
+                <section id='config'>
+                    <div className='' id='wordsNum'>
+                        <WordsNumbers />
+                    </div>
+                    <div className='hidden' id='quoteLength'>
+                        <QuoteLength />
+                    </div>
+                    <div className='hidden' id='timeNum'>
+                        <TimeNumber />
+                    </div>
+                    
+
                 </section>
             </div>
             
