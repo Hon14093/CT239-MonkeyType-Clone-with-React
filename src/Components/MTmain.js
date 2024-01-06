@@ -9,8 +9,21 @@ import TimeFunction from './functions/TimeFunction'
 import WordsNumbers from './modeComponent/WordsNumbers'
 import QuoteLength from './modeComponent/QuoteLength'
 import TimeNumber from './modeComponent/TimeNumber'
+import SelectLanguage from './SelectLanguage'
 
 class MTmain extends Component {
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         selectLanguage: '',
+    //     }
+    // }
+
+    // handleLanguageChange = (selectLanguage) => {
+    //     this.setState({ selectLanguage });
+    // }
+
     render() {
         return (
         <>
@@ -76,14 +89,11 @@ class MTmain extends Component {
         <section className='text-chaosTxt text-justify'>
             <CapsLockWarning />
 
-            <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg'>
-                <i className='fa-solid fa-earth-asia pr-3'></i>
-                english
-            </div>
+            <SelectLanguage />
 
-            <div className='text-2xl h-28'>
+            {/* <div className='text-2xl h-28' id='textBox'>
                 <English />
-            </div>
+            </div> */}
 
             <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg'>
                 <i className='fa-solid fa-arrow-rotate-right'></i>
