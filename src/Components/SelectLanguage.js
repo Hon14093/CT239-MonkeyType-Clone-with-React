@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import English from './languages/English';
 import English1k from './languages/English1k';
 
-const SelectLanguage = () => {
+const SelectLanguage = ({ value }) => {
     const [selectedValue, setSelectedValue] = useState('');
 
     const handleSelectChange = (event) => {
@@ -14,11 +14,11 @@ const SelectLanguage = () => {
     const renderSelectedComponent = () => {
         switch (selectedValue) {
             case 'english':
-                return <English />
+                return <English value={value} />
             case 'english1k':
                 return <English1k />
             default:
-                return <English />
+                return <English value={value} />
         }
     }
 
@@ -34,6 +34,7 @@ const SelectLanguage = () => {
 
             <div className='text-2xl h-28'>
                 { renderSelectedComponent() }
+                
             </div>
         </>
     );

@@ -11,20 +11,23 @@ import QuoteLength from './modeComponent/QuoteLength'
 import TimeNumber from './modeComponent/TimeNumber'
 import SelectLanguage from './SelectLanguage'
 
+import { toggleButton } from './functions/ToggleFunction'
+
 class MTmain extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         selectLanguage: '',
-    //     }
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentValue: '10',
+        };
+    }
 
-    // handleLanguageChange = (selectLanguage) => {
-    //     this.setState({ selectLanguage });
-    // }
+    handleClick = (newValue) => {
+        this.setState({currentValue: newValue});
+    }
 
     render() {
+        const buttonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
         return (
         <>
         {/* config bar */}
@@ -69,17 +72,35 @@ class MTmain extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='rightBorder'></div>
                 
                 <section id='config'>
-                    <div className='' id='wordsNum'>
-                        <WordsNumbers />
-                    </div>
-                    <div className='hidden' id='quoteLength'>
-                        <QuoteLength />
-                    </div>
+
                     <div className='hidden' id='timeNum'>
                         <TimeNumber />
                     </div>
-                    
 
+                    <div id='wordsNum'>
+                        <div className='flex gap-4'>
+                            {buttonIds.map((buttonId) => (
+                                <button key={buttonId} id={buttonId} className='Ani duration-400'
+                                    onClick={() => {
+                                        toggleButton(buttonId, buttonIds)
+                                        this.handleClick(buttonId.substring(6))
+                                    }}>
+
+                                    {buttonId === 'buttonWrench' ? (
+                                    <i className='fa-solid fa-screwdriver-wrench'></i>
+                                    ) : (
+                                    buttonId.replace('button', '')
+                                    )}
+                                    
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className='hidden' id='quoteLength'>
+                        <QuoteLength />
+                    </div>
+                    
                 </section>
             </div>
             
@@ -89,11 +110,10 @@ class MTmain extends Component {
         <section className='text-chaosTxt text-justify'>
             <CapsLockWarning />
 
-            <SelectLanguage />
-
-            {/* <div className='text-2xl h-28' id='textBox'>
-                <English />
-            </div> */}
+            <div id='textBox' className='10'>
+                <SelectLanguage value={this.state.currentValue} />
+            </div>
+            
 
             <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg'>
                 <i className='fa-solid fa-arrow-rotate-right'></i>
