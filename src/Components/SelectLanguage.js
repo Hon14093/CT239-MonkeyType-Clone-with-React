@@ -16,7 +16,7 @@ const SelectLanguage = ({ value }) => {
             case 'english':
                 return <English value={value} />
             case 'english1k':
-                return <English1k />
+                return <English1k value={value} />
             default:
                 return <English value={value} />
         }
@@ -32,7 +32,7 @@ const SelectLanguage = ({ value }) => {
                 </select>
             </div>
 
-            <div className='text-2xl h-28'>
+            <div className=' h-28'>
                 { renderSelectedComponent() }
                 
             </div>

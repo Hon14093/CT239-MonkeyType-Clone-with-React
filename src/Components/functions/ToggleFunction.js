@@ -1,6 +1,6 @@
 export const toggleButton = (clickedButtonId, buttonId) => {
     buttonId.forEach((buttonId) => {
-        const button  = document.getElementById(buttonId);
+        const button = document.getElementById(buttonId);
         
         if (button) {
             const isClickedButton = buttonId === clickedButtonId;

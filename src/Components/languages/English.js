@@ -5,10 +5,11 @@ const words = [
 
 export default function English_test({ value }) {
     const selectedWords = SelectedWords(words, value);
+    const final = selectedWords.join(' ');
 
     return (
         <div>
-            { selectedWords.join(' ') }
+            { final.split('').join('') }
         </div>
     )
 }

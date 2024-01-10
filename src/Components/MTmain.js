@@ -18,16 +18,19 @@ class MTmain extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentValue: '10',
+            currentValueWords: '10',
         };
     }
 
     handleClick = (newValue) => {
-        this.setState({currentValue: newValue});
+        this.setState({currentValueWords: newValue});
     }
 
     render() {
-        const buttonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
+        const wordsButtonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
+        const timeButtonIds = ['button15', 'button30', 'button60', 'button120', 'buttonWrench'];
+        const quoteButtonIds = ['all', 'short', 'medium', 'long', 'thicc']
+
         return (
         <>
         {/* config bar */}
@@ -71,18 +74,37 @@ class MTmain extends Component {
 
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='rightBorder'></div>
                 
+                {/* button sections */}
                 <section id='config'>
 
                     <div className='hidden' id='timeNum'>
-                        <TimeNumber />
+
+                        <div className='flex gap-4'>
+                            {timeButtonIds.map((buttonId) => (
+                                <button key={buttonId} id={buttonId} className='Ani duration-400'
+                                    onClick={() => {
+                                        toggleButton(buttonId, timeButtonIds)
+                                        this.handleClick(buttonId.substring(6))
+                                    }}>
+
+                                    {buttonId === 'buttonWrench' ? (
+                                    <i className='fa-solid fa-screwdriver-wrench'></i>
+                                    ) : (
+                                    buttonId.replace('button', '')
+                                    )}
+                                    
+                                </button>
+                            ))}
+                        </div>
+
                     </div>
 
                     <div id='wordsNum'>
                         <div className='flex gap-4'>
-                            {buttonIds.map((buttonId) => (
+                            {wordsButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
-                                        toggleButton(buttonId, buttonIds)
+                                        toggleButton(buttonId, wordsButtonIds)
                                         this.handleClick(buttonId.substring(6))
                                     }}>
 
@@ -98,7 +120,23 @@ class MTmain extends Component {
                     </div>
 
                     <div className='hidden' id='quoteLength'>
-                        <QuoteLength />
+                        <div className='flex gap-4'>
+                            {quoteButtonIds.map((buttonId) => (
+                                <button key={buttonId} id={buttonId} className='Ani duration-400'
+                                    onClick={() => {
+                                        toggleButton(buttonId, quoteButtonIds)
+                                        this.handleClick(buttonId.substring(6))
+                                    }}>
+
+                                    {buttonId === 'buttonWrench' ? (
+                                    <i className='fa-solid fa-screwdriver-wrench'></i>
+                                    ) : (
+                                    buttonId.replace('button', '')
+                                    )}
+                                    
+                                </button>
+                            ))}
+                        </div>
                     </div>
                     
                 </section>
@@ -110,8 +148,8 @@ class MTmain extends Component {
         <section className='text-chaosTxt text-justify'>
             <CapsLockWarning />
 
-            <div id='textBox' className='10'>
-                <SelectLanguage value={this.state.currentValue} />
+            <div id='textBox' className='text-[1.5rem] overflow-hidden' >
+                <SelectLanguage value={this.state.currentValueWords} />
             </div>
             
 

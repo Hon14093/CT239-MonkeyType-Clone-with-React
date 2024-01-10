@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { toggleButton } from '../functions/ToggleFunction'
+// Unused file
 
 class WordsNumbers extends Component {
 
