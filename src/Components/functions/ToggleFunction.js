@@ -8,8 +8,8 @@ export const toggleButton = (clickedButtonId, buttonId) => {
             button.classList.toggle('bg-chaosBG', !isClickedButton);
 
             if (isClickedButton) {
-                let length = buttonId.substring(6);
-                console.log(length); // output is the amount of words chosen
+                let clickedButtonId = buttonId;
+                console.log(clickedButtonId); // output is the amount of words chosen
             }
         }
     })

@@ -1,19 +1,20 @@
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
-import QuoteFunction from './functions/QuoteFunction'
 import ZenFunction from './functions/ZenFunction'
 import TimeFunction from './functions/TimeFunction'
 
 import SelectLanguage from './SelectLanguage'
 
 import { toggleButton } from './functions/ToggleFunction'
-import { checkWordsClickedSecond } from './Check'
+import { checkWordsClicked } from './functions/CheckWordsClicked'
+import { checkQuoteClicked } from './functions/CheckQuoteClicked'
+
+import EnglishShort from './quotes/EnglishShort'
 
 class MTmain extends Component {
 
     componentDidMount() {
         const wordsClicked = document.getElementById('wordsButton');
-
         if (wordsClicked) {
             wordsClicked.click();
         }
@@ -23,11 +24,16 @@ class MTmain extends Component {
         super(props);
         this.state = {
             currentValueWords: '10',
+            currentQuoteLength: 'short',
         };
     }
 
     handleClick = (newValue) => {
         this.setState({currentValueWords: newValue});
+    }
+
+    handleQuoteClick = (newValue) => {
+        this.setState({currentQuoteLength: newValue});
     }
 
     render() {
@@ -62,16 +68,20 @@ class MTmain extends Component {
 
                     <TimeFunction />
 
-                    {/* <WordsFunction /> */}
-
-                    <button onClick={() => { checkWordsClickedSecond(); toggleButton('button10', wordsButtonIds); this.handleClick('10') }}>
+                    <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleClick('10') }}>
                         <div className='Ani duration-400' id='wordsButton'>
                             <i className='fa-solid fa-a mr-2'></i>
                             words
                         </div>
                     </button>
 
-                    <QuoteFunction />
+                    {/* <QuoteFunction /> */}
+                    <button onClick={() => {checkQuoteClicked()}}>
+                        <div className='Ani duration-400' id='quoteButton'>
+                            <i className='fa-solid fa-quote-left mr-2'></i>
+                            quote
+                        </div>
+                    </button>
 
                     <ZenFunction />
                     
@@ -136,7 +146,7 @@ class MTmain extends Component {
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, quoteButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleQuoteClick(buttonId)
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -160,7 +170,14 @@ class MTmain extends Component {
             <CapsLockWarning />
 
             <div id='textBox' className='text-[1.5rem] overflow-hidden' >
-                <SelectLanguage value={this.state.currentValueWords} />
+                <div id='selectLanguage'>
+                    <SelectLanguage value={this.state.currentValueWords} />
+                </div>
+
+                <div id='quote' className='hidden'>
+                    <EnglishShort />
+                </div>
+
             </div>
             
 
