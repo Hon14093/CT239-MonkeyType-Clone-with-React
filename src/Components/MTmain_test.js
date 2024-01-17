@@ -1,6 +1,7 @@
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
 import QuoteFunction from './functions/QuoteFunction'
+import WordsFunction from './functions/WordsFunction'
 import ZenFunction from './functions/ZenFunction'
 import TimeFunction from './functions/TimeFunction'
 
@@ -10,14 +11,6 @@ import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClickedSecond } from './Check'
 
 class MTmain extends Component {
-
-    componentDidMount() {
-        const wordsClicked = document.getElementById('wordsButton');
-
-        if (wordsClicked) {
-            wordsClicked.click();
-        }
-    }
 
     constructor(props) {
         super(props);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import English from './languages/English';
 import English1k from './languages/English1k';
+import English5k from './languages/English5k';
 
 const SelectLanguage = ({ value }) => {
     const [selectedValue, setSelectedValue] = useState('');
@@ -17,6 +18,8 @@ const SelectLanguage = ({ value }) => {
                 return <English value={value} />
             case 'english1k':
                 return <English1k value={value} />
+            case 'english5k':
+                return <English5k value={value} />
             default:
                 return <English value={value} />
         }
@@ -29,6 +32,7 @@ const SelectLanguage = ({ value }) => {
                 <select className='text-chaosTxt bg-chaosBG Ani duration-400 px-1' onChange={handleSelectChange}>
                     <option value="english">english</option>
                     <option value="english1k">english 1k</option>
+                    <option value="english5k">english 5k</option>
                 </select>
             </div>
 

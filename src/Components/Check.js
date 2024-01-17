@@ -1,21 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { toggleButton } from './ToggleFunction';
-// unused file
-
-function WordsFunction() {
-
-    // Initialize click when loading up website
-    const firstButtonRef = useRef(null);
-    useEffect(() => {
-        if (firstButtonRef.current) {
-            firstButtonRef.current.click();
-        }
-    }, [])
-
-    const wordsButtonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
-
-    function checkWordsClicked() {
-        const words = document.getElementById('wordsButton');
+export const checkWordsClickedSecond = () => {
+    const words = document.getElementById('wordsButton');
         const quote = document.getElementById('quoteButton');
         const zen = document.getElementById('zenButton');
         const time = document.getElementById('timeButton');
@@ -45,18 +29,5 @@ function WordsFunction() {
         wordsNum.classList.remove('hidden');
         quoteConfig.classList.add('hidden');
         timeConfig.classList.add('hidden');
-        
-    }
-
-    return (
-        
-        <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds) }} ref={ firstButtonRef }>
-            <div className='Ani duration-400' id='wordsButton'>
-                <i className='fa-solid fa-a mr-2'></i>
-                words
-            </div>
-        </button>
-    )
+    
 }
-
-export default WordsFunction
