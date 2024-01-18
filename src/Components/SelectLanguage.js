@@ -29,7 +29,7 @@ const SelectLanguage = ({ value }) => {
         <>
             <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg'>
                 <i className='fa-solid fa-earth-asia pr-3'></i>
-                <select className='text-chaosTxt bg-chaosBG Ani duration-400 px-1 text-center' onChange={handleSelectChange} id='select'>
+                <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center' onChange={handleSelectChange} id='select'>
                     <option value="english">english</option>
                     <option value="english1k">english 1k</option>
                     <option value="english5k">english 5k</option>

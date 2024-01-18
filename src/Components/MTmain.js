@@ -10,6 +10,7 @@ import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 
 import EnglishShort from './quotes/EnglishShort'
+import SelectQuoteLength from './SelectQuoteLength'
 
 class MTmain extends Component {
 
@@ -28,7 +29,7 @@ class MTmain extends Component {
         };
     }
 
-    handleClick = (newValue) => {
+    handleWordsClick = (newValue) => {
         this.setState({currentValueWords: newValue});
     }
 
@@ -68,7 +69,7 @@ class MTmain extends Component {
 
                     <TimeFunction />
 
-                    <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleClick('10') }}>
+                    <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleWordsClick('10') }}>
                         <div className='Ani duration-400' id='wordsButton'>
                             <i className='fa-solid fa-a mr-2'></i>
                             words
@@ -76,7 +77,7 @@ class MTmain extends Component {
                     </button>
 
                     {/* <QuoteFunction /> */}
-                    <button onClick={() => {checkQuoteClicked()}}>
+                    <button onClick={() => { checkQuoteClicked(); toggleButton('short', quoteButtonIds); this.handleQuoteClick('short') }}>
                         <div className='Ani duration-400' id='quoteButton'>
                             <i className='fa-solid fa-quote-left mr-2'></i>
                             quote
@@ -95,7 +96,7 @@ class MTmain extends Component {
 
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='rightBorder'></div>
                 
-                {/* button sections */}
+                {/* config button sections */}
                 <section id='config'>
 
                     <div className='hidden' id='timeNum'>
@@ -105,7 +106,7 @@ class MTmain extends Component {
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, timeButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -126,7 +127,7 @@ class MTmain extends Component {
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, wordsButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -175,7 +176,7 @@ class MTmain extends Component {
                 </div>
 
                 <div id='quote' className='hidden'>
-                    <EnglishShort />
+                    <SelectQuoteLength length={this.state.currentQuoteLength} />
                 </div>
 
             </div>

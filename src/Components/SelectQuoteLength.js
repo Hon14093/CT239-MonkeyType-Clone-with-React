@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import EnglishShort from "./quotes/EnglishShort";
 import EnglishMedium from "./quotes/EnglishMedium";
 
-const SelectQuoteLength = ({ value }) => {
+const SelectQuoteLength = ({ length }) => {
 
-    const renderClickedLength = (value) => {
-        switch (value) {
+    const renderClickedLength = () => {
+        switch (length) {
             case 'short':
                 return <EnglishShort />;
             case 'medium':
@@ -17,7 +17,7 @@ const SelectQuoteLength = ({ value }) => {
 
     return (
         <div>
-
+            { renderClickedLength() }
         </div>
     )
 }
