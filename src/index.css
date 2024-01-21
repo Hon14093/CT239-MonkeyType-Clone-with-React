@@ -88,6 +88,13 @@ code {
   transform: translate(-50%, -50%);
 }
 
+#cursor {
+  width: 3px;
+  height: 2rem;
+  @apply bg-chaosPink rounded;
+  position: absolute;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

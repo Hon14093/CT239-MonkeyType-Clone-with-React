@@ -1,26 +1,51 @@
 import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
-import QuoteFunction from './functions/QuoteFunction'
-import WordsFunction from './functions/WordsFunction'
 import ZenFunction from './functions/ZenFunction'
-import TimeFunction from './functions/TimeFunction'
 
-import SelectLanguage from './SelectLanguage'
+import RenderTextbox from './functions/RenderTextbox'
 
 import { toggleButton } from './functions/ToggleFunction'
-import { checkWordsClickedSecond } from './Check'
+import { checkWordsClicked } from './functions/CheckWordsClicked'
+import { checkQuoteClicked } from './functions/CheckQuoteClicked'
+import { checkTimeClicked } from './functions/CheckTimeClicked'
 
-class MTmain extends Component {
+import SelectQuoteLength from './SelectQuoteLength'
+
+class MTmain_test extends Component {
+
+    componentDidMount() {
+        // initialize button click upon loading the website
+        const wordsClicked = document.getElementById('wordsButton');
+        if (wordsClicked) {
+            wordsClicked.click();
+        }
+    }
 
     constructor(props) {
         super(props);
         this.state = {
             currentValueWords: '10',
+            currentTimeValue: '15',
+            currentQuoteLength: 'short',
+            selectLang: '',
         };
     }
 
-    handleClick = (newValue) => {
+    handleWordsClick = (newValue) => {
         this.setState({currentValueWords: newValue});
+    }
+
+    handleTimeClick = (newValue) => {
+        this.setState({currentValueTime: newValue});
+        // this.setState({currentValueWords: newValue});
+    }
+
+    handleQuoteClick = (newValue) => {
+        this.setState({currentQuoteLength: newValue});
+    }
+
+    handleSelectChange = (event) => {
+        this.setState({selectLang: event.target.value});
     }
 
     render() {
@@ -52,19 +77,27 @@ class MTmain extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
                 <article className='flex gap-4' id='mode'>
+                    <button onClick={() => { checkTimeClicked(); toggleButton('button15', timeButtonIds); this.handleTimeClick('15') }}>
+                        <div className='Ani duration-400' id='timeButton'>
+                            <i className='fa-solid fa-clock mr-2'></i>
+                            time
+                        </div>
+                    </button>
 
-                    <TimeFunction />
-
-                    {/* <WordsFunction /> */}
-
-                    <button onClick={() => { checkWordsClickedSecond(); toggleButton('button10', wordsButtonIds); this.handleClick('10') }}>
+                    <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleWordsClick('10') }}>
                         <div className='Ani duration-400' id='wordsButton'>
                             <i className='fa-solid fa-a mr-2'></i>
                             words
                         </div>
                     </button>
 
-                    <QuoteFunction />
+                    {/* <QuoteFunction /> */}
+                    <button onClick={() => { checkQuoteClicked(); toggleButton('short', quoteButtonIds); this.handleQuoteClick('short') }}>
+                        <div className='Ani duration-400' id='quoteButton'>
+                            <i className='fa-solid fa-quote-left mr-2'></i>
+                            quote
+                        </div>
+                    </button>
 
                     <ZenFunction />
                     
@@ -78,17 +111,16 @@ class MTmain extends Component {
 
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='rightBorder'></div>
                 
-                {/* button sections */}
+                {/* config button sections */}
                 <section id='config'>
 
                     <div className='hidden' id='timeNum'>
-
                         <div className='flex gap-4'>
                             {timeButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, timeButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -100,7 +132,6 @@ class MTmain extends Component {
                                 </button>
                             ))}
                         </div>
-
                     </div>
 
                     <div id='wordsNum'>
@@ -109,7 +140,7 @@ class MTmain extends Component {
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, wordsButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -129,7 +160,7 @@ class MTmain extends Component {
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, quoteButtonIds)
-                                        this.handleClick(buttonId.substring(6))
+                                        this.handleQuoteClick(buttonId)
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -153,7 +184,26 @@ class MTmain extends Component {
             <CapsLockWarning />
 
             <div id='textBox' className='text-[1.5rem] overflow-hidden' >
-                <SelectLanguage value={this.state.currentValueWords} />
+                <div id='selectLanguage'>
+
+                    <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg' id='select'>
+                        <i className='fa-solid fa-earth-asia pr-3'></i>
+                        <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center outline-none' onChange={ this.handleSelectChange }>
+                            <option value="english">english</option>
+                            <option value="english1k">english 1k</option>
+                            <option value="english5k">english 5k</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
+                <RenderTextbox language={ this.state.selectLang } value={ this.state.currentValueWords } />
+
+                <div id='quote' className='hidden'>
+                    <SelectQuoteLength length={this.state.currentQuoteLength} />
+                </div>
+
             </div>
             
 
@@ -168,4 +218,4 @@ class MTmain extends Component {
     }
 }
 
-export default MTmain
+export default MTmain_test

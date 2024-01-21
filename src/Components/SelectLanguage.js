@@ -13,6 +13,10 @@ const SelectLanguage = ({ value }) => {
     };
 
     const renderSelectedComponent = () => {
+        // if (value == 15) {
+        //     return <English value={9999} />;
+        // }
+
         switch (selectedValue) {
             case 'english':
                 return <English value={value} />
@@ -27,9 +31,9 @@ const SelectLanguage = ({ value }) => {
 
     return (
         <>
-            <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg'>
+            <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg' id='select'>
                 <i className='fa-solid fa-earth-asia pr-3'></i>
-                <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center' onChange={handleSelectChange} id='select'>
+                <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center outline-none' onChange={handleSelectChange}>
                     <option value="english">english</option>
                     <option value="english1k">english 1k</option>
                     <option value="english5k">english 5k</option>
@@ -38,7 +42,6 @@ const SelectLanguage = ({ value }) => {
 
             <div className='h-28' id='renderLanguage'>
                 { renderSelectedComponent() }
-                
             </div>
         </>
     );

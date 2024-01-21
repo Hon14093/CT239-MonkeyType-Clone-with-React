@@ -8,6 +8,7 @@ import SelectLanguage from './SelectLanguage'
 import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
+import { checkTimeClicked } from './functions/CheckTimeClicked'
 
 import EnglishShort from './quotes/EnglishShort'
 import SelectQuoteLength from './SelectQuoteLength'
@@ -25,12 +26,18 @@ class MTmain extends Component {
         super(props);
         this.state = {
             currentValueWords: '10',
+            currentTimeValue: '15',
             currentQuoteLength: 'short',
         };
     }
 
     handleWordsClick = (newValue) => {
         this.setState({currentValueWords: newValue});
+    }
+
+    handleTimeClick = (newValue) => {
+        this.setState({currentValueTime: newValue});
+        // this.setState({currentValueWords: newValue});
     }
 
     handleQuoteClick = (newValue) => {
@@ -66,8 +73,12 @@ class MTmain extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
                 <article className='flex gap-4' id='mode'>
-
-                    <TimeFunction />
+                    <button onClick={() => { checkTimeClicked(); toggleButton('button15', timeButtonIds); this.handleTimeClick('15') }}>
+                        <div className='Ani duration-400' id='timeButton'>
+                            <i className='fa-solid fa-clock mr-2'></i>
+                            time
+                        </div>
+                    </button>
 
                     <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleWordsClick('10') }}>
                         <div className='Ani duration-400' id='wordsButton'>
@@ -100,7 +111,6 @@ class MTmain extends Component {
                 <section id='config'>
 
                     <div className='hidden' id='timeNum'>
-
                         <div className='flex gap-4'>
                             {timeButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
@@ -118,7 +128,6 @@ class MTmain extends Component {
                                 </button>
                             ))}
                         </div>
-
                     </div>
 
                     <div id='wordsNum'>
@@ -178,7 +187,6 @@ class MTmain extends Component {
                 <div id='quote' className='hidden'>
                     <SelectQuoteLength length={this.state.currentQuoteLength} />
                 </div>
-
             </div>
             
 
