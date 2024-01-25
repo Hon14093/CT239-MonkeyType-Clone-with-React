@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
 import ZenFunction from './functions/ZenFunction'
-import TimeFunction from './functions/TimeFunction'
+
 
 import SelectLanguage from './SelectLanguage'
 

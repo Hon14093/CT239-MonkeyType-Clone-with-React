@@ -3,6 +3,7 @@ import CapsLockWarning from './functions/CapLockDetect'
 import ZenFunction from './functions/ZenFunction'
 
 import RenderTextbox from './functions/RenderTextbox'
+import InputField from './InputField'
 
 import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
@@ -11,6 +12,7 @@ import { checkTimeClicked } from './functions/CheckTimeClicked'
 
 import SelectQuoteLength from './SelectQuoteLength'
 
+import TargetText from './functions/test/TargetText'
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -199,6 +201,9 @@ class MTmain_test extends Component {
 
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
                 <RenderTextbox language={ this.state.selectLang } value={ this.state.currentValueWords } />
+                {/* <input type='text'></input> */}
+                <InputField />
+                {/* <TargetText /> */}
 
                 <div id='quote' className='hidden'>
                     <SelectQuoteLength length={this.state.currentQuoteLength} />

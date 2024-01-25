@@ -68,5 +68,3 @@ class LoginBody extends Component {
 }
 
 export default LoginBody
-
-// grid grid-cols-2

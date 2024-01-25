@@ -5,11 +5,16 @@ const words = [
 
 export default function English({ value }) {
     const selectedWords = SelectedWords(words, value);
-    const final = selectedWords.join(' ');
 
     return (
-        <div>
-            { final.split('').join('') }
+        <div className='flex'>
+        {selectedWords.map((word, wordIndex) => (
+            <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
+                {word.split('').map((letter, letterIndex) => (
+                    <span key={letterIndex} className={`letter ${wordIndex === 0 && letterIndex === 0 ? 'current' : ''}`}>{letter}</span>
+                ))}
+            </div>
+        ))}
         </div>
     )
 }
