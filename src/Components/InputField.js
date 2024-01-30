@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef } from 'react';
 
 const InputField = () => {
     const inputRef = useRef(null);
@@ -6,8 +6,10 @@ const InputField = () => {
 
     useEffect(() => {
         // Focus on the input field when the component mounts
-        inputRef.current.focus();
-    }, []);
+        if (document.activeElement !== inputRef.current) {
+            inputRef.current.focus();
+        }
+    });
 
     function addClass(element, name) {
         element.className += ' '+name;
@@ -93,6 +95,7 @@ const InputField = () => {
         const cursor = document.getElementById('cursor');
         const nextWord = document.querySelector('.word.active');
         cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 175 + 'px';
+        // used to be 175px, dont know why it reduced to 160px
 
     };
 

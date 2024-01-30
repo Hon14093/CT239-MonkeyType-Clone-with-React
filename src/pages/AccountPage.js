@@ -1,9 +1,9 @@
 import React from 'react'
 import MTheader from '../Components/MTheader'
-import LoginBody from '../Components/LoginBody'
+import AccountBody from '../Components/AccountBody'
 import MTfooter from '../Components/MTfooter'
 
-function LoginPage() {
+function AccountPage() {
     return (
         <div id='app' className='wide125'>
             <div className='contentWrapper wide125'>
@@ -11,8 +11,8 @@ function LoginPage() {
                     <MTheader />
                 </header>
                 
-                <main className='text-white font-mono content-center grid'>
-                    <LoginBody />
+                <main className='text-white font-mono grid h-full'>
+                    <AccountBody />
                 </main>
                 
                 <footer>
@@ -24,4 +24,4 @@ function LoginPage() {
     )
 }
 
-export default LoginPage
+export default AccountPage

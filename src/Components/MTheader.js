@@ -32,7 +32,7 @@ class MTheader extends Component {
                 </div>
                 
 
-                <Link to="/Login" className='mt-4 text-slate-500'>
+                <Link to="/Account" className='mt-4 text-slate-500'>
                     <i className='fa-regular fa-user Ani duration-400'></i>
                 </Link>
             </div>

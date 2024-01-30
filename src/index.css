@@ -69,6 +69,29 @@ code {
   max-width: 1250px;
 }
 
+.accountPage {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 9999;
+}
+.accountPage.wide125 {
+  max-width: 1250px;
+}
+
+#details {
+  grid-template-columns: 17.5rem auto 1fr;
+}
+
+#avatarAndName {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 5rem 1fr;
+  width: 100%;
+}
+
 #app {
   display: grid;
   grid-template-columns: auto;

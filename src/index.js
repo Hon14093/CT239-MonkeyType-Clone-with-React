@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LoginPage from './pages/LoginPage';
+import AccountPage from './pages/AccountPage';
 
 import {
   createBrowserRouter,
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "Login",
     element: <LoginPage />,
+  },
+  {
+    path: "Account",
+    element: <AccountPage />,
   },
 ]);
 
