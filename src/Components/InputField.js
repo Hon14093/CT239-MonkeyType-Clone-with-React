@@ -95,7 +95,6 @@ const InputField = () => {
         const cursor = document.getElementById('cursor');
         const nextWord = document.querySelector('.word.active');
         cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 175 + 'px';
-        // used to be 175px, dont know why it reduced to 160px
 
     };
 
