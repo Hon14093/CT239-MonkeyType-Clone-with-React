@@ -92,7 +92,7 @@ const InputField = () => {
         const nextLetter = document.querySelector('.letter.current');
         const cursor = document.getElementById('cursor');
         const nextWord = document.querySelector('.word.active');
-        cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 175 + 'px';
+        cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 160 + 'px';
 
     };
 
