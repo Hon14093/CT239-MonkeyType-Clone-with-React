@@ -1,9 +1,9 @@
 import SelectQuoteLength from "../../SelectQuoteLength";
 import RenderTextbox from "../RenderTextbox";
 
-const ChoosingMode = ({mode, quoteLength, language, wordsValue}) => {
+const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
 
-    console.log(mode + " " + quoteLength + " " + language + " " + wordsValue);
+    // console.log(mode + " " + quoteLength + " " + language + " " + wordsValue);
 
     if (mode === 'words') {
         console.log('words');
@@ -11,7 +11,6 @@ const ChoosingMode = ({mode, quoteLength, language, wordsValue}) => {
     } else if (mode === 'quote') {
         return <SelectQuoteLength length={quoteLength} />
     }
-
 
 }
 

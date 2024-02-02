@@ -220,17 +220,14 @@ class MTmain_test extends Component {
                 </div>
 
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
-                {/* <RenderTextbox language={ this.state.selectLang } value={ this.state.currentValueWords } /> */}
+                
                 <ChoosingMode 
                     mode={this.state.mode}
                     quoteLength={this.state.currentQuoteLength}
                     language={this.state.selectLang}
-                    wordsValue={this.state.currentValueWords} />
+                    wordsValue={this.state.currentValueWords} 
+                />
                 <InputField />
-
-                {/* <div id='quote' className='hidden'>
-                    <SelectQuoteLength length={this.state.currentQuoteLength} />
-                </div> */}
 
             </div>
             

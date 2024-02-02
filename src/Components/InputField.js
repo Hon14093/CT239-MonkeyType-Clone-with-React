@@ -33,28 +33,33 @@ const InputField = () => {
 
         if (isBackspace) {
             console.log('backspace');
-            if (currentLetter && isFirstLetter) {
-                console.log('running');
-                // make previous word current, last letter current
-                removeClass(activeWord, 'active');
-                addClass(activeWord.previousSibling, 'active');
-                removeClass(currentLetter, 'current');
-                addClass(activeWord.previousSibling.lastChild, 'current');
-                removeClass(activeWord.previousSibling.lastChild, 'text-red-500');
-                removeClass(activeWord.previousSibling.lastChild, 'text-white');
-            }
-            if (currentLetter && !isFirstLetter) {
-                console.log('running 2');
-                // move back one letter, invalidate letter
-                removeClass(currentLetter, 'current');
-                addClass(currentLetter.previousSibling, 'current');
-                removeClass(currentLetter.previousSibling, 'text-red-500');
-                removeClass(currentLetter.previousSibling, 'text-white');
-            }
-            if (!currentLetter) {
-                addClass(activeWord.lastChild, 'current');
-                removeClass(activeWord.lastChild, 'text-red-500');
-                removeClass(activeWord.lastChild, 'text-white');
+            const extraLetter = activeWord.querySelector('.extra:last-child');
+            if (extraLetter) {
+                extraLetter.remove();
+            } else {
+                if (currentLetter && isFirstLetter) {
+                    console.log('running');
+                    // make previous word current, last letter current
+                    removeClass(activeWord, 'active');
+                    addClass(activeWord.previousSibling, 'active');
+                    removeClass(currentLetter, 'current');
+                    addClass(activeWord.previousSibling.lastChild, 'current');
+                    removeClass(activeWord.previousSibling.lastChild, 'text-red-500');
+                    removeClass(activeWord.previousSibling.lastChild, 'text-white');
+                }
+                if (currentLetter && !isFirstLetter) {
+                    console.log('running 2');
+                    // move back one letter, invalidate letter
+                    removeClass(currentLetter, 'current');
+                    addClass(currentLetter.previousSibling, 'current');
+                    removeClass(currentLetter.previousSibling, 'text-red-500');
+                    removeClass(currentLetter.previousSibling, 'text-white');
+                }
+                if (!currentLetter) {
+                    addClass(activeWord.lastChild, 'current');
+                    removeClass(activeWord.lastChild, 'text-red-500');
+                    removeClass(activeWord.lastChild, 'text-white');
+                }
             }
 
         } else if (isLetter) {
