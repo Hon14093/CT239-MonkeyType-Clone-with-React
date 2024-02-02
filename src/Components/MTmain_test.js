@@ -12,7 +12,7 @@ import { checkTimeClicked } from './functions/CheckTimeClicked'
 
 import SelectQuoteLength from './SelectQuoteLength'
 
-import ChoosingMode from './functions/test/ChoosingMode'
+import ChoosingMode from './functions/ChoosingMode'
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -58,7 +58,7 @@ class MTmain_test extends Component {
     render() {
         const wordsButtonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
         const timeButtonIds = ['button15', 'button30', 'button60', 'button120', 'buttonWrench'];
-        const quoteButtonIds = ['all', 'short', 'medium', 'long', 'thicc']
+        const quoteButtonIds = ['all', 'short', 'medium', 'long', 'extended']
 
         return (
         <>
@@ -220,7 +220,7 @@ class MTmain_test extends Component {
                 </div>
 
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
-                
+
                 <ChoosingMode 
                     mode={this.state.mode}
                     quoteLength={this.state.currentQuoteLength}

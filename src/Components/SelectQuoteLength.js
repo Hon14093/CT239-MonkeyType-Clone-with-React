@@ -2,6 +2,7 @@ import React from 'react';
 import EnglishShort from "./quotes/EnglishShort";
 import EnglishMedium from "./quotes/EnglishMedium";
 import EnglishLong from "./quotes/EnglishLong";
+import EnglishExtended from './quotes/EnglishExtended';
 
 const SelectQuoteLength = ({ length }) => {
 
@@ -13,6 +14,8 @@ const SelectQuoteLength = ({ length }) => {
                 return <EnglishMedium />;
             case 'long':
                 return <EnglishLong />;
+            case 'extended':
+                return <EnglishExtended />;
             default:
                 return <EnglishShort />;
         }

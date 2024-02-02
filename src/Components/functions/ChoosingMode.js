@@ -1,5 +1,5 @@
-import SelectQuoteLength from "../../SelectQuoteLength";
-import RenderTextbox from "../RenderTextbox";
+import SelectQuoteLength from "../SelectQuoteLength";
+import RenderTextbox from "./RenderTextbox";
 
 const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
 
