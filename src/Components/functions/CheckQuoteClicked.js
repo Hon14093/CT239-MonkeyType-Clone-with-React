@@ -29,8 +29,11 @@ export const checkQuoteClicked = () => {
     zen.classList.remove('text-chaosPink');
     time.classList.remove('text-chaosPink');
 
-    const renderLanguage= document.getElementById('renderLanguage');
-    renderLanguage.classList.add('hidden');
-    const quoteBox = document.getElementById('quote');
-    quoteBox.classList.remove('hidden');
+    // const renderLanguage= document.getElementById('renderLanguage');
+    // renderLanguage.classList.add('hidden');
+    // const quoteBox = document.getElementById('quote');
+    // quoteBox.classList.remove('hidden');
+
+    const wordsActive = document.getElementsByClassName('active');
+    console.log(wordsActive);
 }

@@ -12,7 +12,7 @@ import { checkTimeClicked } from './functions/CheckTimeClicked'
 
 import SelectQuoteLength from './SelectQuoteLength'
 
-import TargetText from './functions/test/TargetText'
+import ChoosingMode from './functions/test/ChoosingMode'
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -25,19 +25,17 @@ class MTmain_test extends Component {
 
     constructor(props) {
         super(props);
-        this.inputRef = React.createRef();
         this.state = {
             currentValueWords: '10',
             currentTimeValue: '15',
             currentQuoteLength: 'short',
-            selectLang: '',
-            mode: 'default',
+            selectLang: 'english',
+            mode: 'words',
         };
     }
 
-    handleInputFocus = (mode) => {
-        this.setState({ mode });
-        console.log("Input focus");
+    handleModeChange = (changedMode) => {
+        this.setState({mode: changedMode});
     }
 
     handleWordsClick = (newValue) => {
@@ -86,14 +84,24 @@ class MTmain_test extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
                 <article className='flex gap-4' id='mode'>
-                    <button onClick={() => { checkTimeClicked(); toggleButton('button15', timeButtonIds); this.handleTimeClick('15') }}>
+                    <button onClick={() => { 
+                        checkTimeClicked(); 
+                        toggleButton('button15', timeButtonIds); 
+                        this.handleTimeClick('15');
+                        this.handleModeChange('time')
+                    }}>
                         <div className='Ani duration-400' id='timeButton'>
                             <i className='fa-solid fa-clock mr-2'></i>
                             time
                         </div>
                     </button>
 
-                    <button onClick={() => { checkWordsClicked(); toggleButton('button10', wordsButtonIds); this.handleWordsClick('10'); this.handleInputFocus('words') }}>
+                    <button onClick={() => { 
+                        checkWordsClicked(); 
+                        toggleButton('button10', wordsButtonIds); 
+                        this.handleWordsClick('10');
+                        this.handleModeChange('words')
+                    }}>
                         <div className='Ani duration-400' id='wordsButton'>
                             <i className='fa-solid fa-a mr-2'></i>
                             words
@@ -101,7 +109,12 @@ class MTmain_test extends Component {
                     </button>
 
                     {/* <QuoteFunction /> */}
-                    <button onClick={() => { checkQuoteClicked(); toggleButton('short', quoteButtonIds); this.handleQuoteClick('short'); this.handleInputFocus('quote') }}>
+                    <button onClick={() => { 
+                        checkQuoteClicked(); 
+                        toggleButton('short', quoteButtonIds);
+                        this.handleQuoteClick('short');
+                        this.handleModeChange('quote')
+                    }}>
                         <div className='Ani duration-400' id='quoteButton'>
                             <i className='fa-solid fa-quote-left mr-2'></i>
                             quote
@@ -207,12 +220,17 @@ class MTmain_test extends Component {
                 </div>
 
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
-                <RenderTextbox language={ this.state.selectLang } value={ this.state.currentValueWords } />
+                {/* <RenderTextbox language={ this.state.selectLang } value={ this.state.currentValueWords } /> */}
+                <ChoosingMode 
+                    mode={this.state.mode}
+                    quoteLength={this.state.currentQuoteLength}
+                    language={this.state.selectLang}
+                    wordsValue={this.state.currentValueWords} />
                 <InputField />
 
-                <div id='quote' className='hidden'>
+                {/* <div id='quote' className='hidden'>
                     <SelectQuoteLength length={this.state.currentQuoteLength} />
-                </div>
+                </div> */}
 
             </div>
             

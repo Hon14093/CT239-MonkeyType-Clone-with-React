@@ -3,8 +3,8 @@ import MTheader from './Components/MTheader';
 import MTmain from './Components/MTmain';
 import MTfooter from './Components/MTfooter';
 
-import GameComponent from './Components/functions/test/GameComponent';
-import SpeedTypingGame from './Components/functions/new_test/SpeedTypingGame';
+
+
 
 import MTmain_test from './Components/MTmain_test';
 

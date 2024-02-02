@@ -17,10 +17,19 @@ const quotes = [
 export default function EnglishLong() {
     // randomly choose one quote from quote variables
     const random = Math.floor(Math.random() * quotes.length);
+    const sentence = quotes[random];
+    const wordsArray = sentence.split(/\s+/); // split a string into words
 
     return (
-        <div className="h-28">
-            { quotes[random] }
+
+        <div className='flex flex-wrap h-28'>
+            {wordsArray.map((word, wordIndex) => (
+                <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
+                    {word.split('').map((letter, letterIndex) => (
+                        <span key={letterIndex} className={`letter ${wordIndex === 0 && letterIndex === 0 ? 'current' : ''}`}>{letter}</span>
+                    ))}
+                </div>
+            ))}
         </div>
     )
 }
