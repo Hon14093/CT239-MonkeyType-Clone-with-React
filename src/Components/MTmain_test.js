@@ -201,21 +201,18 @@ class MTmain_test extends Component {
         <section className='text-chaosTxt text-justify'>
             <CapsLockWarning />
 
-            <div id='textBox' className='text-[1.5rem] overflow-hidden' >
-                <div id='selectLanguage'>
-
-                    <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg' id='select'>
-                        <i className='fa-solid fa-earth-asia pr-3'></i>
-                        <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center outline-none' onChange={ this.handleSelectChange }>
-                            <option value="english">english</option>
-                            <option value="english1k">english 1k</option>
-                            <option value="english5k">english 5k</option>
-                        </select>
-                    </div>
-
+            <div id='selectLanguage'>
+                <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg' id='select'>
+                    <i className='fa-solid fa-earth-asia pr-3'></i>
+                    <select className='text-chaosTxt bg-chaosBG Ani duration-400 p-0.5 rounded-lg text-center outline-none' onChange={ this.handleSelectChange }>
+                        <option value="english">english</option>
+                        <option value="english1k">english 1k</option>
+                        <option value="english5k">english 5k</option>
+                    </select>
                 </div>
+            </div>
 
-
+            <div id='textBox' className='text-[1.5rem] overflow-hidden' >
                 {/* Default mode will be 'words' with word number 10 */}
                 <ChoosingMode 
                     mode={this.state.mode}
@@ -225,7 +222,6 @@ class MTmain_test extends Component {
                 />
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
                 <InputField />
-
             </div>
             
 

@@ -95,11 +95,21 @@ const InputField = () => {
         console.log({key, expected}); 
         console.log(key === expected);
 
+        // move lines
+        if (activeWord.getBoundingClientRect().top > 320) {
+            const words = document.getElementById('words');
+            const margin = parseInt(words.style.top || '0px');
+            words.style.top = (margin - 35) + 'px';
+        }
+
         // move cursor
         const nextLetter = document.querySelector('.letter.current');
         const cursor = document.getElementById('cursor');
         const nextWord = document.querySelector('.word.active');
+        cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 'px';
         cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 2 + 'px';
+
+
 
     };
 

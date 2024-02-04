@@ -117,8 +117,6 @@ code {
   top: 255px;
   position: fixed;
   @apply bg-chaosPink rounded;
-  /* position: absolute; */
-  /* position: relative; */
   display: block;
 }
 
