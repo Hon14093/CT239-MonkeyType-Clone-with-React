@@ -114,8 +114,12 @@ code {
 #cursor {
   width: 3px;
   height: 2rem;
+  top: 255px;
+  position: fixed;
   @apply bg-chaosPink rounded;
-  position: absolute;
+  /* position: absolute; */
+  /* position: relative; */
+  display: block;
 }
 
 @tailwind base;

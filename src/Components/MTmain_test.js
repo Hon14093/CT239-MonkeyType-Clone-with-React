@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
 import ZenFunction from './functions/ZenFunction'
-
-import RenderTextbox from './functions/RenderTextbox'
 import InputField from './InputField'
+import ChoosingMode from './functions/ChoosingMode'
 
 import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
 
-import SelectQuoteLength from './SelectQuoteLength'
-
-import ChoosingMode from './functions/ChoosingMode'
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -219,14 +215,15 @@ class MTmain_test extends Component {
 
                 </div>
 
-                <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
 
+                {/* Default mode will be 'words' with word number 10 */}
                 <ChoosingMode 
                     mode={this.state.mode}
                     quoteLength={this.state.currentQuoteLength}
                     language={this.state.selectLang}
                     wordsValue={this.state.currentValueWords} 
                 />
+                <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
                 <InputField />
 
             </div>
