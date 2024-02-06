@@ -21,6 +21,7 @@ class MTmain_test extends Component {
 
     constructor(props) {
         super(props);
+        this.inputRef = React.createRef();
         this.state = {
             currentValueWords: '10',
             currentTimeValue: '15',
@@ -49,6 +50,8 @@ class MTmain_test extends Component {
 
     handleSelectChange = (event) => {
         this.setState({selectLang: event.target.value});
+        const input = document.getElementById('inputField');
+        input.focus();
     }
 
     render() {

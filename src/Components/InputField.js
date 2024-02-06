@@ -1,21 +1,46 @@
-import React, { useRef, useEffect, useState, forwardRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 const InputField = () => {
     const inputRef = useRef(null);
     const [userInput, setUserInput] = useState('');
 
     useEffect(() => {
-        // Focus on the input field when the component mounts
-        if (document.activeElement !== inputRef.current) {
-            inputRef.current.focus();
+        const handleClick = (event) => {
+            if (document.activeElement !== inputRef.current && !event.target.closest('select')) {
+                inputRef.current.focus();
+            }
         }
-    });
+        
+        inputRef.current.focus();
+        document.addEventListener('click', handleClick);
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        }
+    }, []);
 
     function addClass(element, name) {
         element.className += ' '+name;
     }
+    
     function removeClass(element, name) {
         element.className = element.className.replace(name, '');
+    }
+
+    function moveCursor() {
+        const nextLetter = document.querySelector('.letter.current');
+        const cursor = document.getElementById('cursor');
+        const nextWord = document.querySelector('.word.active');
+        cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 'px';
+        cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 2 + 'px';
+    }
+
+    function moveLine(activeWord) {
+        if (activeWord.getBoundingClientRect().top > 320) {
+            const words = document.getElementById('words');
+            const margin = parseInt(words.style.top || '0px');
+            words.style.top = (margin - 35) + 'px';
+        }
     }
 
     const handleInputChange = (event) => {
@@ -96,29 +121,19 @@ const InputField = () => {
         console.log(key === expected);
 
         // move lines
-        if (activeWord.getBoundingClientRect().top > 320) {
-            const words = document.getElementById('words');
-            const margin = parseInt(words.style.top || '0px');
-            words.style.top = (margin - 35) + 'px';
-        }
+        moveLine(activeWord);
 
         // move cursor
-        const nextLetter = document.querySelector('.letter.current');
-        const cursor = document.getElementById('cursor');
-        const nextWord = document.querySelector('.word.active');
-        cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 'px';
-        cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 2 + 'px';
-
-
-
+        moveCursor();
     };
 
     return (
         <input
         ref={inputRef}
+        id='inputField'
         type="text"
-        className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
-        // className='text-black'
+        // className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
+        className='text-black'
         onChange={handleInputChange}
         value={userInput}
         />

@@ -35,7 +35,7 @@ export default function EnglishShort() {
 
     return (
 
-        <div className='flex flex-wrap h-28'>
+        <div className='flex flex-wrap h-28 relative' id='words'>
             {wordsArray.map((word, wordIndex) => (
                 <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
                     {word.split('').map((letter, letterIndex) => (

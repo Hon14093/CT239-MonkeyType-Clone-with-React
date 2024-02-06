@@ -8,7 +8,7 @@ export default function English1k({ value }) {
     const selectedWords = SelectedWords(words, value);
 
     return (
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap relative' id='words'>
         {selectedWords.map((word, wordIndex) => (
             <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
                 {word.split('').map((letter, letterIndex) => (
