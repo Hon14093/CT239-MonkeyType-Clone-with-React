@@ -132,8 +132,8 @@ const InputField = () => {
         ref={inputRef}
         id='inputField'
         type="text"
-        // className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
-        className='text-black'
+        className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
+        // className='text-black'
         onChange={handleInputChange}
         value={userInput}
         />
