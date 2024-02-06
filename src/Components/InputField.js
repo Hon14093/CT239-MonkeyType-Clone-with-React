@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect} from 'react';
 
 const InputField = () => {
     const inputRef = useRef(null);
-    const [userInput, setUserInput] = useState('');
 
     useEffect(() => {
         const handleClick = (event) => {
@@ -44,26 +43,40 @@ const InputField = () => {
     }
 
     const handleInputChange = (event) => {
-        const value = event.target.value;
-        setUserInput(value);
-
-        const key = value.charAt(value.length - 1);
+        const key = event.key;
         const activeWord = document.querySelector('.active');
         const currentLetter = document.querySelector('.letter.current');
         const expected = currentLetter?.innerHTML || ' ';
-        const isLetter = key.length >= 1 && key !== ' ' ;
+        const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey;
         const isSpace = key === ' ';
         const isFirstLetter = currentLetter === activeWord.firstChild;
-        const isBackspace = event.nativeEvent.data === null;
+        const isBackspace = key === 'Backspace' && !event.ctrlKey;
+        const controlBackspace = key === 'Backspace' && event.ctrlKey;
+        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
+
+        if (specialKey) {
+            return;
+        }
+
+        if (controlBackspace) {
+            console.log('Backspace and control are pressed');
+
+            const letters = activeWord.querySelectorAll('span.letter');
+            letters.forEach(letter => {
+                letter.classList.remove('text-white', 'text-red-500', 'current');
+            })
+            
+            activeWord.firstChild.classList.add('current');
+        }
 
         if (isBackspace) {
-            console.log('backspace');
+            console.log('Backspace is pressed');
             const extraLetter = activeWord.querySelector('.extra:last-child');
             if (extraLetter) {
                 extraLetter.remove();
             } else {
                 if (currentLetter && isFirstLetter) {
-                    console.log('running');
+                    console.log('Current letter is first letter');
                     // make previous word current, last letter current
                     removeClass(activeWord, 'active');
                     addClass(activeWord.previousSibling, 'active');
@@ -72,14 +85,16 @@ const InputField = () => {
                     removeClass(activeWord.previousSibling.lastChild, 'text-red-500');
                     removeClass(activeWord.previousSibling.lastChild, 'text-white');
                 }
+
                 if (currentLetter && !isFirstLetter) {
-                    console.log('running 2');
+                    console.log('Current letter is not first letter');
                     // move back one letter, invalidate letter
                     removeClass(currentLetter, 'current');
                     addClass(currentLetter.previousSibling, 'current');
                     removeClass(currentLetter.previousSibling, 'text-red-500');
                     removeClass(currentLetter.previousSibling, 'text-white');
                 }
+
                 if (!currentLetter) {
                     addClass(activeWord.lastChild, 'current');
                     removeClass(activeWord.lastChild, 'text-red-500');
@@ -133,9 +148,8 @@ const InputField = () => {
         id='inputField'
         type="text"
         className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
-        // className='text-black'
-        onChange={handleInputChange}
-        value={userInput}
+        // onChange={handleInputChange}
+        onKeyDown={handleInputChange}
         />
     );
 };
