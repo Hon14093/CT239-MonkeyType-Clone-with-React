@@ -42,12 +42,30 @@ const InputField = () => {
         }
     }
 
+    function handleControlBackspace(controlBackspace, activeWord) {
+        const extraLetter = activeWord.querySelector('.extra:last-child');
+        if (extraLetter) {
+            extraLetter.remove();
+        }
+
+        if (controlBackspace) {
+            console.log('Backspace and control are pressed');
+
+            const letters = activeWord.querySelectorAll('span.letter');
+            letters.forEach(letter => {
+                letter.classList.remove('text-white', 'text-red-500', 'current');
+            })
+            
+            activeWord.firstChild.classList.add('current'); 
+        }
+    }
+
     const handleInputChange = (event) => {
         const key = event.key;
         const activeWord = document.querySelector('.active');
         const currentLetter = document.querySelector('.letter.current');
         const expected = currentLetter?.innerHTML || ' ';
-        const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey;
+        const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey && key !== 'Backspace';
         const isSpace = key === ' ';
         const isFirstLetter = currentLetter === activeWord.firstChild;
         const isBackspace = key === 'Backspace' && !event.ctrlKey;
@@ -59,14 +77,7 @@ const InputField = () => {
         }
 
         if (controlBackspace) {
-            console.log('Backspace and control are pressed');
-
-            const letters = activeWord.querySelectorAll('span.letter');
-            letters.forEach(letter => {
-                letter.classList.remove('text-white', 'text-red-500', 'current');
-            })
-            
-            activeWord.firstChild.classList.add('current');
+            handleControlBackspace(controlBackspace, activeWord);
         }
 
         if (isBackspace) {
@@ -102,21 +113,27 @@ const InputField = () => {
                 }
             }
 
-        } else if (isLetter) {
+        } 
+
+        if (isLetter) {
             console.log('letter');
             if (currentLetter) {
                 addClass(currentLetter, key === expected ? 'text-white' : 'text-red-500');
                 removeClass(currentLetter, 'current');
+                
                 if (currentLetter.nextSibling) {
                     addClass(currentLetter.nextSibling, 'current');
                 }
+
             } else {
                 const incorrectLetter = document.createElement('span');
                 incorrectLetter.innerHTML = key;
                 incorrectLetter.className = 'letter text-red-500 extra';
                 activeWord.appendChild(incorrectLetter);
             }
-        } else if (isSpace) {
+        } 
+        
+        if (isSpace) {
             if (expected !== ' ') {
                 const letterToInvalidate = [...document.querySelectorAll('.word.active .letter:not(.text-white)')];
                 letterToInvalidate.forEach(letter => {
@@ -148,7 +165,6 @@ const InputField = () => {
         id='inputField'
         type="text"
         className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
-        // onChange={handleInputChange}
         onKeyDown={handleInputChange}
         />
     );

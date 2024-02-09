@@ -9,6 +9,8 @@ import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
 
+import { reset } from './functions/Reset'
+
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -86,6 +88,7 @@ class MTmain_test extends Component {
                     <button onClick={() => { 
                         checkTimeClicked(); 
                         toggleButton('button15', timeButtonIds); 
+                        reset();
                         this.handleTimeClick('15');
                         this.handleModeChange('time')
                     }}>
@@ -98,6 +101,7 @@ class MTmain_test extends Component {
                     <button onClick={() => { 
                         checkWordsClicked(); 
                         toggleButton('button10', wordsButtonIds); 
+                        reset();
                         this.handleWordsClick('10');
                         this.handleModeChange('words')
                     }}>
@@ -111,6 +115,7 @@ class MTmain_test extends Component {
                     <button onClick={() => { 
                         checkQuoteClicked(); 
                         toggleButton('short', quoteButtonIds);
+                        reset();
                         this.handleQuoteClick('short');
                         this.handleModeChange('quote')
                     }}>
@@ -140,7 +145,8 @@ class MTmain_test extends Component {
                             {timeButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
-                                        toggleButton(buttonId, timeButtonIds)
+                                        toggleButton(buttonId, timeButtonIds);
+                                        reset();
                                         this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
@@ -160,7 +166,8 @@ class MTmain_test extends Component {
                             {wordsButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
-                                        toggleButton(buttonId, wordsButtonIds)
+                                        toggleButton(buttonId, wordsButtonIds);
+                                        reset();
                                         this.handleWordsClick(buttonId.substring(6))
                                     }}>
 
@@ -180,7 +187,8 @@ class MTmain_test extends Component {
                             {quoteButtonIds.map((buttonId) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
-                                        toggleButton(buttonId, quoteButtonIds)
+                                        toggleButton(buttonId, quoteButtonIds);
+                                        reset();
                                         this.handleQuoteClick(buttonId)
                                     }}>
 

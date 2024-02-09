@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import English from './languages/English';
 import English1k from './languages/English1k';
 import English5k from './languages/English5k';
+import { reset } from './functions/test/Reset';
 
 const SelectLanguage = ({ value }) => {
     const [selectedValue, setSelectedValue] = useState('');
