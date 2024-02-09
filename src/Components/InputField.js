@@ -43,9 +43,11 @@ const InputField = () => {
     }
 
     function handleControlBackspace(controlBackspace, activeWord) {
-        const extraLetter = activeWord.querySelector('.extra:last-child');
-        if (extraLetter) {
-            extraLetter.remove();
+        const extraLetters = activeWord.querySelectorAll('.extra');
+        if (extraLetters.length > 0) {
+            extraLetters.forEach(extra => {
+                extra.remove();
+            })
         }
 
         if (controlBackspace) {
@@ -120,7 +122,7 @@ const InputField = () => {
             if (currentLetter) {
                 addClass(currentLetter, key === expected ? 'text-white' : 'text-red-500');
                 removeClass(currentLetter, 'current');
-                
+
                 if (currentLetter.nextSibling) {
                     addClass(currentLetter.nextSibling, 'current');
                 }
