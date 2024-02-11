@@ -11,6 +11,8 @@ import { checkTimeClicked } from './functions/CheckTimeClicked'
 
 import { reset } from './functions/Reset'
 
+import { resetGame } from './functions/test/ResetGame'
+
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -23,7 +25,6 @@ class MTmain_test extends Component {
 
     constructor(props) {
         super(props);
-        this.inputRef = React.createRef();
         this.state = {
             currentValueWords: '10',
             currentTimeValue: '15',
@@ -53,7 +54,17 @@ class MTmain_test extends Component {
     handleSelectChange = (event) => {
         this.setState({selectLang: event.target.value});
         const input = document.getElementById('inputField');
-        input.focus();
+        if (input) {
+            input.focus();
+        }
+    }
+
+    handleResetGame = (mode, language, quoteLength, wordsValue) => {
+        console.log('reset');
+        const wordsButton = document.getElementById('wordsButton');
+        if (wordsButton) 
+            alert('pressed')
+        // if (mode === 'words')
     }
 
     render() {
@@ -85,41 +96,43 @@ class MTmain_test extends Component {
                 <div className='w-0.5 h-6 border-2 border-chaosTxt rounded-lg' id='leftBorder'></div>
 
                 <article className='flex gap-4' id='mode'>
-                    <button onClick={() => { 
+                    {/* Time Mode */}
+                    <button id='timeButton' onClick={() => { 
                         checkTimeClicked(); 
                         toggleButton('button15', timeButtonIds); 
                         reset();
                         this.handleTimeClick('15');
                         this.handleModeChange('time')
                     }}>
-                        <div className='Ani duration-400' id='timeButton'>
+                        <div className='Ani duration-400'>
                             <i className='fa-solid fa-clock mr-2'></i>
                             time
                         </div>
                     </button>
 
-                    <button onClick={() => { 
+                    {/* Words Mode */}
+                    <button id='wordsButton' onClick={() => { 
                         checkWordsClicked(); 
                         toggleButton('button10', wordsButtonIds); 
                         reset();
                         this.handleWordsClick('10');
                         this.handleModeChange('words')
                     }}>
-                        <div className='Ani duration-400' id='wordsButton'>
+                        <div className='Ani duration-400'>
                             <i className='fa-solid fa-a mr-2'></i>
                             words
                         </div>
                     </button>
 
-                    {/* <QuoteFunction /> */}
-                    <button onClick={() => { 
+                    {/* Quote Mode */}
+                    <button id='quoteButton' onClick={() => { 
                         checkQuoteClicked(); 
                         toggleButton('short', quoteButtonIds);
                         reset();
                         this.handleQuoteClick('short');
                         this.handleModeChange('quote')
                     }}>
-                        <div className='Ani duration-400' id='quoteButton'>
+                        <div className='Ani duration-400'>
                             <i className='fa-solid fa-quote-left mr-2'></i>
                             quote
                         </div>
@@ -235,8 +248,9 @@ class MTmain_test extends Component {
                 <InputField />
             </div>
             
-
-            <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg' id='temp'>
+            <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg' id='resetGame' onClick={() => {
+                resetGame(this.state.mode, this.state.selectLang, this.state.currentQuoteLength, this.state.currentValueWords)
+            }}>
                 <i className='fa-solid fa-arrow-rotate-right'></i>
             </button>
             

@@ -19,11 +19,11 @@ const InputField = () => {
     }, []);
 
     function addClass(element, name) {
-        element.className += ' '+name;
+        element.classList.add(name);
     }
-    
+
     function removeClass(element, name) {
-        element.className = element.className.replace(name, '');
+        element.classList.remove(name);
     }
 
     function moveCursor() {
@@ -38,13 +38,14 @@ const InputField = () => {
         if (activeWord.getBoundingClientRect().top > 320) {
             const words = document.getElementById('words');
             const margin = parseInt(words.style.top || '0px');
-            words.style.top = (margin - 35) + 'px';
+            words.style.top = (margin - 35.5) + 'px';
         }
     }
 
     function handleControlBackspace(controlBackspace, activeWord) {
         const extraLetters = activeWord.querySelectorAll('.extra');
         if (extraLetters.length > 0) {
+            // remove all extra letters
             extraLetters.forEach(extra => {
                 extra.remove();
             })

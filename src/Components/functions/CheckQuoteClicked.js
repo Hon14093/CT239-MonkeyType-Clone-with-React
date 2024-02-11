@@ -33,7 +33,4 @@ export const checkQuoteClicked = () => {
     // renderLanguage.classList.add('hidden');
     // const quoteBox = document.getElementById('quote');
     // quoteBox.classList.remove('hidden');
-
-    const wordsActive = document.getElementsByClassName('active');
-    console.log(wordsActive);
 }

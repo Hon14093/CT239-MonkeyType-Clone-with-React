@@ -3,8 +3,6 @@ import RenderTextbox from "./RenderTextbox";
 
 const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
 
-    // console.log(mode + " " + quoteLength + " " + language + " " + wordsValue);
-
     if (mode === 'words') {
         console.log('words');
         return <RenderTextbox language={language} value={wordsValue} />
