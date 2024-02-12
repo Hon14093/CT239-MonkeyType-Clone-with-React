@@ -28,9 +28,7 @@ export const checkTimeClicked = () => {
     wordsNum.classList.add('hidden');
     quoteConfig.classList.add('hidden');
     timeConfig.classList.remove('hidden');
-    
-    const renderLanguage= document.getElementById('renderLanguage');
-    renderLanguage.classList.remove('hidden');
-    const quoteBox = document.getElementById('quote');
-    quoteBox.classList.add('hidden');
+
+    const timer = document.getElementById('timer');
+    timer.classList.remove('hidden');
 }

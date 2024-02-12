@@ -4,6 +4,7 @@ import MTmain from './Components/MTmain';
 import MTfooter from './Components/MTfooter';
 
 
+import Main from './Components/functions/new_test/Main';
 
 
 import MTmain_test from './Components/MTmain_test';
@@ -18,8 +19,7 @@ function App() {
 
                 <main className='typingMain text-white font-mT'>
                     <MTmain_test />
-                    {/* <GameComponent /> */}
-                    {/* <SpeedTypingGame /> */}
+                    {/* <Main /> */}
                 </main>
                 
                 <footer>

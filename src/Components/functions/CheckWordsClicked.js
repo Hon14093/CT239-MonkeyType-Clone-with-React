@@ -30,8 +30,6 @@ export const checkWordsClicked = () => {
     quoteConfig.classList.add('hidden');
     timeConfig.classList.add('hidden');
     
-    // const renderLanguage= document.getElementById('renderLanguage');
-    // renderLanguage.classList.remove('hidden');
-    // const quoteBox = document.getElementById('quote');
-    // quoteBox.classList.add('hidden');
+    const timer = document.getElementById('timer');
+    timer.classList.add('hidden');
 }

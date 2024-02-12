@@ -3,12 +3,12 @@ import RenderTextbox from "./RenderTextbox";
 
 const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
 
+    console.log('current mode: ' + mode);
     if (mode === 'words') {
-        console.log('words');
         return <RenderTextbox language={language} value={wordsValue} />
     } else if (mode === 'quote') {
         return <SelectQuoteLength length={quoteLength} />
-    }
+    } else return <RenderTextbox language={language} value={99999} />
 
 }
 

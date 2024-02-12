@@ -36,6 +36,7 @@ class MTmain_test extends Component {
 
     handleModeChange = (changedMode) => {
         this.setState({mode: changedMode});
+        // console.log('current mode: '+this.state.mode)
     }
 
     handleWordsClick = (newValue) => {
@@ -43,7 +44,8 @@ class MTmain_test extends Component {
     }
 
     handleTimeClick = (newValue) => {
-        this.setState({currentValueTime: newValue});
+        this.setState({currentTimeValue: newValue});
+        clearInterval(window.timer);
         // this.setState({currentValueWords: newValue});
     }
 
@@ -57,14 +59,6 @@ class MTmain_test extends Component {
         if (input) {
             input.focus();
         }
-    }
-
-    handleResetGame = (mode, language, quoteLength, wordsValue) => {
-        console.log('reset');
-        const wordsButton = document.getElementById('wordsButton');
-        if (wordsButton) 
-            alert('pressed')
-        // if (mode === 'words')
     }
 
     render() {
@@ -160,7 +154,7 @@ class MTmain_test extends Component {
                                     onClick={() => {
                                         toggleButton(buttonId, timeButtonIds);
                                         reset();
-                                        this.handleWordsClick(buttonId.substring(6))
+                                        this.handleTimeClick(buttonId.substring(6))
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -225,6 +219,10 @@ class MTmain_test extends Component {
         <section className='text-chaosTxt text-justify'>
             <CapsLockWarning />
 
+            <div className='absolute text-[1.5rem] text-chaosPink' id='timer'>
+                {this.state.currentTimeValue}
+            </div>
+
             <div id='selectLanguage'>
                 <div className='flex justify-center items-center mb-2 Ani duration-400 text-lg' id='select'>
                     <i className='fa-solid fa-earth-asia pr-3'></i>
@@ -244,12 +242,17 @@ class MTmain_test extends Component {
                     language={this.state.selectLang}
                     wordsValue={this.state.currentValueWords} 
                 />
+
                 <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
-                <InputField />
+
+                <InputField 
+                    mode={this.state.mode}
+                    seconds={this.state.currentTimeValue} 
+                />
             </div>
             
             <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg' id='resetGame' onClick={() => {
-                resetGame(this.state.mode, this.state.selectLang, this.state.currentQuoteLength, this.state.currentValueWords)
+                resetGame(this.state.mode, this.state.selectLang, this.state.currentQuoteLength, this.state.currentValueWords, this.state.currentTimeValue)
             }}>
                 <i className='fa-solid fa-arrow-rotate-right'></i>
             </button>
