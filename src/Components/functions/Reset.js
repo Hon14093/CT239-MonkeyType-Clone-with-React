@@ -1,9 +1,9 @@
 export const reset = () => {
     const wordsBox = document.getElementById('words');
-    const activeWord = wordsBox.querySelector('div.word.active');
-    const firstLetter = activeWord.querySelector('span.letter:first-child');
+    // const activeWord = wordsBox.querySelector('div.word.active') ?? null;
+    const firstLetter = wordsBox.querySelector('span.letter:first-child') ?? null;
     const cursor = document.getElementById('cursor');
-    console.log('reset');
+    console.log(firstLetter.innerHTML);
 
     document.getElementById('textBox').classList.remove('over');
 
@@ -15,9 +15,7 @@ export const reset = () => {
         activeWord.classList.remove('active');
     });
     
-    wordsBox.firstChild.classList.add('active');
-    firstLetter.classList.add('current');
-
+    
     const extraLetters = document.querySelectorAll('.extra');
     if (extraLetters.length > 0) {
         // remove all extra letters
@@ -25,6 +23,9 @@ export const reset = () => {
             extra.remove();
         })
     }
+    
+    wordsBox.firstChild.classList.add('active');
+    firstLetter.classList.add('current');
 
     // reset cursor to the first letter
     cursor.style.left = wordsBox.getBoundingClientRect().left - 2 + 'px';

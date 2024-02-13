@@ -101,7 +101,10 @@ const InputField = ({mode, seconds}) => {
         const expected = currentLetter?.innerHTML || ' ';
         const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey && key !== 'Backspace';
         const isSpace = key === ' ';
-        const isFirstLetter = currentLetter === activeWord.firstChild;
+        const isFirstLetter = !!currentLetter && !!activeWord.firstChild &&
+        (currentLetter === activeWord.firstChild);
+
+
         const isBackspace = key === 'Backspace' && !event.ctrlKey;
         const controlBackspace = key === 'Backspace' && event.ctrlKey;
         const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
@@ -171,20 +174,36 @@ const InputField = ({mode, seconds}) => {
             }
         } 
         
-        if (isSpace) {
+        if (isSpace && !document.querySelector('#textBox.over')) {
+            console.log('space')
             if (expected !== ' ') {
                 const letterToInvalidate = [...document.querySelectorAll('.word.active .letter:not(.text-white)')];
                 letterToInvalidate.forEach(letter => {
                     addClass(letter, 'text-red-500');
                 })
             }
-            removeClass(activeWord, 'active');
-            addClass(activeWord.nextSibling, 'active');
+            if (activeWord) {
+                removeClass(activeWord, 'active');
+            }
+            // addClass(activeWord.nextSibling, 'active');
+
+            if (activeWord.nextSibling) {
+                addClass(activeWord.nextSibling, 'active');
+            } 
+            else {
+                gameOver();
+                return;
+            }
 
             if (currentLetter) {
                 removeClass(currentLetter, 'current');
             }
-            addClass(activeWord.nextSibling.firstChild, 'current');
+
+            if (activeWord.nextSibling.firstChild) {
+                addClass(activeWord.nextSibling.firstChild, 'current');
+            } else {
+                return;
+            }
         }
         
         console.log({key, expected}); 
@@ -298,7 +317,6 @@ const InputField = ({mode, seconds}) => {
     }
 
     if (mode === 'time') {
-        console.log(mode)
         return (
             <input
             ref={inputRef}

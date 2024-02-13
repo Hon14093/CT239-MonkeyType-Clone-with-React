@@ -111,6 +111,13 @@ code {
   transform: translate(-50%, -50%);
 }
 
+.chart {
+  display: grid;
+  grid-template-rows: auto !important;
+  place-self: center;
+  width: 800px;
+}
+
 #cursor {
   width: 3px;
   height: 2rem;

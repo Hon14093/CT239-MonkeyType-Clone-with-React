@@ -8,9 +8,7 @@ import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
-
 import { reset } from './functions/Reset'
-
 import { resetGame } from './functions/test/ResetGame'
 
 class MTmain_test extends Component {
