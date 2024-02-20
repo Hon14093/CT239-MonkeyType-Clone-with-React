@@ -21,6 +21,9 @@ export default function EnglishMedium() {
     const sentence = quotes[random];
     const wordsArray = sentence.split(/\s+/); // split a string into words
 
+    window.content = sentence;
+    console.log(window.content);
+
     return (
 
         <div className='flex flex-wrap h-28 relative' id='words'>

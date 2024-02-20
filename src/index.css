@@ -127,6 +127,36 @@ code {
   display: block;
 }
 
+#result {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.topText {
+  font-size: 24px;
+  height: 24px;
+}
+
+.bottomText {
+  font-family: "Roboto Mono", "Vazirmatn", monospace;
+  font-size: 64px;
+  height: 64px;
+  line-height: 64px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-chaosBG;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-chaosTxt;
+  border-radius: 100vw;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

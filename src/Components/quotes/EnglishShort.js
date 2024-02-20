@@ -25,6 +25,7 @@ const quotes = [
     "It's dangerous to go alone, take this!", // Old Man, The Legend of Zelda
     "Protocol one: link to Pilot. Protocol two: uphold the mission. Protocol three: protect the Pilot.", // BT-7274, Titanfall 2
     "You are here, and it's beautiful, and escaping isn't always something bad.", // Delilah, Firewatch
+    "Could life exist in the greatest depths of the ocean? It could!"
 ]
 
 export default function EnglishShort() {
@@ -32,6 +33,9 @@ export default function EnglishShort() {
     const random = Math.floor(Math.random() * quotes.length);
     const sentence = quotes[random];
     const wordsArray = sentence.split(/\s+/); // split a string into words
+
+    window.content = sentence;
+    console.log(window.content);
 
     return (
 

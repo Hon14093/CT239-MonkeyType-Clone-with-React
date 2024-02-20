@@ -7,6 +7,8 @@ const words = [
 
 export default function English1k({ value }) {
     const selectedWords = SelectedWords(words, value);
+    window.content = selectedWords.join(' ');
+    console.log(window.content);
     reset();
 
     return (

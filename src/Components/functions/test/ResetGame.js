@@ -1,9 +1,12 @@
 export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) => {
+
     const wordsButton = document.getElementById('wordsButton');
     const quoteButton = document.getElementById('quoteButton');
     const timeButton = document.getElementById('timeButton');
     const extraLetters = document.querySelectorAll('.extra');
-
+    
+    console.log('reloaded');
+    
     if (extraLetters.length > 0) {
         // remove all extra letters
         extraLetters.forEach(extra => {
@@ -46,5 +49,5 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
     wordsBox.style.top = 0 + 'px';
     const cursor = document.getElementById('cursor');
     cursor.style.top = wordsBox.getBoundingClientRect().top + 'px';
-
+    
 }

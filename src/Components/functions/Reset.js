@@ -1,11 +1,15 @@
 export const reset = () => {
+
     const wordsBox = document.getElementById('words');
-    // const activeWord = wordsBox.querySelector('div.word.active') ?? null;
     const firstLetter = wordsBox.querySelector('span.letter:first-child') ?? null;
     const cursor = document.getElementById('cursor');
-    console.log(firstLetter.innerHTML);
 
-    document.getElementById('textBox').classList.remove('over');
+    document.getElementById('lineChart').classList.add('hidden');
+    document.getElementById('textBox').classList.remove('over', 'hidden');
+    document.getElementById('selectLanguage').classList.remove('opacity-0');
+    document.getElementById('resetGame1').classList.remove('hidden');
+    document.getElementById('top').classList.remove('opacity-0');
+
 
     wordsBox.querySelectorAll('span.letter').forEach(letter => {
         letter.classList.remove('text-white', 'text-red-500', 'current');
@@ -29,4 +33,7 @@ export const reset = () => {
 
     // reset cursor to the first letter
     cursor.style.left = wordsBox.getBoundingClientRect().left - 2 + 'px';
+
+    window.timeArray = null;
+    window.wpmArray = null;
 }

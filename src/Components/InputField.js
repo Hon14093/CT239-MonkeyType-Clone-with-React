@@ -3,13 +3,28 @@ import React, { useRef, useEffect} from 'react';
 const InputField = ({mode, seconds}) => {
     const inputRef = useRef(null);
     let gameTime = (seconds - 1) * 1000;
+    window.content = null; // string of random generated game content (words or quote)
+    let startTime = null;
+    let endTime = null;
+    let elapsedTime = 0;
+    
+    let currentIndex = 0;
+    let typedString = '';
+    
+    // global variables for time mode
     window.timer = null;
     window.gameStart = null;
     window.pauseTime = null;
+    
+    // testing idea
+    window.timeArray = [];
+    window.wpmArray = [];
+    window.errorArray = [];
+    window.timeTaken = null;
 
     useEffect(() => {
         const handleClick = (event) => {
-            if (document.activeElement !== inputRef.current && !event.target.closest('select')) {
+            if (document.activeElement !== inputRef.current && !event.target.closest('select') && inputRef.current) {
                 inputRef.current.focus();
             }
         }
@@ -47,9 +62,9 @@ const InputField = ({mode, seconds}) => {
     }
 
     function handleControlBackspace(controlBackspace, activeWord) {
+        // remove all extra letters
         const extraLetters = activeWord.querySelectorAll('.extra');
         if (extraLetters.length > 0) {
-            // remove all extra letters
             extraLetters.forEach(extra => {
                 extra.remove();
             })
@@ -67,15 +82,42 @@ const InputField = ({mode, seconds}) => {
         }
     }
 
+    function testIdea(event) {
+        const key = event.key
+        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key === 'Backspace';
+
+        if (!specialKey) {
+            typedString += key;
+
+        }
+        console.log(typedString);
+
+    }
+    setInterval(() => {
+        typedString = '';
+    }, 2000)
+    
     function gameOver() {
         console.log('Game Over');
+        stopTimer();
         clearInterval(window.timer);
         addClass(document.getElementById('textBox'), 'over');
+
+        removeClass(document.getElementById('lineChart'), 'hidden');
+        addClass(document.getElementById('textBox'), 'hidden');
+        addClass(document.getElementById('selectLanguage'), 'opacity-0');
+        addClass(document.getElementById('resetGame1'), 'hidden');
+        addClass(document.getElementById('top'), 'opacity-0');
+
+        if (document.getElementById('update')) {
+            document.getElementById('update').click();
+        }
     }
 
     function timerCountdown(event) {
         const key = event.key;
         const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey && key !== 'Backspace';
+
         if (!window.timer && isLetter) {
             window.timer = setInterval(() => {
                 if (!window.gameStart) {
@@ -94,6 +136,44 @@ const InputField = ({mode, seconds}) => {
         }
     }
 
+    function wpmeEachSecond() {
+        // will store calculated wpm for each second in an array
+        
+    }
+
+    function startTimer(event) {
+        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
+        endTime = null;
+        if (!startTime && !specialKey) {
+            startTime = Date.now();
+            console.log('Start time: ' + startTime);
+            
+        } else console.log('Not started');
+    }
+
+    function stopTimer() {
+        if (startTime) {
+            endTime = Date.now();
+            elapsedTime = Math.floor((endTime - startTime) / 1000);
+            window.timeTaken = elapsedTime;
+            console.log('Elasped time: ' + elapsedTime);
+            startTime = null;
+        } else console.log('Timer has not started');
+
+        document.getElementById('timeTaken').innerHTML = elapsedTime + 's';
+
+        for (let i=1; i<=elapsedTime; i++) {
+            let randomNumber = Math.floor(Math.random() * 100) + 1;
+            window.timeArray.push(i);
+            window.wpmArray.push(randomNumber);
+
+            let randomErrorNum = Math.floor(Math.random() * 8) + 1;
+            window.errorArray.push(randomErrorNum)
+        }
+        console.log(window.timeArray);
+        console.log(window.wpmArray);
+    }
+
     const handleInputChange = (event) => {
         const key = event.key;
         const activeWord = document.querySelector('.active');
@@ -104,10 +184,11 @@ const InputField = ({mode, seconds}) => {
         const isFirstLetter = !!currentLetter && !!activeWord.firstChild &&
         (currentLetter === activeWord.firstChild);
 
-
         const isBackspace = key === 'Backspace' && !event.ctrlKey;
         const controlBackspace = key === 'Backspace' && event.ctrlKey;
         const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
+
+        startTimer(event);
 
         if (document.querySelector('#textBox.over')) {
             return;
@@ -185,7 +266,6 @@ const InputField = ({mode, seconds}) => {
             if (activeWord) {
                 removeClass(activeWord, 'active');
             }
-            // addClass(activeWord.nextSibling, 'active');
 
             if (activeWord.nextSibling) {
                 addClass(activeWord.nextSibling, 'active');
@@ -216,105 +296,7 @@ const InputField = ({mode, seconds}) => {
         moveCursor();
     };
 
-    const handleTimeMode = (event) => {
-        const key = event.key;
-        const activeWord = document.querySelector('.active');
-        const currentLetter = document.querySelector('.letter.current');
-        const expected = currentLetter?.innerHTML || ' ';
-        const isLetter = key.length >= 1 && key !== ' ' && !event.ctrlKey && key !== 'Backspace';
-        const isSpace = key === ' ';
-        const isFirstLetter = currentLetter === activeWord.firstChild;
-        const isBackspace = key === 'Backspace' && !event.ctrlKey;
-        const controlBackspace = key === 'Backspace' && event.ctrlKey;
-        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
-        
-
-        if (specialKey) {
-            return;
-        }
-
-        if (controlBackspace) {
-            handleControlBackspace(controlBackspace, activeWord);
-        }
-
-        if (isBackspace) {
-            console.log('Backspace is pressed');
-            const extraLetter = activeWord.querySelector('.extra:last-child');
-            if (extraLetter) {
-                extraLetter.remove();
-            } else {
-                if (currentLetter && isFirstLetter) {
-                    console.log('Current letter is first letter');
-                    // make previous word current, last letter current
-                    removeClass(activeWord, 'active');
-                    addClass(activeWord.previousSibling, 'active');
-                    removeClass(currentLetter, 'current');
-                    addClass(activeWord.previousSibling.lastChild, 'current');
-                    removeClass(activeWord.previousSibling.lastChild, 'text-red-500');
-                    removeClass(activeWord.previousSibling.lastChild, 'text-white');
-                }
-
-                if (currentLetter && !isFirstLetter) {
-                    console.log('Current letter is not first letter');
-                    // move back one letter, invalidate letter
-                    removeClass(currentLetter, 'current');
-                    addClass(currentLetter.previousSibling, 'current');
-                    removeClass(currentLetter.previousSibling, 'text-red-500');
-                    removeClass(currentLetter.previousSibling, 'text-white');
-                }
-
-                if (!currentLetter) {
-                    addClass(activeWord.lastChild, 'current');
-                    removeClass(activeWord.lastChild, 'text-red-500');
-                    removeClass(activeWord.lastChild, 'text-white');
-                }
-            }
-
-        } 
-
-        if (isLetter) {
-            console.log('letter');
-            if (currentLetter) {
-                addClass(currentLetter, key === expected ? 'text-white' : 'text-red-500');
-                removeClass(currentLetter, 'current');
-
-                if (currentLetter.nextSibling) {
-                    addClass(currentLetter.nextSibling, 'current');
-                }
-
-            } else {
-                const incorrectLetter = document.createElement('span');
-                incorrectLetter.innerHTML = key;
-                incorrectLetter.className = 'letter text-red-500 extra';
-                activeWord.appendChild(incorrectLetter);
-            }
-        } 
-        
-        if (isSpace) {
-            if (expected !== ' ') {
-                const letterToInvalidate = [...document.querySelectorAll('.word.active .letter:not(.text-white)')];
-                letterToInvalidate.forEach(letter => {
-                    addClass(letter, 'text-red-500');
-                })
-            }
-            removeClass(activeWord, 'active');
-            addClass(activeWord.nextSibling, 'active');
-
-            if (currentLetter) {
-                removeClass(currentLetter, 'current');
-            }
-            addClass(activeWord.nextSibling.firstChild, 'current');
-        }
-        
-        console.log({key, expected}); 
-        console.log(key === expected);
-
-        // move lines
-        moveLine(activeWord);
-
-        // move cursor
-        moveCursor();
-    }
+    
 
     if (mode === 'time') {
         return (
@@ -336,7 +318,10 @@ const InputField = ({mode, seconds}) => {
             id='inputField'
             type="text"
             className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
-            onKeyDown={handleInputChange}
+            onKeyDown={(event) => {
+                handleInputChange(event);
+                testIdea(event);
+            }}
             />
         );
     }
@@ -344,3 +329,4 @@ const InputField = ({mode, seconds}) => {
 };
 
 export default InputField;
+    
