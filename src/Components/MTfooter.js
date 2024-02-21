@@ -13,7 +13,7 @@ class MTfooter extends Component {
                         = restart test
                     </div>
 
-                    <div className='flex justify-center'>
+                    {/* <div className='flex justify-center'>
                         <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>esc</p>
                         or
                         <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>ctrl</p>
@@ -22,7 +22,7 @@ class MTfooter extends Component {
                         +
                         <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>p</p>
                         = command line
-                    </div>
+                    </div> */}
                 </div>
 
                 <ul className='flex'>

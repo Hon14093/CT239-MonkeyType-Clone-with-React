@@ -328,7 +328,7 @@ class MTmain_test extends Component {
                                 acc
                             </div>
 
-                            <div className='text-chaosPink bottomText'>
+                            <div className='text-chaosPink bottomText' id='accuracy'>
                                 97%
                             </div>
                         </div>
@@ -343,15 +343,15 @@ class MTmain_test extends Component {
                     <div>
                         <div className='text-chaosTxt'>text type</div>
                         <div className='text-chaosPink'>
-                            english <br/>
-                            words 10
+                            {this.state.selectLang} <br/>
+                            {this.state.mode} 
                         </div>
                     </div>
 
                     <div>
                         <div className='text-chaosTxt'>characters</div>
-                        <div className='text-[2rem] text-chaosPink'>
-                            203
+                        <div className='text-[2rem] text-chaosPink' id='charactersCount'>
+                            
                         </div>
                     </div>
 
@@ -371,14 +371,6 @@ class MTmain_test extends Component {
                 </button>
 
                 <button id='update' className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none" onClick={() => {
-                    // for (let i=1; i<=window.timeTaken; i++) {
-                    //     let randomNumber = Math.floor(Math.random() * 100) + 1;
-                    //     window.timeArray.push(i);
-                    //     window.wpmArray.push(randomNumber);
-                    // }
-                    // console.log(window.timeArray);
-                    // console.log(window.wpmArray);
-
                     setTimeout(() => {
                         this.updateChart();
                     }, 100)

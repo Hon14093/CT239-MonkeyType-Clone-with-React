@@ -3,7 +3,6 @@ import React, { useRef, useEffect} from 'react';
 const InputField = ({mode, seconds}) => {
     const inputRef = useRef(null);
     let gameTime = (seconds - 1) * 1000;
-    window.content = null; // string of random generated game content (words or quote)
     let startTime = null;
     let endTime = null;
     let elapsedTime = 0;
@@ -21,6 +20,8 @@ const InputField = ({mode, seconds}) => {
     window.wpmArray = [];
     window.errorArray = [];
     window.timeTaken = null;
+
+    window.correctChars = 0;
 
     useEffect(() => {
         const handleClick = (event) => {
@@ -112,6 +113,8 @@ const InputField = ({mode, seconds}) => {
         if (document.getElementById('update')) {
             document.getElementById('update').click();
         }
+
+        setTimeout(accCalulator(), 100);
     }
 
     function timerCountdown(event) {
@@ -141,6 +144,7 @@ const InputField = ({mode, seconds}) => {
         
     }
 
+    // startTimer() and stopTimer() are there to provide data for line chart
     function startTimer(event) {
         const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
         endTime = null;
@@ -189,6 +193,8 @@ const InputField = ({mode, seconds}) => {
         const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
 
         startTimer(event);
+
+        console.log(window.content);
 
         if (document.querySelector('#textBox.over')) {
             return;
@@ -285,6 +291,11 @@ const InputField = ({mode, seconds}) => {
                 return;
             }
         }
+
+        if (key === expected) {
+            window.correctChars += 1;
+            document.getElementById('charactersCount').innerHTML = window.correctChars; 
+        }
         
         console.log({key, expected}); 
         console.log(key === expected);
@@ -294,9 +305,17 @@ const InputField = ({mode, seconds}) => {
 
         // move cursor
         moveCursor();
+
+        
     };
 
-    
+    const accCalulator = () => {
+        // window.content is in English.js
+        let acc = Math.floor((window.correctChars / window.content.length) * 100);
+        document.getElementById('accuracy').innerHTML = acc + '%';
+        console.log('Acc: ' + acc + '%');
+        
+    }
 
     if (mode === 'time') {
         return (
