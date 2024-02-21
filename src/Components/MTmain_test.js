@@ -24,6 +24,14 @@ class MTmain_test extends Component {
         if (wordsClicked) {
             wordsClicked.click();
         }
+
+        // set the cursor at the corret position upong loading the website
+        const cursor = document.getElementById('cursor');
+        const wordsBox = document.getElementById('words');
+        if (cursor) {
+            cursor.style.left = wordsBox.getBoundingClientRect().left - 2 + 'px';
+            cursor.style.top = wordsBox.getBoundingClientRect().top + 'px';
+        }
     }
 
     constructor(props) {
@@ -66,7 +74,6 @@ class MTmain_test extends Component {
 
     handleModeChange = (changedMode) => {
         this.setState({mode: changedMode});
-        // console.log('current mode: '+this.state.mode)
     }
 
     handleWordsClick = (newValue) => {
@@ -76,7 +83,6 @@ class MTmain_test extends Component {
     handleTimeClick = (newValue) => {
         this.setState({currentTimeValue: newValue});
         clearInterval(window.timer);
-        // this.setState({currentValueWords: newValue});
     }
 
     handleQuoteClick = (newValue) => {
@@ -313,23 +319,23 @@ class MTmain_test extends Component {
 
                 <div className='grid gap-4' id='result'>
                     <div>
-                        <div className='flex flex-wrap w-[100px]'>
+                        <div className='flex flex-wrap w-[125px]'>
                             <div className='text-chaosTxt topText'>
                                 wpm
                             </div>
 
                             <div className='text-chaosPink bottomText'>
-                                89
+                                50
                             </div>
                         </div>
 
-                        <div className='flex flex-wrap w-[100px]'>
+                        <div className='flex flex-wrap w-[125px]'>
                             <div className=' text-chaosTxt topText'>
                                 acc
                             </div>
 
                             <div className='text-chaosPink bottomText' id='accuracy'>
-                                97%
+                                1%
                             </div>
                         </div>
                     </div>

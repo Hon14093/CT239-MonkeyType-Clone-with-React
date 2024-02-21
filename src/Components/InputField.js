@@ -6,6 +6,7 @@ const InputField = ({mode, seconds}) => {
     let startTime = null;
     let endTime = null;
     let elapsedTime = 0;
+    let totalTyped = 0; // total numbers of key strokes
     
     let currentIndex = 0;
     let typedString = '';
@@ -306,12 +307,12 @@ const InputField = ({mode, seconds}) => {
         // move cursor
         moveCursor();
 
-        
+        totalTyped++;
     };
 
     const accCalulator = () => {
         // window.content is in English.js
-        let acc = Math.floor((window.correctChars / window.content.length) * 100);
+        let acc = Math.floor((window.correctChars / totalTyped) * 100);
         document.getElementById('accuracy').innerHTML = acc + '%';
         console.log('Acc: ' + acc + '%');
         

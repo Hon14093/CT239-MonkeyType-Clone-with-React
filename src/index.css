@@ -121,7 +121,7 @@ code {
 #cursor {
   width: 3px;
   height: 2rem;
-  top: 270.4px;
+  /* top: 270.4px; */
   position: fixed;
   @apply bg-chaosPink rounded;
   display: block;
