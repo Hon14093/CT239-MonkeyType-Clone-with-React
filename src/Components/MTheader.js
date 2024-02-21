@@ -7,12 +7,12 @@ class MTheader extends Component {
             <div className='flex justify-between'>
                 <div className='text-white flex'>
                     <Link id="logo" to="/" className='items-center'>
-                        <img className='items-center' src={require('./image/chaos.png')} alt='chaos logo' width={45}></img>
+                        <img className='items-center' src={require('./image/ChaosCrab2.png')} alt='chaos logo' width={50}></img>
                     </Link>
 
                     <div className='flex flex-col pl-2'>
-                        <div className='top'>monkey see</div>
-                        <h1 className='text-3xl mt-1'>monkeytype</h1>
+                        <div className='top'>crab see</div>
+                        <h1 className='text-3xl mt-1'>crabtype</h1>
                     </div>
 
                     <nav className='grid grid-flow-col auto-cols-max gap-2 pt-2'>
