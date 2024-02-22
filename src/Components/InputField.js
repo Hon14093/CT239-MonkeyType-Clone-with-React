@@ -56,7 +56,9 @@ const InputField = ({mode, seconds}) => {
     }
 
     function moveLine(activeWord) {
-        if (activeWord.getBoundingClientRect().top > 320) {
+        const selectLanguage = document.getElementById('selectLanguage');
+        console.log(Math.floor(selectLanguage.getBoundingClientRect().top));
+        if (activeWord.getBoundingClientRect().top > selectLanguage.getBoundingClientRect().top + 100) {
             const words = document.getElementById('words');
             const margin = parseInt(words.style.top || '0px');
 
