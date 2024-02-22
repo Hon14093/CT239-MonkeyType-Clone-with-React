@@ -32,6 +32,11 @@ class MTmain_test extends Component {
             cursor.style.left = wordsBox.getBoundingClientRect().left - 2 + 'px';
             cursor.style.top = wordsBox.getBoundingClientRect().top + 'px';
         }
+
+        const renderLanguage = document.getElementById('renderLanguage');
+        if (renderLanguage) {
+            wordsBox.style.top = renderLanguage.style.top + 'px';
+        }
     }
 
     constructor(props) {

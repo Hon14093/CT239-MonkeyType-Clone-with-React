@@ -59,7 +59,10 @@ const InputField = ({mode, seconds}) => {
         if (activeWord.getBoundingClientRect().top > 320) {
             const words = document.getElementById('words');
             const margin = parseInt(words.style.top || '0px');
-            words.style.top = (margin - 35.5) + 'px';
+
+            const render = document.getElementById('renderLanguage')
+            const tempMargin = parseInt(render.style.top || '0px');
+            words.style.top = (tempMargin - 35.5) + 'px';
         }
     }
 
