@@ -277,7 +277,7 @@ class MTmain_test extends Component {
         {/* typing box */}
         <section className='text-chaosTxt text-justify ' id='middle'>
 
-            <article className='text-justify'>
+            <article className='text-justify relative top-[100px]'>
                 <CapsLockWarning />
 
                 <div className='absolute text-[1.5rem] text-chaosPink' id='timer'>

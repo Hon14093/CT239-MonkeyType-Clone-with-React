@@ -6,9 +6,15 @@ class MTheader extends Component {
         return (
             <div className='flex justify-between'>
                 <div className='text-white flex'>
-                    <Link id="logo" to="/" className='items-center'>
+                    {/* <Link id="logo" to="/" className='items-center'>
                         <img className='items-center' src={require('./image/ChaosCrab.png')} alt='chaos logo' width={50}></img>
-                    </Link>
+                    </Link> */}
+
+                    <button id='logo' className='items-center' onClick={() => {
+                        window.location.reload();
+                    }}>
+                        <img className='items-center' src={require('./image/ChaosCrab.png')} alt='chaos logo' width={50}></img>
+                    </button>
 
                     <div className='flex flex-col pl-2'>
                         <div className='top'>crab see</div>

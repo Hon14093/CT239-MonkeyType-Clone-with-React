@@ -57,14 +57,29 @@ const InputField = ({mode, seconds}) => {
 
     function moveLine(activeWord) {
         const selectLanguage = document.getElementById('selectLanguage');
-        console.log(Math.floor(selectLanguage.getBoundingClientRect().top));
+        // console.log('active word: ' + Math.floor(activeWord.getBoundingClientRect().top));
+        // console.log('Select Language: ' + Math.floor(selectLanguage.getBoundingClientRect().top + 100));
+
+        // if (activeWord.getBoundingClientRect().top > selectLanguage.getBoundingClientRect().top + 100) {
+        //     const words = document.getElementById('words');
+        //     // const margin = parseInt(words.style.top || '0px');
+
+        //     const render = document.getElementById('renderLanguage');
+        //     // const tempMargin = parseInt(render.style.marginTop);
+        //     const tempMargin = render.getBoundingClientRect().top;
+
+        //     // const tempMargin = render.getBoundingClientRect().top;
+
+        //     console.log('Temp margin: ' + tempMargin);
+        //     words.style.top = (words.style.top - 35.5) + 'px';
+        // }
+
         if (activeWord.getBoundingClientRect().top > selectLanguage.getBoundingClientRect().top + 100) {
             const words = document.getElementById('words');
             const margin = parseInt(words.style.top || '0px');
-
-            const render = document.getElementById('renderLanguage')
-            const tempMargin = parseInt(render.style.top || '0px');
-            words.style.top = (tempMargin - 35.5) + 'px';
+            console.log('parse Int: ' + words.style.top);
+            console.log('margin: '+margin);
+            words.style.top = (margin - 35.5) + 'px';
         }
     }
 
