@@ -22,15 +22,27 @@ export default function EnglishExtended() {
     const wordsArray = sentence.split(/\s+/); // split a string into words
 
     window.content = sentence;
-    console.log(window.content);
+    // console.log(window.content);
 
     return (
 
         <div className='flex flex-wrap h-28 relative' id='words'>
             {wordsArray.map((word, wordIndex) => (
-                <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
+                <div
+                    key={wordIndex}
+                    className={`mr-2 word ${
+                    wordIndex === 0 ? 'active first_word' : wordIndex === wordsArray.length - 1 ? 'last_word' : ''
+                    }`}
+                >
                     {word.split('').map((letter, letterIndex) => (
-                        <span key={letterIndex} className={`letter ${wordIndex === 0 && letterIndex === 0 ? 'current' : ''}`}>{letter}</span>
+                    <span
+                        key={letterIndex}
+                        className={`letter ${
+                        wordIndex === 0 && letterIndex === 0 ? 'current' : ''
+                        }`}
+                    >
+                        {letter}
+                    </span>
                     ))}
                 </div>
             ))}

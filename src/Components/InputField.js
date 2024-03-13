@@ -8,7 +8,7 @@ const InputField = ({mode, seconds}) => {
     let elapsedTime = 0;
     let totalTyped = 0; // total numbers of key strokes
     
-    let currentIndex = 0;
+    let currentIndex = -1;
     let typedString = '';
     
     // global variables for time mode
@@ -51,7 +51,7 @@ const InputField = ({mode, seconds}) => {
         const nextLetter = document.querySelector('.letter.current');
         const cursor = document.getElementById('cursor');
         const nextWord = document.querySelector('.word.active');
-        cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 'px';
+        cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 'px' ;
         cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] - 2 + 'px';
     }
 
@@ -104,20 +104,36 @@ const InputField = ({mode, seconds}) => {
         }
     }
 
-    function testIdea(event) {
-        const key = event.key
-        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key === 'Backspace';
 
-        if (!specialKey) {
-            typedString += key;
 
+    function testIdea(key, expected, specialKey, isBackspace) {
+        console.log(key, expected);
+        // if (specialKey) {
+        //     return;
+        // }
+
+        if (isBackspace && currentIndex !== -1) {
+            typedString = typedString.slice(0, -1);
+            currentIndex--;
         }
-        console.log(typedString);
+        else if (!isBackspace) {
+            typedString += key;
+            currentIndex++;
+        }
+        if (key === expected) {
+            console.log('correct ++');
+        }
+
+        
+        console.log('Char at ' + currentIndex + ': ' + window.content.charAt(currentIndex));
+        console.log('Typed Characters: ' + typedString);
 
     }
-    setInterval(() => {
-        typedString = '';
-    }, 2000)
+    // setInterval(() => {
+    //     typedString = '';
+    // }, 1000)
+
+
     
     function gameOver() {
         console.log('Game Over');
@@ -166,8 +182,9 @@ const InputField = ({mode, seconds}) => {
     }
 
     // startTimer() and stopTimer() are there to provide data for line chart
+    // not for time mode
     function startTimer(event) {
-        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
+        const specialKey = event.key.length > 1 && event.key !== 'Backspace' || event.key.startsWith('Arrow');
         endTime = null;
         if (!startTime && !specialKey) {
             startTime = Date.now();
@@ -195,8 +212,15 @@ const InputField = ({mode, seconds}) => {
             let randomErrorNum = Math.floor(Math.random() * 8) + 1;
             window.errorArray.push(randomErrorNum)
         }
-        console.log(window.timeArray);
-        console.log(window.wpmArray);
+        console.log('Time Array: ' + window.timeArray);
+        console.log('wpm Array: ' + window.wpmArray);
+    }
+
+    function accCalulator() {
+        // window.content variable is in English.js
+        let acc = Math.floor((window.correctChars / totalTyped) * 100);
+        document.getElementById('accuracy').innerHTML = acc + '%';
+        // console.log('Acc: ' + acc + '%');
     }
 
     const handleInputChange = (event) => {
@@ -208,14 +232,17 @@ const InputField = ({mode, seconds}) => {
         const isSpace = key === ' ';
         const isFirstLetter = !!currentLetter && !!activeWord.firstChild &&
         (currentLetter === activeWord.firstChild);
+        const FirstWord = document.querySelector('.first_word');
+        const isFirstCharacter = activeWord === FirstWord && isFirstLetter;
+        console.log('First character? ' + isFirstCharacter);
 
         const isBackspace = key === 'Backspace' && !event.ctrlKey;
         const controlBackspace = key === 'Backspace' && event.ctrlKey;
-        const specialKey = event.key.length > 1 && !event.key.startsWith('Arrow') && event.key !== 'Backspace';
-
+        const specialKey = event.key.length > 1 && event.key !== 'Backspace' || event.key.startsWith('Arrow');
+        
         startTimer(event);
 
-        console.log(window.content);
+        //console.log(window.content);
 
         if (document.querySelector('#textBox.over')) {
             return;
@@ -229,12 +256,13 @@ const InputField = ({mode, seconds}) => {
             handleControlBackspace(controlBackspace, activeWord);
         }
 
-        if (isBackspace) {
+        if (isBackspace && !isFirstCharacter) {
             console.log('Backspace is pressed');
             const extraLetter = activeWord.querySelector('.extra:last-child');
             if (extraLetter) {
                 extraLetter.remove();
             } else {
+                console.log('klsjdfkljslkdjflksjdfjksldfklsjdf');
                 if (currentLetter && isFirstLetter) {
                     console.log('Current letter is first letter');
                     // make previous word current, last letter current
@@ -244,6 +272,7 @@ const InputField = ({mode, seconds}) => {
                     addClass(activeWord.previousSibling.lastChild, 'current');
                     removeClass(activeWord.previousSibling.lastChild, 'text-red-500');
                     removeClass(activeWord.previousSibling.lastChild, 'text-white');
+                    
                 }
 
                 if (currentLetter && !isFirstLetter) {
@@ -319,24 +348,16 @@ const InputField = ({mode, seconds}) => {
         }
         
         console.log({key, expected}); 
-        console.log(key === expected);
 
-        // move lines
+        // move lines and cursor
         moveLine(activeWord);
-
-        // move cursor
         moveCursor();
 
+        testIdea(key, expected, currentLetter, isBackspace);
         totalTyped++;
     };
 
-    const accCalulator = () => {
-        // window.content is in English.js
-        let acc = Math.floor((window.correctChars / totalTyped) * 100);
-        document.getElementById('accuracy').innerHTML = acc + '%';
-        console.log('Acc: ' + acc + '%');
-        
-    }
+    
 
     if (mode === 'time') {
         return (
@@ -360,7 +381,7 @@ const InputField = ({mode, seconds}) => {
             className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
             onKeyDown={(event) => {
                 handleInputChange(event);
-                testIdea(event);
+                // testIdea(event);
             }}
             />
         );

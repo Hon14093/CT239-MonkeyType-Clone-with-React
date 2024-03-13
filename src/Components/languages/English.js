@@ -9,7 +9,7 @@ const words = [
 export default function English({ value }) {
     const selectedWords = SelectedWords(words, value);
     window.content = selectedWords.join(' ');
-    console.log(window.content);
+    // console.log(window.content);
     const wordsBox = document.getElementById('words');
     if (wordsBox) {
         reset();
@@ -17,13 +17,25 @@ export default function English({ value }) {
 
     return (
         <div className='flex flex-wrap relative' id='words'>
-        {selectedWords.map((word, wordIndex) => (
-            <div key={wordIndex} className={`mr-2 word ${wordIndex === 0 ? 'active' : ''}`}>
-                {word.split('').map((letter, letterIndex) => (
-                    <span key={letterIndex} className={`letter ${wordIndex === 0 && letterIndex === 0 ? 'current' : ''}`}>{letter}</span>
-                ))}
-            </div>
-        ))}
+            {selectedWords.map((word, wordIndex) => (
+                <div
+                    key={wordIndex}
+                    className={`mr-2 word ${
+                    wordIndex === 0 ? 'active first_word' : wordIndex === selectedWords.length - 1 ? 'last_word' : ''
+                    }`}
+                >
+                    {word.split('').map((letter, letterIndex) => (
+                    <span
+                        key={letterIndex}
+                        className={`letter ${
+                        wordIndex === 0 && letterIndex === 0 ? 'current' : ''
+                        }`}
+                    >
+                        {letter}
+                    </span>
+                    ))}
+                </div>
+            ))}
         </div>
     )
 }
