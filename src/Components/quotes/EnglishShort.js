@@ -25,7 +25,14 @@ const quotes = [
     "It's dangerous to go alone, take this!", // Old Man, The Legend of Zelda
     "Protocol one: link to Pilot. Protocol two: uphold the mission. Protocol three: protect the Pilot.", // BT-7274, Titanfall 2
     "You are here, and it's beautiful, and escaping isn't always something bad.", // Delilah, Firewatch
-    "Could life exist in the greatest depths of the ocean? It could!"
+    "Could life exist in the greatest depths of the ocean? It could!",
+    "When I was younger, I left a trail of broken hearts like a rockstar. I'm not proud of it.",
+    "The most important days in your life are the day you are born and the day you find out why.",
+    "You get tough like me and you don't get hurt. You look out for yourself and nothin' can touch you...",
+    "What is the point of staying alive if you don't at least try to do something remarkable?",
+    "You can't cross the sea merely by standing and staring at the water.",
+    "All we really want is for no one to have a boring life, to be impressive, so we can be impressed.",
+    "Popular is even weirder. Turns out, it's not the same thing as having friends at all."
 ]
 
 export default function EnglishShort() {

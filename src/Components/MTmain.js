@@ -9,7 +9,7 @@ import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
 import { reset } from './functions/Reset'
-import { resetGame } from './functions/test/ResetGame'
+import { resetGame } from './functions/ResetGame'
 
 class MTmain extends Component {
 

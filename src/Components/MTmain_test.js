@@ -9,7 +9,7 @@ import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
 import { reset } from './functions/Reset'
-import { resetGame } from './functions/test/ResetGame'
+import { resetGame } from './functions/ResetGame'
 
 import LineChart from './functions/test/LineChart'
 import { UserData } from './functions/test/Data'
@@ -329,7 +329,7 @@ class MTmain_test extends Component {
                                 wpm
                             </div>
 
-                            <div className='text-chaosPink bottomText'>
+                            <div className='text-chaosPink bottomText' id='netWPM'>
                                 50
                             </div>
                         </div>

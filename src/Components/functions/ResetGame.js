@@ -41,7 +41,9 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
         }
     }
 
-    clearInterval(window.timer)
+    clearInterval(window.timer);
+    clearInterval(window.wpmTimer);
+    
     document.getElementById('timer').innerHTML = timeValue;
     document.getElementById('textBox').classList.remove('over');
 

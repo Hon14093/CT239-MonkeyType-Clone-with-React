@@ -1,4 +1,6 @@
 import React, { useRef, useEffect} from 'react';
+import averageCharsPerWord from './functions/AverageCharacters';
+import { WPM } from './functions/WPMcalculation';
 
 const InputField = ({mode, seconds}) => {
     const inputRef = useRef(null);
@@ -10,19 +12,28 @@ const InputField = ({mode, seconds}) => {
     
     let currentIndex = -1;
     let typedString = '';
+    let wholeTypedString = '';
+    let averageChars = averageCharsPerWord(window.content);
     
     // global variables for time mode
     window.timer = null;
     window.gameStart = null;
     window.pauseTime = null;
     
-    // testing idea
     window.timeArray = [];
     window.wpmArray = [];
     window.errorArray = [];
     window.timeTaken = null;
+    let inputPerSecond = [];
+    let indexPerSecond = [];
 
-    window.correctChars = 0;
+    // wpm timer
+    window.wpmTimer = null;
+    window.wpmGameStart = null;
+
+    //test
+    let correctChars = 0;
+    let acc = 0;
 
     useEffect(() => {
         const handleClick = (event) => {
@@ -57,23 +68,6 @@ const InputField = ({mode, seconds}) => {
 
     function moveLine(activeWord) {
         const selectLanguage = document.getElementById('selectLanguage');
-        // console.log('active word: ' + Math.floor(activeWord.getBoundingClientRect().top));
-        // console.log('Select Language: ' + Math.floor(selectLanguage.getBoundingClientRect().top + 100));
-
-        // if (activeWord.getBoundingClientRect().top > selectLanguage.getBoundingClientRect().top + 100) {
-        //     const words = document.getElementById('words');
-        //     // const margin = parseInt(words.style.top || '0px');
-
-        //     const render = document.getElementById('renderLanguage');
-        //     // const tempMargin = parseInt(render.style.marginTop);
-        //     const tempMargin = render.getBoundingClientRect().top;
-
-        //     // const tempMargin = render.getBoundingClientRect().top;
-
-        //     console.log('Temp margin: ' + tempMargin);
-        //     words.style.top = (words.style.top - 35.5) + 'px';
-        // }
-
         if (activeWord.getBoundingClientRect().top > selectLanguage.getBoundingClientRect().top + 100) {
             const words = document.getElementById('words');
             const margin = parseInt(words.style.top || '0px');
@@ -104,36 +98,81 @@ const InputField = ({mode, seconds}) => {
         }
     }
 
+    const mergeShortString = (arr) => {
+        for (let i = 0; i < arr.length-1; i++) {
+            if (arr[i].length < 3) {
+                arr[i + 1] = arr[i] + arr[i + 1];
+                arr.splice(i, 1); // Remove the merged element
+                i--; // Adjust the index after splicing
+            }
+        }
+        return arr;
+    }
 
-
-    function testIdea(key, expected, specialKey, isBackspace) {
-        console.log(key, expected);
-        // if (specialKey) {
-        //     return;
-        // }
-
+    function testIdea(key, expected, isLetter, isBackspace) {
         if (isBackspace && currentIndex !== -1) {
             typedString = typedString.slice(0, -1);
+            wholeTypedString = wholeTypedString.slice(0, -1);
             currentIndex--;
         }
         else if (!isBackspace) {
             typedString += key;
+            wholeTypedString += key;
             currentIndex++;
         }
-        if (key === expected) {
-            console.log('correct ++');
+
+        if (!window.wpmTimer && isLetter) {
+            window.wpmTimer = setInterval(() => {
+                if (!window.wpmGameStart) {
+                    window.wpmGameStart = (new Date()).getTime();
+                }
+                const currentTime = (new Date()).getTime();
+                const msPassed = currentTime - window.wpmGameStart;
+                const sPassed = Math.round(msPassed / 1000);
+                const sLeft = (gameTime / 1000) - sPassed;
+
+                inputPerSecond.push(typedString);
+                indexPerSecond.push(currentIndex);
+                
+                if (sLeft <= -1) {
+                    clearInterval(window.wpmTimer);
+                    // wpmEachSecond();
+                    return;
+                }
+                
+            }, 1000)
+        }
+        
+        console.log('Typed Characters: ' + typedString);
+    
+    }
+
+    function wpmEachSecond() {
+        // will store calculated wpm for each second in an array
+        let typedCharacters = inputPerSecond.map((el) => el.length);
+
+        for (let x=0; x<elapsedTime; x++) {
+            const wpm = (typedCharacters[x] / averageChars) * (60 / (x+1));
+            window.wpmArray.push(wpm);
         }
 
+        // for (let x = 0; x < elapsedTime; x++) {
+        //   // Handle division by zero and potential missing values
+        //     const wpm = (x === 0)
+        //         ? 0 // Set wpm to 0 for the first second (avoid division by zero)
+        //         : (typedCharacters.length > 0 && averageChars > 0)
+        //         ? (typedCharacters.reduce((sum, length) => sum + length, 0) / averageChars) * (60 / (x + 1))
+        //         : NaN; // Set wpm to NaN if typedCharacters or averageChars is invalid
         
-        console.log('Char at ' + currentIndex + ': ' + window.content.charAt(currentIndex));
-        console.log('Typed Characters: ' + typedString);
+        //     window.wpmArray.push(wpm);
+        // }
+        
+        console.log(window.wpmArray);
+    }
+
+    function calculateNetWPM() {
 
     }
-    // setInterval(() => {
-    //     typedString = '';
-    // }, 1000)
-
-
     
     function gameOver() {
         console.log('Game Over');
@@ -147,11 +186,28 @@ const InputField = ({mode, seconds}) => {
         addClass(document.getElementById('resetGame1'), 'hidden');
         addClass(document.getElementById('top'), 'opacity-0');
 
-        if (document.getElementById('update')) {
-            document.getElementById('update').click();
-        }
+        
+        inputPerSecond = inputPerSecond.filter((item) => {
+            return item !== '' && item !== null && item !== undefined;
+        })
+        
+        inputPerSecond = mergeShortString(inputPerSecond);
+        setTimeout(() => {
+            accCalulator();
+            wpmEachSecond();
+            WPM(typedString, window.content, averageChars, correctChars, elapsedTime, acc);
+            
+            if (document.getElementById('update')) {
+                document.getElementById('update').click();
+            }
 
-        setTimeout(accCalulator(), 100);
+            // console.log(inputPerSecond);
+            // console.log(indexPerSecond);
+            // console.log(window.content);
+            // console.log(wholeTypedString);
+            typedString = ''; // reset String when game is over
+        }, 100);
+        
     }
 
     function timerCountdown(event) {
@@ -176,15 +232,10 @@ const InputField = ({mode, seconds}) => {
         }
     }
 
-    function wpmeEachSecond() {
-        // will store calculated wpm for each second in an array
-        
-    }
-
     // startTimer() and stopTimer() are there to provide data for line chart
     // not for time mode
     function startTimer(event) {
-        const specialKey = event.key.length > 1 && event.key !== 'Backspace' || event.key.startsWith('Arrow');
+        const specialKey = (event.key.length > 1 && event.key !== 'Backspace') || event.key.startsWith('Arrow');
         endTime = null;
         if (!startTime && !specialKey) {
             startTime = Date.now();
@@ -198,7 +249,7 @@ const InputField = ({mode, seconds}) => {
             endTime = Date.now();
             elapsedTime = Math.floor((endTime - startTime) / 1000);
             window.timeTaken = elapsedTime;
-            console.log('Elasped time: ' + elapsedTime);
+            console.log('Elapsed time: ' + elapsedTime);
             startTime = null;
         } else console.log('Timer has not started');
 
@@ -207,18 +258,20 @@ const InputField = ({mode, seconds}) => {
         for (let i=1; i<=elapsedTime; i++) {
             let randomNumber = Math.floor(Math.random() * 100) + 1;
             window.timeArray.push(i);
-            window.wpmArray.push(randomNumber);
+            // window.wpmArray.push(randomNumber);
 
             let randomErrorNum = Math.floor(Math.random() * 8) + 1;
             window.errorArray.push(randomErrorNum)
         }
         console.log('Time Array: ' + window.timeArray);
-        console.log('wpm Array: ' + window.wpmArray);
+        setTimeout(() => {
+            console.log('wpm Array: ' + window.wpmArray);
+        }, 100)
     }
 
     function accCalulator() {
         // window.content variable is in English.js
-        let acc = Math.floor((window.correctChars / totalTyped) * 100);
+        acc = Math.floor((correctChars / totalTyped) * 100);
         document.getElementById('accuracy').innerHTML = acc + '%';
         // console.log('Acc: ' + acc + '%');
     }
@@ -234,11 +287,10 @@ const InputField = ({mode, seconds}) => {
         (currentLetter === activeWord.firstChild);
         const FirstWord = document.querySelector('.first_word');
         const isFirstCharacter = activeWord === FirstWord && isFirstLetter;
-        console.log('First character? ' + isFirstCharacter);
 
         const isBackspace = key === 'Backspace' && !event.ctrlKey;
         const controlBackspace = key === 'Backspace' && event.ctrlKey;
-        const specialKey = event.key.length > 1 && event.key !== 'Backspace' || event.key.startsWith('Arrow');
+        const specialKey = (event.key.length > 1 && event.key !== 'Backspace') || event.key.startsWith('Arrow');
         
         startTimer(event);
 
@@ -258,6 +310,7 @@ const InputField = ({mode, seconds}) => {
 
         if (isBackspace && !isFirstCharacter) {
             console.log('Backspace is pressed');
+            correctChars--;
             const extraLetter = activeWord.querySelector('.extra:last-child');
             if (extraLetter) {
                 extraLetter.remove();
@@ -343,8 +396,8 @@ const InputField = ({mode, seconds}) => {
         }
 
         if (key === expected) {
-            window.correctChars += 1;
-            document.getElementById('charactersCount').innerHTML = window.correctChars; 
+            correctChars++;
+            document.getElementById('charactersCount').innerHTML = correctChars; 
         }
         
         console.log({key, expected}); 
@@ -353,7 +406,7 @@ const InputField = ({mode, seconds}) => {
         moveLine(activeWord);
         moveCursor();
 
-        testIdea(key, expected, currentLetter, isBackspace);
+        testIdea(key, expected, isLetter, isBackspace);
         totalTyped++;
     };
 
