@@ -39,11 +39,20 @@ export const WPM = (input, text, averageChars, correctChars, time, acc) => {
 
     const distance = editDistance(input, text);
     const netWPMdiv = document.getElementById('netWPM');
-    const totalLength = text.length;
+
+    const wordsDiv = document.querySelector('#words');
+    const uncorrectedErrors = wordsDiv.querySelectorAll('.text-red-500').length;
+
+    const errors = (distance === uncorrectedErrors) ? distance : ((distance+uncorrectedErrors)/2)
 
     // const wpm = Math.floor((correctChars / averageChars) * (60 / time) * (1 - distance / totalLength));
-    const wpm = Math.floor((correctChars / 5) * (30 / time) * (100 / acc));
+    // const wpm = Math.floor((correctChars / 5) * (60 / time) * (100 / acc));
 
-    netWPMdiv.innerHTML = wpm;
-    console.log(wpm); 
+    const gross = (input.length / averageChars);
+    const netWPM = Math.floor((gross - errors) / (time / 60));
+
+    netWPMdiv.innerHTML = netWPM;
+    console.log('uncorrected: ' + uncorrectedErrors);
+    console.log('distance: ' + distance);
+    console.log('errors: ' + errors);
 }

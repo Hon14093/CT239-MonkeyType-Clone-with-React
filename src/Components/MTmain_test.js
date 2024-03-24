@@ -362,7 +362,7 @@ class MTmain_test extends Component {
                     <div>
                         <div className='text-chaosTxt'>characters</div>
                         <div className='text-[2rem] text-chaosPink' id='charactersCount'>
-                            
+                            100
                         </div>
                     </div>
 
