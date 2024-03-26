@@ -43,7 +43,7 @@ export const WPM = (input, text, averageChars, correctChars, time, acc) => {
     const wordsDiv = document.querySelector('#words');
     const uncorrectedErrors = wordsDiv.querySelectorAll('.text-red-500').length;
 
-    const errors = (distance === uncorrectedErrors) ? distance : ((distance+uncorrectedErrors)/2)
+    const errors = (distance === uncorrectedErrors) ? distance : uncorrectedErrors;
 
     // const wpm = Math.floor((correctChars / averageChars) * (60 / time) * (1 - distance / totalLength));
     // const wpm = Math.floor((correctChars / 5) * (60 / time) * (100 / acc));
