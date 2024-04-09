@@ -11,6 +11,7 @@ const AccountSchema = new mongoose.Schema({
 
 AccountSchema.methods.generateAuthToken = function() {
     const token = jwt.sign({_id: this._id}, process.env.JWT_PRIVATE_KEY, {expiresIn: "3d"});
+    console.log(token);
     return token;
 }
 
@@ -22,6 +23,7 @@ const validate = (data) => {
         email: joi.string().email().required().label("email"),
         password: passwordComplexity().required().label("password")
     });
+    console.log('Validate account');
     return schema.validate(data);
 }
 

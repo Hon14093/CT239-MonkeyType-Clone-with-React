@@ -36,6 +36,10 @@ function LoginBody() {
         .catch(err => console.log(err))
     }
 
+
+
+    // ----------------------------------------------------------------
+
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     }
@@ -43,10 +47,37 @@ function LoginBody() {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
         try {
-            // const url = 'http://localhost:3001/login';
             const url = 'http://localhost:3001/register';
+            // const url = 'http://localhost:3001/api/accounts';
+            // console.log('hello')
+            // const {data: res} = await axios.post(url, data);
+            // navigate('/');
+            // console.log(res.message);
+            // console.log(data);
+
+            axios.post(url, {data})
+            .then(result => {
+                console.log(result);
+                if (result.data === "Success") {
+                    navigate('/');
+                }
+            })
+            .catch(err => console.log(err))
+
+        } catch (error) {
+            console.log(error.message);
+            console.log(error.response.data);
+        }
+    }
+
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = 'http://localhost:3001/logins';
             const {data: res} = await axios.post(url, data);
-            console.log(res.message);
+            localStorage.setItem("token", res.data);
+            window.location = "/"
+            console.log({data});
             navigate('/');
         } catch (error) {
             console.log(error.message);

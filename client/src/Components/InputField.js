@@ -9,6 +9,7 @@ const InputField = ({mode, seconds}) => {
     let endTime = null;
     let elapsedTime = 0;
     let totalTyped = 0; // total numbers of key strokes
+    let backspaceTyped = 0;
     
     let currentIndex = -1;
     let typedString = '';
@@ -195,7 +196,7 @@ const InputField = ({mode, seconds}) => {
         setTimeout(() => {
             accCalulator();
             wpmEachSecond();
-            WPM(typedString, window.content, averageChars, correctChars, elapsedTime, acc);
+            WPM(typedString, window.content, averageChars, correctChars, elapsedTime, acc, backspaceTyped);
             
             if (document.getElementById('update')) {
                 document.getElementById('update').click();
@@ -264,9 +265,7 @@ const InputField = ({mode, seconds}) => {
             window.errorArray.push(randomErrorNum)
         }
         console.log('Time Array: ' + window.timeArray);
-        setTimeout(() => {
-            console.log('wpm Array: ' + window.wpmArray);
-        }, 100)
+        
     }
 
     function accCalulator() {
@@ -310,6 +309,7 @@ const InputField = ({mode, seconds}) => {
 
         if (isBackspace && !isFirstCharacter) {
             console.log('Backspace is pressed');
+            backspaceTyped++;
             correctChars--;
             const extraLetter = activeWord.querySelector('.extra:last-child');
             if (extraLetter) {

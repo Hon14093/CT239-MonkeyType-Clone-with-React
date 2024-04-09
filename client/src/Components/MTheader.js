@@ -10,12 +10,6 @@ class MTheader extends Component {
                         <img className='items-center' src={require('./image/ChaosCrab.png')} alt='chaos logo' width={50}></img>
                     </Link>
 
-                    {/* <Link to='/' id='logo' className='items-center' onClick={() => {
-                        window.location.reload();
-                    }}>
-                        <img className='items-center' src={require('./image/ChaosCrab.png')} alt='chaos logo' width={50}></img>
-                    </Link> */}
-
                     <div className='flex flex-col pl-2'>
                         <div className='top'>crab see</div>
                         <h1 className='text-3xl mt-1'>crabtype</h1>
@@ -37,10 +31,21 @@ class MTheader extends Component {
 
                 </div>
                 
-
                 <Link to="/Login" className='mt-4 text-slate-500'>
                     <i className='fa-regular fa-user Ani duration-400'></i>
                 </Link>
+
+                <div className='hidden'>
+                    <Link to="/Account" className='m-4 p-3 text-slate-500 bg-chaosPink rounded-lg'>
+                        <i className='fa-regular fa-user Ani duration-400 pr-2'></i>
+                        Hon
+                    </Link>
+
+                    <Link to="/Login" className='mt-4 text-slate-500'>
+                        <i className="fa-solid fa-right-to-bracket"></i>
+                    </Link>
+                </div>
+
             </div>
 
         )

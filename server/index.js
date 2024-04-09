@@ -3,10 +3,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connection = require("./db");
-const {AccountModel} = require('./models/Account');
+// const {AccountModel} = require('./models/Account');
 
 const accountRoutes = require('./routes/Accounts');
 const authRoutes = require('./routes/Auth');
+
+const { AccountModel, validate } = require('./models/Account')
+const bcrypt = require('bcrypt');
+
 
 // middleware
 app.use(express.json());
@@ -16,8 +20,12 @@ app.use(cors());
 connection();
 
 // routes
-app.use('/server/accounts', accountRoutes);
-app.use('/server/auth', authRoutes);
+// app.use('/api/accounts', accountRoutes);
+// app.use('/api/auth', authRoutes);
+
+// app.use('/register', accountRoutes);
+app.use('/api/auth', authRoutes);
+
 
 app.post('/login', (req, res) => {
     const {email, password} = req.body;

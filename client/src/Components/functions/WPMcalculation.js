@@ -1,4 +1,4 @@
-export const WPM = (input, text, averageChars, correctChars, time, acc) => {
+export const WPM = (input, text, averageChars, correctChars, time, acc, deletedErrors) => {
 
     const editDistance = (str1, str2) => {
         // Handle empty strings, this situation is very unlikely to happen
@@ -42,17 +42,32 @@ export const WPM = (input, text, averageChars, correctChars, time, acc) => {
 
     const wordsDiv = document.querySelector('#words');
     const uncorrectedErrors = wordsDiv.querySelectorAll('.text-red-500').length;
+    const correctChars2 = wordsDiv.querySelectorAll('.text-green-500').length;
 
-    const errors = (distance === uncorrectedErrors) ? distance : uncorrectedErrors;
+    const errors = ((distance === uncorrectedErrors) ? distance : uncorrectedErrors) + deletedErrors;
+    console.log('errors: ' + errors);
 
-    // const wpm = Math.floor((correctChars / averageChars) * (60 / time) * (1 - distance / totalLength));
-    // const wpm = Math.floor((correctChars / 5) * (60 / time) * (100 / acc));
+    const one = Math.floor((correctChars / averageChars) * (60 / time) * (1 - errors / input.length));
+    const two = Math.floor((correctChars / 5) * (60 / time) * (100 / acc));
+    const wpm = Math.floor((one + two) / 2);
 
     const gross = (input.length / averageChars);
     const netWPM = Math.floor((gross - errors) / (time / 60));
 
-    netWPMdiv.innerHTML = netWPM;
-    console.log('uncorrected: ' + uncorrectedErrors);
-    console.log('distance: ' + distance);
-    console.log('errors: ' + errors);
+
+    const wpm3 = Math.floor((correctChars / text.length) * (text.length / (time / 60)));
+    const wpm4 = Math.floor((correctChars / time) * 60);
+
+    // netWPMdiv.innerHTML = netWPM;
+    netWPMdiv.innerHTML = wpm;
+    // console.log('uncorrected: ' + uncorrectedErrors);
+    // console.log('distance: ' + distance);
+    // console.log('time: ' + time);
+
+    console.log('correctChars and correctChars2: ' + [correctChars, correctChars2]);
+    console.log('one: ' + one);
+    console.log('two: ' + two);
+    console.log('netWPM: ' + netWPM);
+    console.log('three: ' + wpm3);
+    console.log('four: ' + wpm4);
 }
