@@ -17,6 +17,8 @@ const quotes = [
 export default function EnglishLong() {
     // randomly choose one quote from quote variables
     const random = Math.floor(Math.random() * quotes.length);
+    console.log('random ' + random);
+    console.log('quote length ' + quotes.length);
     const sentence = quotes[random];
     const wordsArray = sentence.split(/\s+/); // split a string into words
 

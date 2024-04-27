@@ -12,6 +12,7 @@ const AccountSchema = new mongoose.Schema({
 AccountSchema.methods.generateAuthToken = function() {
     const token = jwt.sign({_id: this._id}, process.env.JWT_PRIVATE_KEY, {expiresIn: "3d"});
     console.log(token);
+    localStorage.setItem(token, token);
     return token;
 }
 

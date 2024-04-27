@@ -55,15 +55,21 @@ class MTmain_test extends Component {
                     label: 'wpm',
                     data: [5, 7, 16, 19, 2, 10, 2, 3, 1, 10], // wpm
                     yAxisID: 'y'
-                }, {
-                    label: 'errors',
-                    data: [1, 0, 2, 3, 2, 2, 1, 0, 0, 1],
-                    yAxisID: 'y1'
                 }]       
             }
         };
 
     }
+
+    // datasets: [{
+    //     label: 'wpm',
+    //     data: [5, 7, 16, 19, 2, 10, 2, 3, 1, 10], // wpm
+    //     yAxisID: 'y'
+    // }, {
+    //     label: 'errors',
+    //     data: [1, 0, 2, 3, 2, 2, 1, 0, 0, 1],
+    //     yAxisID: 'y1'
+    // }]  
 
     updateChart() {
         const chart = this.chartReference.current;
@@ -71,7 +77,7 @@ class MTmain_test extends Component {
         chart.data.labels = window.timeArray;
         if (window.wpmArray && window.errorArray) {
             chart.data.datasets[0].data = window.wpmArray;
-            chart.data.datasets[1].data = window.errorArray;
+            // chart.data.datasets[1].data = window.errorArray;
         }
 
         chart.update();
@@ -116,12 +122,13 @@ class MTmain_test extends Component {
                     type: 'linear',
                     display: true,
                     position: 'left',
-                },
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
                 }
+                // ,
+                // y1: {
+                //     type: 'linear',
+                //     display: true,
+                //     position: 'right',
+                // }
             }
         }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -8,81 +8,47 @@ function LoginBody() {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
-    const [data, setData] = useState({
-        user_name: "",
-        email: "",
-        password: ""
-    });
-
     const handleSubmitRegister = (e) => {
+        let passwordValue = document.getElementById('password').value;
+        let retypeValue = document.getElementById('retypePass').value;
+
+        let emailValue = document.getElementById('email').value;
+        let retypeMailValue = document.getElementById('retypeMail').value;
+
+        if (passwordValue !== retypeValue) {
+            alert('Verify password failed');
+            return;
+        }
+
+        if (emailValue !== retypeMailValue) {
+            alert('Verify email failed');
+            return;
+        }
+
         e.preventDefault();
         axios.post('http://localhost:3001/register', {user_name, email, password})
         .then(result => {
             console.log(result);
             navigate('/');
+            localStorage.setItem('isLoggedIn', true);
+            localStorage.setItem('name', result.data.user.username);
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
 
-    const handleSubmitLogin= (e) => {
+    const handleSubmitLogin= async (e) => {
         e.preventDefault();
         axios.post('http://localhost:3001/login', {email, password})
         .then(result => {
             console.log(result);
-            if (result.data === "Success") {
+            if (result.data.status === "Success") {
                 navigate('/');
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('name', result.data.user.username);
             }
         })
-        .catch(err => console.log(err))
-    }
+        .catch(err => console.log(err));
 
-
-
-    // ----------------------------------------------------------------
-
-    const handleChange = ({ currentTarget: input }) => {
-        setData({ ...data, [input.name]: input.value });
-    }
-
-    const handleRegisterSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const url = 'http://localhost:3001/register';
-            // const url = 'http://localhost:3001/api/accounts';
-            // console.log('hello')
-            // const {data: res} = await axios.post(url, data);
-            // navigate('/');
-            // console.log(res.message);
-            // console.log(data);
-
-            axios.post(url, {data})
-            .then(result => {
-                console.log(result);
-                if (result.data === "Success") {
-                    navigate('/');
-                }
-            })
-            .catch(err => console.log(err))
-
-        } catch (error) {
-            console.log(error.message);
-            console.log(error.response.data);
-        }
-    }
-
-    const handleLoginSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const url = 'http://localhost:3001/logins';
-            const {data: res} = await axios.post(url, data);
-            localStorage.setItem("token", res.data);
-            window.location = "/"
-            console.log({data});
-            navigate('/');
-        } catch (error) {
-            console.log(error.message);
-            console.log(error.response);
-        }
     }
     
     return (
@@ -90,18 +56,12 @@ function LoginBody() {
             <section className='gap-2 grid grid-cols-1'>
                 <div className='text-white'>register</div>
 
-                {/* 
-                handleSubmitRegister 
-                handleRegisterSubmit
-                */}
                 <form onSubmit={handleSubmitRegister}> 
                     <div>
                         <input placeholder='username' className='bg-chaosBG loginInput'
                             type='text'
                             name='user_name'
-                            // value={data.user_name}
                             required
-                            // onChange={handleChange}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
@@ -109,29 +69,27 @@ function LoginBody() {
                         <input placeholder='email' className='bg-chaosBG loginInput'
                             type='email'
                             name='email'
-                            // value={data.email}
                             required
-                            // onChange={handleChange}
+                            id='email'
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         
                     </div>
                     <div>
-                        <input placeholder='verify email' className='bg-chaosBG loginInput'></input>
+                        <input placeholder='verify email' className='bg-chaosBG loginInput' id='retypeMail'/>
                     </div>
                     <div>
                         <input placeholder='password' className='bg-chaosBG loginInput'
                             type='password'
                             name='password'
-                            // value={data.password}
                             required
-                            // onChange={handleChange}
+                            id='password'
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         
                     </div>
                     <div>
-                        <input placeholder='verify password' className='bg-chaosBG loginInput'></input>
+                        <input placeholder='verify password' className='bg-chaosBG loginInput' id='retypePass'/>
                     </div>
 
                     <button type='submit' className='flex justify-center items-center w-full bg-chaosBG text-white mb-2 p-2 rounded hover:bg-white hover:text-chaosBG Ani duration-400'>
@@ -150,12 +108,12 @@ function LoginBody() {
 
                 <form onSubmit={handleSubmitLogin}>
                     <div>
-                        <input placeholder='email' className='bg-chaosBG loginInput'
+                        <input placeholder='email' type='email' className='bg-chaosBG loginInput'
                             onChange={(e) => setEmail(e.target.value)}>
                         </input>
                     </div>
                     <div>
-                        <input placeholder='password' className='bg-chaosBG loginInput'
+                        <input placeholder='password' type='password' className='bg-chaosBG loginInput'
                             onChange={(e) => setPassword(e.target.value)}>
                         </input>
                     </div>
@@ -168,11 +126,11 @@ function LoginBody() {
                         <i className='fa-solid fa-right-to-bracket pr-2'></i>
                         Sign In
                     </button>
-                    <p className='text-center m-1 text-xs text-slate-300'>or</p>
+                    {/* <p className='text-center m-1 text-xs text-slate-300'>or</p>
                     <button className='flex justify-center items-center w-full bg-chaosBG text-white mb-2 p-2 rounded hover:bg-white hover:text-chaosBG Ani duration-400'>
                         <i className='fa-brands fa-google pr-2'></i>
                         Google Sign In
-                    </button>
+                    </button> */}
 
                 </form>
             </section>

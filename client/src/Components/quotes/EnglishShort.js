@@ -42,6 +42,8 @@ export default function EnglishShort() {
     const wordsArray = sentence.split(/\s+/); // split a string into words
 
     window.content = sentence;
+    console.log('random ' + random);
+    console.log('quote length ' + quotes.length);
     // console.log(window.content);
 
     return (

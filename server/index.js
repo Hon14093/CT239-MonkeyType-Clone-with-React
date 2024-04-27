@@ -29,11 +29,20 @@ app.use('/api/auth', authRoutes);
 
 app.post('/login', (req, res) => {
     const {email, password} = req.body;
+
     AccountModel.findOne({email: email})
     .then(user => {
         if (user) {
             if (user.password === password) {
-                res.json("Success")
+                res.json({
+                    status: "Success",
+                    user: {
+                        username: user.user_name,
+                        email: user.email
+                        // Add other user information fields as needed
+                    }
+                })
+
             } else {
                 res.json("The passwords do not match")
             }
@@ -45,7 +54,13 @@ app.post('/login', (req, res) => {
 
 app.post('/register', (req, res) => {
     AccountModel.create(req.body)
-    .then(accounts => res.json(accounts))
+    .then(accounts => res.json({
+        account: accounts,
+        user: {
+            username: accounts.user_name,
+            email: accounts.email
+        }
+    }))
     .catch(err => res.json(err))
 })
 
