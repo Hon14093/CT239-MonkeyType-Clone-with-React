@@ -1,7 +1,7 @@
 export const checkWordsClicked = () => {
     const words = document.getElementById('wordsButton');
     const quote = document.getElementById('quoteButton');
-    const zen = document.getElementById('zenButton');
+    const random = document.getElementById('randomButton');
     const time = document.getElementById('timeButton');
     const puncAndNum = document.getElementById('puncAndNum');
     const left = document.getElementById('leftBorder');
@@ -20,7 +20,7 @@ export const checkWordsClicked = () => {
     config.classList.remove('hidden');
 
     quote.classList.remove('text-chaosPink');
-    zen.classList.remove('text-chaosPink');
+    random.classList.remove('text-chaosPink');
     time.classList.remove('text-chaosPink');
 
     words.classList.add('text-chaosPink');

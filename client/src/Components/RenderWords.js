@@ -1,9 +1,9 @@
 import React from 'react';
-import English from '../languages/English';
-import English1k from '../languages/English1k';
-import English5k from '../languages/English5k';
+import English from './languages/English';
+import English1k from './languages/English1k';
+import English5k from './languages/English5k';
 
-const RenderTextbox = ({ language, value }) => {
+const RenderWords = ({ language, value }) => {
 
     const renderSelectedComponent = () => {
 
@@ -26,4 +26,4 @@ const RenderTextbox = ({ language, value }) => {
     );
 };
 
-export default RenderTextbox;
+export default RenderWords;

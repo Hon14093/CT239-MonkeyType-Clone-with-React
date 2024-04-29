@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function LoginBody() {
     const [user_name, setName] = useState();
@@ -48,7 +48,6 @@ function LoginBody() {
             }
         })
         .catch(err => console.log(err));
-
     }
     
     return (
@@ -73,7 +72,6 @@ function LoginBody() {
                             id='email'
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        
                     </div>
                     <div>
                         <input placeholder='verify email' className='bg-chaosBG loginInput' id='retypeMail'/>
@@ -89,7 +87,8 @@ function LoginBody() {
                         
                     </div>
                     <div>
-                        <input placeholder='verify password' className='bg-chaosBG loginInput' id='retypePass'/>
+                        <input placeholder='verify password' className='bg-chaosBG loginInput' 
+                        type='password' id='retypePass'/>
                     </div>
 
                     <button type='submit' className='flex justify-center items-center w-full bg-chaosBG text-white mb-2 p-2 rounded hover:bg-white hover:text-chaosBG Ani duration-400'>

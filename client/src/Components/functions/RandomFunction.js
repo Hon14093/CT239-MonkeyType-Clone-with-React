@@ -29,7 +29,7 @@ function ZenFunction() {
         <button onClick={ checkZenClicked }>
             <div className='Ani duration-400' id='zenButton'>
                 <i className='fas fa-fw fa-mountain mr-2'></i>
-                zen
+                random
             </div>
         </button>
     )

@@ -3,6 +3,7 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
     const wordsButton = document.getElementById('wordsButton');
     const quoteButton = document.getElementById('quoteButton');
     const timeButton = document.getElementById('timeButton');
+    const randomButton = document.getElementById('randomButton');
     const extraLetters = document.querySelectorAll('.extra');
     
     console.log('reloaded');
@@ -13,32 +14,40 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
             extra.remove();
         })
     }
-    
-    if (mode === 'words') {
-        const wordButtonIdString = 'button' + wordsValue;
-        const wordsValueButton = document.getElementById(wordButtonIdString);
 
-        if (wordsButton) {
-            wordsButton.click();
-            wordsValueButton.click();
-        }
-    } 
-    else if (mode === 'quote') {
-        const quoteLengthButton = document.getElementById(quoteLength);
+    switch (mode) {
+        case 'words':
+            const wordButtonIdString = 'button' + wordsValue;
+            const wordsValueButton = document.getElementById(wordButtonIdString);
 
-        if (quoteButton) {
-            quoteButton.click();
-            quoteLengthButton.click();
-        }
-    }
-    else if (mode === 'time') {
-        const timeButtonIdString = 'button' + timeValue;
-        const timeValueButton = document.getElementById(timeButtonIdString);
+            if (wordsButton) {
+                wordsButton.click();
+                wordsValueButton.click();
+            }
+            break;
 
-        if (timeButton) {
-            timeButton.click();
-            timeValueButton.click();
-        }
+        case 'quote':
+            const quoteLengthButton = document.getElementById(quoteLength);
+
+            if (quoteButton) {
+                quoteButton.click();
+                quoteLengthButton.click();
+            }
+            break;
+        
+        case 'time':
+            const timeButtonIdString = 'button' + timeValue;
+            const timeValueButton = document.getElementById(timeButtonIdString);
+
+            if (timeButton) {
+                timeButton.click();
+                timeValueButton.click();
+            }
+            break;
+
+        case 'random':
+            randomButton.click();
+            break;
     }
 
     clearInterval(window.timer);

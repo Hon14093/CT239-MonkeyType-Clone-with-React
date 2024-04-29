@@ -9,8 +9,6 @@ function AccountBody() {
         const username = localStorage.getItem('name');
         usernameDiv.innerHTML = username;
         console.log('username: ' + username);
-        console.log(usernameDiv)
-
     }, []);
 
     return (
@@ -33,14 +31,23 @@ function AccountBody() {
 
                     <div>
                         tests started
+                        <p className='text-[2rem]' id='startedTests'>
+                            -
+                        </p>
                     </div>
 
                     <div>
                         tests completed
+                        <p className='text-[2rem]' id='completed'>
+                            -
+                        </p>
                     </div>
 
                     <div>
                         time typing
+                        <p className='text-[2rem]' id='timeTyping'>
+                            -
+                        </p>
                     </div>
 
                 </article>

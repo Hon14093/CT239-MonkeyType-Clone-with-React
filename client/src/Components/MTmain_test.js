@@ -1,6 +1,6 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
-import ZenFunction from './functions/ZenFunction'
+import RandomFunction from './functions/RandomFunction'
 import InputField from './InputField'
 import ChoosingMode from './functions/ChoosingMode'
 
@@ -8,18 +8,15 @@ import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
+import { checkRandomClicked } from './functions/CheckRandomClicked'
 import { reset } from './functions/Reset'
 import { resetGame } from './functions/ResetGame'
-
-import LineChart from './functions/test/LineChart'
-import { UserData } from './functions/test/Data'
-
 import { Line } from 'react-chartjs-2'
 
 class MTmain_test extends Component {
 
     componentDidMount() {
-        // initialize button click upon loading the website
+        // initialize button click for words mode upon loading the website
         const wordsClicked = document.getElementById('wordsButton');
         if (wordsClicked) {
             wordsClicked.click();
@@ -160,7 +157,7 @@ class MTmain_test extends Component {
                     <button id='timeButton' onClick={() => { 
                         checkTimeClicked(); 
                         toggleButton('button15', timeButtonIds); 
-                        reset();
+                        reset('random');
                         this.handleTimeClick('15');
                         this.handleModeChange('time')
                     }}>
@@ -174,7 +171,7 @@ class MTmain_test extends Component {
                     <button id='wordsButton' onClick={() => { 
                         checkWordsClicked(); 
                         toggleButton('button10', wordsButtonIds); 
-                        reset();
+                        reset('random');
                         this.handleWordsClick('10');
                         this.handleModeChange('words')
                     }}>
@@ -188,7 +185,7 @@ class MTmain_test extends Component {
                     <button id='quoteButton' onClick={() => { 
                         checkQuoteClicked(); 
                         toggleButton('short', quoteButtonIds);
-                        reset();
+                        reset('random');
                         this.handleQuoteClick('short');
                         this.handleModeChange('quote')
                     }}>
@@ -198,7 +195,19 @@ class MTmain_test extends Component {
                         </div>
                     </button>
 
-                    <ZenFunction />
+                    {/* Random Mode */}
+                    <button id='randomButton' onClick={() => { 
+                        checkRandomClicked(); 
+                        reset('');
+                        this.handleModeChange('random')
+                    }}>
+                        <div className='Ani duration-400'>
+                        <i className='fas fa-fw fa-mountain mr-2'></i>
+                            random
+                        </div>
+                    </button>
+
+                    {/* <RandomFunction /> */}
                     
                     <button>
                         <div className='Ani duration-400'>
