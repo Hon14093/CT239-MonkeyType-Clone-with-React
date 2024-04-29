@@ -16,13 +16,6 @@ const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
         case 'time':
             return <RenderWords language={language} value={99999} />
     }
-
-    // if (mode === 'words') {
-    //     return <RenderTextbox language={language} value={wordsValue} />
-    // } else if (mode === 'quote') {
-    //     return <SelectQuoteLength length={quoteLength} />
-    // } else return <RenderTextbox language={language} value={99999} />
-
 }
 
 export default ChoosingMode; 

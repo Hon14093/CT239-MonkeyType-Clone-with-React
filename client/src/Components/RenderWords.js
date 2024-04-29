@@ -6,7 +6,6 @@ import English5k from './languages/English5k';
 const RenderWords = ({ language, value }) => {
 
     const renderSelectedComponent = () => {
-
         switch (language) {
             case 'english':
                 return <English value={value} />
