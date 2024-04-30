@@ -198,7 +198,7 @@ class MTmain_test extends Component {
                     {/* Random Mode */}
                     <button id='randomButton' onClick={() => { 
                         checkRandomClicked(); 
-                        reset('');
+                        // reset('');
                         this.handleModeChange('random')
                     }}>
                         <div className='Ani duration-400'>
@@ -320,7 +320,7 @@ class MTmain_test extends Component {
                         wordsValue={this.state.currentValueWords} 
                     />
 
-                    <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
+                    <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow block'></div>
 
                     <InputField 
                         mode={this.state.mode}

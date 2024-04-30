@@ -124,7 +124,6 @@ code {
   /* top: 270.4px; */
   position: fixed;
   @apply bg-chaosPink rounded;
-  display: block;
 }
 
 #result {
@@ -174,6 +173,12 @@ code {
   border-radius: 0.5rem;
   border-width: 1px;
   border-color: #656c87;
+}
+
+.attention {
+  animation: shakeX; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
+  /* animation-repeat: infinite; */
 }
 
 #SPACE {

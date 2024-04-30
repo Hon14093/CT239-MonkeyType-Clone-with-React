@@ -16,6 +16,8 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
     }
 
     switch (mode) {
+        case 'random':
+            return;
         case 'words':
             const wordButtonIdString = 'button' + wordsValue;
             const wordsValueButton = document.getElementById(wordButtonIdString);
@@ -45,9 +47,7 @@ export const resetGame = (mode, language, quoteLength, wordsValue, timeValue) =>
             }
             break;
 
-        case 'random':
-            randomButton.click();
-            break;
+        
     }
 
     clearInterval(window.timer);

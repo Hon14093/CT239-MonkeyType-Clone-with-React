@@ -31,4 +31,15 @@ export const checkRandomClicked = () => {
 
     const timer = document.getElementById('timer');
     timer.classList.add('hidden');
+
+    // hide replay button and select language combobox
+    const language = document.getElementById('selectLanguage');
+    const resetGame1 = document.getElementById('resetGame1');
+
+    language.classList.add('hidden');
+    resetGame1.classList.add('hidden');
+
+    // hide cursor
+    const cursor = document.getElementById('cursor');
+    cursor.classList.add('hidden');
 }

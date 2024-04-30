@@ -1,6 +1,7 @@
 import React, { useRef, useEffect} from 'react';
 import averageCharsPerWord from './functions/AverageCharacters';
 import { WPM } from './functions/WPMcalculation';
+import { handleKeyboardInput } from './InputField_Random';
 
 const InputField = ({mode, seconds}) => {
     const inputRef = useRef(null);
@@ -410,9 +411,21 @@ const InputField = ({mode, seconds}) => {
         totalTyped++;
     };
 
-    
-
-    if (mode === 'time') {
+    if (mode === 'random') {
+        return;
+        // return (
+        //     <input
+        //     ref={inputRef}
+        //     id='inputField'
+        //     type="text"
+        //     className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
+        //     onKeyDown={(event) => {
+        //         handleKeyboardInput(event);
+        //     }}
+        //     />
+        // );
+    } 
+    else if (mode === 'time') {
         return (
             <input
             ref={inputRef}

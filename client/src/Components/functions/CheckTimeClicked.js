@@ -31,4 +31,15 @@ export const checkTimeClicked = () => {
 
     const timer = document.getElementById('timer');
     timer.classList.remove('hidden');
+
+    //unhide reset button and language combobox
+    const language = document.getElementById('selectLanguage');
+    const resetGame1 = document.getElementById('resetGame1');
+
+    language.classList.remove('hidden');
+    resetGame1.classList.remove('hidden');
+
+    // unhide cursor
+    const cursor = document.getElementById('cursor');
+    cursor.classList.remove('hidden');
 }

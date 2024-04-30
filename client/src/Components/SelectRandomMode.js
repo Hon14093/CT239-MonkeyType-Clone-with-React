@@ -1,11 +1,48 @@
 // this file handles the text box render for random mode
+import { handleKeyboardInput } from "./InputField_Random";
+import { useRef, useEffect } from "react";
+
 const SelectRandomMode = () => {
-    // abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!;:'"()[]{}<>+-*/=@#$%^&|_~
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!;:"()[]{}<>+-*/=@#$%^&|_';
+    const inputRef = useRef(null);
+    window.key = 0;
 
-    const random = Math.floor(Math.random() * characters.length);
+    useEffect(() => {
+        const handleClick = (event) => {
+            if (document.activeElement !== inputRef.current && !event.target.closest('select') && inputRef.current) {
+                inputRef.current.focus();
+            }
+        }
+        
+        inputRef.current.focus();
+        document.addEventListener('click', handleClick);
 
+        randomizer();
 
+        return () => {
+            document.removeEventListener('click', handleClick);
+        }
+    }, []);
+
+    function randomizer() {
+        const characters = [
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+            'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3',
+            '4', '5', '6', '7', '8', '9', ',', '.', ';', '[',
+            ']', '/', 'SPACE'
+        ]; 
+    
+        const random = Math.floor(Math.random() * characters.length);
+        window.key = characters[random].toLowerCase();
+        console.log('random: ' + characters[random]);
+
+        const randomDiv = document.getElementById(characters[random]);
+        console.log('random div: ' + randomDiv.innerHTML);
+
+        if (randomDiv) {
+            randomDiv.classList.add('bg-chaosPink');
+        }
+    }
 
     return (
         <div id='renderLanguage'>
@@ -61,7 +98,7 @@ const SelectRandomMode = () => {
                     <span id="N" className="UNIKEY">N</span>
                     <span id="M" className="UNIKEY">M</span>
                     <span id="," className="UNIKEY">,</span>
-                    <span id="."className="UNIKEY">.</span>
+                    <span id="." className="UNIKEY">.</span>
                     <span id="/" className="UNIKEY">/</span>
                 </div>
 
@@ -69,8 +106,31 @@ const SelectRandomMode = () => {
                     <span id="SPACE">SPACE</span>
                 </div>
             </div>
+
+            <div className="flex gap-10 justify-center mt-6 text-chaosPink">
+                <div className="flex">
+                    <p className="mr-3">acc:</p>
+                    <p id="accRandom" className="">100.00%</p>
+                </div>
+
+                <div className="flex">
+                    <p id="correctCount">0</p>
+                    /
+                    <p id="incorrectCount">0</p>
+                </div>
+            </div>
             
+            <input
+                id='inputField'
+                ref={inputRef}
+                type="text"
+                className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
+                onKeyDown={(event) => {
+                    handleKeyboardInput(event);
+                }}
+            />
         </div>
+        
     )
 }
 
