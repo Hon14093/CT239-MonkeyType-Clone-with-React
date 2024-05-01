@@ -8,6 +8,19 @@ function LoginBody() {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
+    let id = generateRandomId();
+
+    function generateRandomId() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let randomId = '';
+    
+        for (let i = 0; i < 10; i++) {
+            randomId += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+    
+        return randomId;
+    }
+
     const handleSubmitRegister = (e) => {
         let passwordValue = document.getElementById('password').value;
         let retypeValue = document.getElementById('retypePass').value;
@@ -25,20 +38,21 @@ function LoginBody() {
             return;
         }
 
+        // http://localhost:3001/register
         e.preventDefault();
-        axios.post('http://localhost:3001/register', {user_name, email, password})
+        axios.post('http://localhost:8081/register', {id, user_name, email, password})
         .then(result => {
             console.log(result);
             navigate('/');
             localStorage.setItem('isLoggedIn', true);
-            localStorage.setItem('name', result.data.user.username);
+            // localStorage.setItem('name', result.data.user.username);
         })
         .catch(err => console.log(err));
     }
 
     const handleSubmitLogin= async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/login', {email, password})
+        axios.post('http://localhost:8081/login', {email, password})
         .then(result => {
             console.log(result);
             if (result.data.status === "Success") {
