@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import generateRandomID from './functions/GenerateID';
 
 function LoginBody() {
     const [user_name, setName] = useState();
@@ -8,18 +9,7 @@ function LoginBody() {
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
-    let id = generateRandomId();
-
-    function generateRandomId() {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let randomId = '';
-    
-        for (let i = 0; i < 10; i++) {
-            randomId += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-    
-        return randomId;
-    }
+    let id = generateRandomID(10);
 
     const handleSubmitRegister = (e) => {
         let passwordValue = document.getElementById('password').value;
@@ -38,16 +28,22 @@ function LoginBody() {
             return;
         }
 
-        // http://localhost:3001/register
         e.preventDefault();
         axios.post('http://localhost:8081/register', {id, user_name, email, password})
         .then(result => {
             console.log(result);
             navigate('/');
             localStorage.setItem('isLoggedIn', true);
-            // localStorage.setItem('name', result.data.user.username);
+            localStorage.setItem('name', user_name);
+            localStorage.setItem('accountID', id);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            if (err.response && err.response.status === 400) {
+                alert(err.response.data.error); // Display the error message to the user
+            } else {
+                console.log(err); // Log other types of errors to the console
+            }
+        });
     }
 
     const handleSubmitLogin= async (e) => {
@@ -59,6 +55,7 @@ function LoginBody() {
                 navigate('/');
                 localStorage.setItem('isLoggedIn', true);
                 localStorage.setItem('name', result.data.user.username);
+                localStorage.setItem('accountID', result.data.user.id);
             }
         })
         .catch(err => console.log(err));
@@ -139,6 +136,7 @@ function LoginBody() {
                         <i className='fa-solid fa-right-to-bracket pr-2'></i>
                         Sign In
                     </button>
+
                     {/* <p className='text-center m-1 text-xs text-slate-300'>or</p>
                     <button className='flex justify-center items-center w-full bg-chaosBG text-white mb-2 p-2 rounded hover:bg-white hover:text-chaosBG Ani duration-400'>
                         <i className='fa-brands fa-google pr-2'></i>

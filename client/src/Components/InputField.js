@@ -1,7 +1,8 @@
 import React, { useRef, useEffect} from 'react';
 import averageCharsPerWord from './functions/AverageCharacters';
 import { WPM } from './functions/WPMcalculation';
-import { handleKeyboardInput } from './InputField_Random';
+import axios from 'axios';
+import generateRandomID from './functions/GenerateID';
 
 const InputField = ({mode, seconds}) => {
     const inputRef = useRef(null);
@@ -51,6 +52,38 @@ const InputField = ({mode, seconds}) => {
             document.removeEventListener('click', handleClick);
         }
     }, []);
+
+    function getFormattedDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(today.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
+    }
+
+    const handleUpdateDB = () => {
+        // e.preventDefault();
+
+        const recordID = generateRandomID(15);
+        const id = localStorage.getItem('accountID');
+        const modeID = localStorage.getItem('modeID');
+        const configID = localStorage.getItem('configID');
+        const wpm = document.getElementById('netWPM').innerHTML;
+        const accuracy = acc;
+        const timeTaken = window.timeTaken;
+        const date = getFormattedDate();
+
+        console.log([modeID, configID]);
+
+        axios.post('http://localhost:8081/save', {recordID, id, modeID, configID, wpm, accuracy, timeTaken, date})
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     function addClass(element, name) {
         element.classList.add(name);
@@ -208,6 +241,8 @@ const InputField = ({mode, seconds}) => {
             // console.log(window.content);
             // console.log(wholeTypedString);
             typedString = ''; // reset String when game is over
+
+            handleUpdateDB();
         }, 100);
         
     }
@@ -413,17 +448,6 @@ const InputField = ({mode, seconds}) => {
 
     if (mode === 'random') {
         return;
-        // return (
-        //     <input
-        //     ref={inputRef}
-        //     id='inputField'
-        //     type="text"
-        //     className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
-        //     onKeyDown={(event) => {
-        //         handleKeyboardInput(event);
-        //     }}
-        //     />
-        // );
     } 
     else if (mode === 'time') {
         return (
