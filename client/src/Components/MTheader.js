@@ -70,8 +70,9 @@ function MTheader() {
                 <i className='fa-regular fa-user Ani duration-400'></i>
             </Link>
 
+            {/* text-slate-500 */}
             <div className='hidden' id='loggedIn'>
-                <Link to="/Account" className='m-4 p-3 text-slate-500 bg-chaosPink rounded-lg' id='username'>
+                <Link to="/Account" className='m-4 p-3 text-slate-600 bg-chaosPink rounded-lg' id='username'>
                     <div className='fa-regular fa-user Ani duration-400 pr-2'/>
                 </Link>
 

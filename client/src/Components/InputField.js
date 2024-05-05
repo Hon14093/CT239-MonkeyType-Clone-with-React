@@ -74,8 +74,6 @@ const InputField = ({mode, seconds}) => {
         const timeTaken = window.timeTaken;
         const date = getFormattedDate();
 
-        console.log([modeID, configID]);
-
         axios.post('http://localhost:8081/save', {recordID, id, modeID, configID, wpm, accuracy, timeTaken, date})
         .then(result => {
             console.log(result);
@@ -144,7 +142,7 @@ const InputField = ({mode, seconds}) => {
         return arr;
     }
 
-    function testIdea(key, expected, isLetter, isBackspace) {
+    function testIdea1(key, expected, isLetter, isBackspace) {
         if (isBackspace && currentIndex !== -1) {
             typedString = typedString.slice(0, -1);
             wholeTypedString = wholeTypedString.slice(0, -1);
@@ -165,6 +163,8 @@ const InputField = ({mode, seconds}) => {
                 const msPassed = currentTime - window.wpmGameStart;
                 const sPassed = Math.round(msPassed / 1000);
                 const sLeft = (gameTime / 1000) - sPassed;
+                
+                console.log([window.wpmGameStart, currentTime, msPassed, sPassed, sLeft])
 
                 inputPerSecond.push(typedString);
                 indexPerSecond.push(currentIndex);
@@ -177,20 +177,67 @@ const InputField = ({mode, seconds}) => {
                 
             }, 1000)
         }
-        
+
+        console.log([inputPerSecond, indexPerSecond]);
         console.log('Typed Characters: ' + typedString);
     
     }
 
+    
+function testIdea(key, expected, isLetter, isBackspace) {
+    // Initialize window.wpmGameStart if it's null
+    // if (!window.wpmGameStart) {
+    //     window.wpmGameStart = (new Date()).getTime();
+    // }
+
+    if (isBackspace && currentIndex !== -1) {
+        typedString = typedString.slice(0, -1);
+        wholeTypedString = wholeTypedString.slice(0, -1);
+        currentIndex--;
+    } else if (!isBackspace) {
+        typedString += key;
+        wholeTypedString += key;
+        currentIndex++;
+    }
+
+    if (!window.wpmTimer && isLetter) {
+        let sec = 0;
+        window.wpmTimer = setInterval(() => {
+            
+            // window.wpmGameStart = (new Date()).getTime();
+            
+            // const currentTime = (new Date()).getTime();
+            // const msPassed = currentTime - window.wpmGameStart;
+            // const sPassed = Math.round(msPassed / 1000);
+            // const sLeft = (gameTime / 1000) - sPassed;
+            
+            // console.log([window.wpmGameStart, currentTime, msPassed, sPassed, sLeft])
+            console.log(sec)
+
+            sec++;
+            inputPerSecond.push(typedString);
+            indexPerSecond.push(currentIndex);
+
+            
+        }, 1000);
+    }
+
+    console.log([inputPerSecond, indexPerSecond]);
+    console.log('Typed Characters: ' + typedString);
+}
+
     function wpmEachSecond() {
         // will store calculated wpm for each second in an array
         let typedCharacters = inputPerSecond.map((el) => el.length);
+        console.log('bla bla: ' + typedCharacters)
 
         for (let x=0; x<elapsedTime; x++) {
             const wpm = (typedCharacters[x] / averageChars) * (60 / (x+1));
             window.wpmArray.push(wpm);
+            console.log([typedCharacters[x], averageChars, (60 / (x+1))]) 
         }
-
+        
+        
         // for (let x = 0; x < elapsedTime; x++) {
         //   // Handle division by zero and potential missing values
         //     const wpm = (x === 0)
@@ -213,6 +260,7 @@ const InputField = ({mode, seconds}) => {
         console.log('Game Over');
         stopTimer();
         clearInterval(window.timer);
+        clearInterval(window.wpmTimer);
         addClass(document.getElementById('textBox'), 'over');
 
         removeClass(document.getElementById('lineChart'), 'hidden');
@@ -293,9 +341,7 @@ const InputField = ({mode, seconds}) => {
         document.getElementById('timeTaken').innerHTML = elapsedTime + 's';
 
         for (let i=1; i<=elapsedTime; i++) {
-            let randomNumber = Math.floor(Math.random() * 100) + 1;
             window.timeArray.push(i);
-            // window.wpmArray.push(randomNumber);
 
             let randomErrorNum = Math.floor(Math.random() * 8) + 1;
             window.errorArray.push(randomErrorNum)
@@ -344,16 +390,13 @@ const InputField = ({mode, seconds}) => {
         }
 
         if (isBackspace && !isFirstCharacter) {
-            console.log('Backspace is pressed');
             backspaceTyped++;
             correctChars--;
             const extraLetter = activeWord.querySelector('.extra:last-child');
             if (extraLetter) {
                 extraLetter.remove();
             } else {
-                console.log('klsjdfkljslkdjflksjdfjksldfklsjdf');
                 if (currentLetter && isFirstLetter) {
-                    console.log('Current letter is first letter');
                     // make previous word current, last letter current
                     removeClass(activeWord, 'active');
                     addClass(activeWord.previousSibling, 'active');
@@ -365,7 +408,6 @@ const InputField = ({mode, seconds}) => {
                 }
 
                 if (currentLetter && !isFirstLetter) {
-                    console.log('Current letter is not first letter');
                     // move back one letter, invalidate letter
                     removeClass(currentLetter, 'current');
                     addClass(currentLetter.previousSibling, 'current');
@@ -383,7 +425,6 @@ const InputField = ({mode, seconds}) => {
         } 
 
         if (isLetter) {
-            console.log('letter');
             if (currentLetter) {
                 addClass(currentLetter, key === expected ? 'text-white' : 'text-red-500');
                 removeClass(currentLetter, 'current');
@@ -401,7 +442,6 @@ const InputField = ({mode, seconds}) => {
         } 
         
         if (isSpace && !document.querySelector('#textBox.over')) {
-            console.log('space')
             if (expected !== ' ') {
                 const letterToInvalidate = [...document.querySelectorAll('.word.active .letter:not(.text-white)')];
                 letterToInvalidate.forEach(letter => {
@@ -435,8 +475,6 @@ const InputField = ({mode, seconds}) => {
             correctChars++;
             document.getElementById('charactersCount').innerHTML = correctChars; 
         }
-        
-        console.log({key, expected}); 
 
         // move lines and cursor
         moveLine(activeWord);

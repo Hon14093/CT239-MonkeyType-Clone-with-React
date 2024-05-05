@@ -97,6 +97,7 @@ app.post('/save', (req, res) => {
 // FROM record r
 // JOIN mode m ON r.mode_id = m.mode_id
 // JOIN config c ON r.config_id = c.config_id;
+// ORDER BY r.date DESC
 
 app.get('/record', (req, res) => {
     // const sql = 'SELECT * FROM record r WHERE r.id = (?)';
@@ -104,10 +105,109 @@ app.get('/record', (req, res) => {
                 'FROM record r ' +
                 'JOIN mode m ON r.mode_id = m.mode_id ' +
                 'JOIN config c ON r.config_id = c.config_id ' +
-                'WHERE r.id = (?)'
+                'WHERE r.id = (?) ' +
+                'ORDER BY r.date DESC'
 
     const id = req.query.id; // Access id from query parameters
     db.query(sql, id, (err, result) => { // Use req.query.id to retrieve the id
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+app.get('/stat', (req, res) => {
+    const sql = 'SELECT COUNT(*) as startedTests, AVG(wpm) as average, SUM(timeTaken) as timeTyping ' +
+                'FROM record r WHERE r.id = (?)'
+
+    const id = req.query.id;
+    db.query(sql, id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+// SELECT config_id, MAX(wpm) AS highest_wpm
+// FROM record
+// WHERE config_id IN ('CF0001', 'CF0002', 'CF0003', 'CF004')
+// AND id = "3UdmVKFpSv"
+// GROUP BY config_id;
+
+app.get('/time', (req, res) => {
+    const sql= `SELECT config_id, MAX(wpm) AS highest_wpm,
+                    (SELECT accuracy FROM record AS r2
+                    WHERE r2.config_id = r.config_id
+                    AND r2.wpm = (SELECT MAX(wpm) FROM record AS r3
+                                    WHERE r3.config_id = r.config_id)
+                    ) AS highest_acc
+                FROM record AS r
+                WHERE config_id IN ('CF0001', 'CF0002', 'CF0003', 'CF0004')
+                AND id = ?
+                GROUP BY config_id`;
+
+    const id = req.query.id;
+    db.query(sql, id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+// SELECT config_id, 
+//        MAX(wpm) AS highest_wpm,
+//        (SELECT accuracy FROM record AS r2
+//         WHERE r2.config_id = r.config_id
+//           AND r2.wpm = (SELECT MAX(wpm) FROM record AS r3
+//                        WHERE r3.config_id = r.config_id)
+//        ) AS highest_acc
+// FROM record AS r
+// WHERE config_id IN ('CF0001', 'CF0002', 'CF0003', 'CF0004')
+// AND id = "3UdmVKFpSv"
+// GROUP BY config_id
+
+app.get('/words', (req, res) => {
+    const sql= `SELECT config_id, MAX(wpm) AS highest_wpm,
+                    (SELECT accuracy FROM record AS r2
+                    WHERE r2.config_id = r.config_id
+                    AND r2.wpm = (SELECT MAX(wpm) FROM record AS r3
+                                    WHERE r3.config_id = r.config_id)
+                    ) AS highest_acc
+                FROM record AS r
+                WHERE config_id IN ('CF0005', 'CF0006', 'CF0007', 'CF0008')
+                AND id = ?
+                GROUP BY config_id`;
+
+    const id = req.query.id;
+    db.query(sql, id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+app.get('/quote', (req, res) => {
+    const sql= `SELECT config_id, MAX(wpm) AS highest_wpm,
+                    (SELECT accuracy FROM record AS r2
+                    WHERE r2.config_id = r.config_id
+                    AND r2.wpm = (SELECT MAX(wpm) FROM record AS r3
+                                    WHERE r3.config_id = r.config_id)
+                    ) AS highest_acc
+                FROM record AS r
+                WHERE config_id IN ('CF0009', 'CF0010', 'CF0011', 'CF0012')
+                AND id = ?
+                GROUP BY config_id`;
+
+    const id = req.query.id;
+    db.query(sql, id, (err, result) => {
         if (err) {
             console.log(err);
         } else {
