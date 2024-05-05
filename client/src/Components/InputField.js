@@ -142,99 +142,38 @@ const InputField = ({mode, seconds}) => {
         return arr;
     }
 
-    function testIdea1(key, expected, isLetter, isBackspace) {
+    
+    function testIdea(key, expected, isLetter, isBackspace) {
         if (isBackspace && currentIndex !== -1) {
             typedString = typedString.slice(0, -1);
             wholeTypedString = wholeTypedString.slice(0, -1);
             currentIndex--;
-        }
-        else if (!isBackspace) {
+        } else if (!isBackspace) {
             typedString += key;
             wholeTypedString += key;
             currentIndex++;
         }
 
         if (!window.wpmTimer && isLetter) {
+            let sec = 0;
             window.wpmTimer = setInterval(() => {
-                if (!window.wpmGameStart) {
-                    window.wpmGameStart = (new Date()).getTime();
-                }
-                const currentTime = (new Date()).getTime();
-                const msPassed = currentTime - window.wpmGameStart;
-                const sPassed = Math.round(msPassed / 1000);
-                const sLeft = (gameTime / 1000) - sPassed;
-                
-                console.log([window.wpmGameStart, currentTime, msPassed, sPassed, sLeft])
-
+                sec++;
                 inputPerSecond.push(typedString);
                 indexPerSecond.push(currentIndex);
-                
-                if (sLeft <= -1) {
-                    clearInterval(window.wpmTimer);
-                    // wpmEachSecond();
-                    return;
-                }
-                
-            }, 1000)
+            }, 1000);
         }
 
-        console.log([inputPerSecond, indexPerSecond]);
-        console.log('Typed Characters: ' + typedString);
-    
+        // console.log([inputPerSecond, indexPerSecond]);
+        // console.log('Typed Characters: ' + typedString);
     }
-
-    
-function testIdea(key, expected, isLetter, isBackspace) {
-    // Initialize window.wpmGameStart if it's null
-    // if (!window.wpmGameStart) {
-    //     window.wpmGameStart = (new Date()).getTime();
-    // }
-
-    if (isBackspace && currentIndex !== -1) {
-        typedString = typedString.slice(0, -1);
-        wholeTypedString = wholeTypedString.slice(0, -1);
-        currentIndex--;
-    } else if (!isBackspace) {
-        typedString += key;
-        wholeTypedString += key;
-        currentIndex++;
-    }
-
-    if (!window.wpmTimer && isLetter) {
-        let sec = 0;
-        window.wpmTimer = setInterval(() => {
-            
-            // window.wpmGameStart = (new Date()).getTime();
-            
-            // const currentTime = (new Date()).getTime();
-            // const msPassed = currentTime - window.wpmGameStart;
-            // const sPassed = Math.round(msPassed / 1000);
-            // const sLeft = (gameTime / 1000) - sPassed;
-            
-            // console.log([window.wpmGameStart, currentTime, msPassed, sPassed, sLeft])
-            console.log(sec)
-
-            sec++;
-            inputPerSecond.push(typedString);
-            indexPerSecond.push(currentIndex);
-
-            
-        }, 1000);
-    }
-
-    console.log([inputPerSecond, indexPerSecond]);
-    console.log('Typed Characters: ' + typedString);
-}
 
     function wpmEachSecond() {
         // will store calculated wpm for each second in an array
         let typedCharacters = inputPerSecond.map((el) => el.length);
-        console.log('bla bla: ' + typedCharacters)
 
         for (let x=0; x<elapsedTime; x++) {
             const wpm = (typedCharacters[x] / averageChars) * (60 / (x+1));
             window.wpmArray.push(wpm);
-            console.log([typedCharacters[x], averageChars, (60 / (x+1))]) 
         }
         
         
@@ -326,7 +265,7 @@ function testIdea(key, expected, isLetter, isBackspace) {
             startTime = Date.now();
             console.log('Start time: ' + startTime);
             
-        } else console.log('Not started');
+        }
     }
 
     function stopTimer() {

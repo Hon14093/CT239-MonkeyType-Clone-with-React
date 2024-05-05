@@ -116,7 +116,7 @@ const SelectRandomMode = () => {
                 <div className="flex">
                     <p id="correctCount">0</p>
                     /
-                    <p id="incorrectCount">0</p>
+                    <p id="incorrectCount" className="text-red-500">0</p>
                 </div>
             </div>
             

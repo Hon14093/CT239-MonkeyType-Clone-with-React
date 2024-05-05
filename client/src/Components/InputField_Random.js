@@ -36,9 +36,13 @@ export const handleKeyboardInput = (e) => {
     const key = e.key;
     let correctCount = document.getElementById('correctCount');
     let incorrectCount = document.getElementById('incorrectCount');
+
+    let correctCountInt = parseInt(correctCount.innerHTML);
+    let incorrectCountInt = parseInt(incorrectCount.innerHTML);
     
-    let acc = (correctCount.innerHTML / (correctCount.innerHTML + incorrectCount.innerHTML)) * 100;
-    console.log(acc);
+    let acc = (correctCountInt / (correctCountInt + incorrectCountInt)) * 100;
+    // console.log([correctCountInt, incorrectCountInt])
+    // console.log(acc);
 
     if (key === window.key) {
         randomCharacter();
@@ -47,8 +51,8 @@ export const handleKeyboardInput = (e) => {
         if (incorrectCount.innerHTML !== '0') {
             document.getElementById('accRandom').innerHTML = acc.toFixed(2) + '%';
         }
-    }
-    else {
+        
+    } else {
         incorrectCount.innerHTML++;
         if (incorrectCount.innerHTML !== '0') {
             document.getElementById('accRandom').innerHTML = acc.toFixed(2) + '%';
