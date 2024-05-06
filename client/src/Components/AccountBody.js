@@ -1,5 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import BarChartWPM from './functions/new_test/BarChartWPM';
+import { Bar } from 'react-chartjs-2';
 
 // SELECT *
 // FROM record r
@@ -16,18 +18,56 @@ function AccountBody() {
     const quoteConfigID = ['CF0009', 'CF0010', 'CF0011', 'CF0012'];
     const quoteAcc = ['accCF9', 'accCF10', 'accCF11', 'accCF12'];
     const [recordData, setRecordData] = useState([]);
+    const chartRef = useRef(null);
 
-    useEffect(() => {
-        const usernameDiv = document.getElementById('username1');
-        usernameDiv.innerHTML = localStorage.getItem('name');
-        
+    const joinedDateWithoutTime = localStorage.getItem('joinedDate').replace('T17:00:00.000Z', '');
+    const wpmRanges = [
+        '0-9', '10-19', '20-29', '30-39', '40-49', '50-59',
+        '60-69', '70-79', '80-89', '90-99', '100-109', '110-119',
+        '120-129', '130-139', '140-149', '150-159'
+    ];  
+    const wpmCounts = new Array(wpmRanges.length).fill(0);
+
+    const data = {
+        labels: wpmRanges,
+        datasets: [
+            {
+                label: 'wpm',
+                data: wpmCounts,
+                // data: [0,2,1,2,3,4,5,6,7,8,9],
+                backgroundColor: '#e769c3',
+                borderWidth: 1
+            }
+
+        ]
+    }
+
+    const option = {
+        responsive: true,
+        maintainAspectRatio: false,
+    }
+
+    useEffect(() => {        
         fetchDataTable();
         fetchStat();
         fetchTimeStat(); 
         fetchWordsStat();
         fetchQuoteStat();
 
-    }, []);
+        setTimeout(() => {
+            chartRef.current.update();
+        }, 500);
+
+    }, [chartRef]);
+
+    useEffect(() => {
+        if (recordData.length > 0) {
+            barChartData();
+            console.log(wpmCounts);
+            console.log(data)
+        }
+
+    }, [recordData])
 
     const fetchDataTable = async () => {
         
@@ -173,6 +213,42 @@ function AccountBody() {
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
+    function reformatDate(inputDate) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        // Split the input date string into year, month, and day components
+        const [year, monthIndex, day] = inputDate.split('-');
+        
+        // Get the month abbreviation from the months array using the monthIndex
+        const monthAbbreviation = months[parseInt(monthIndex) - 1]; // Months are zero-indexed
+        
+        // Construct the reformatted date string
+        const reformattedDate = `${day} ${monthAbbreviation} ${year}`;
+        return reformattedDate;
+    }
+
+    function barChartData() {
+        recordData.forEach(record => {
+            const wpm = record.wpm;
+            let foundRange = false;
+        
+            for (const range of wpmRanges) {
+                const [min, max] = range.split('-').map(Number);
+            
+                if (wpm >= min && wpm <= max) {
+                    const index = wpmRanges.indexOf(range); // Get index of the matching range
+                    wpmCounts[index]++; // Increment count at the corresponding index
+                    foundRange = true;
+                    break; // Stop searching ranges once a match is found
+                }
+            }
+        
+            if (!foundRange) {
+                console.warn(`WPM value ${wpm} doesn't fall into any defined range!`);
+            }
+        });
+    }
+
     return (
     <>
     <div className='flex items-start gap-[2rem]'>
@@ -183,8 +259,13 @@ function AccountBody() {
                     <div id='avatar' className='w-[80px]'>
                         <i className='fas fa-user-circle text-[5rem] text-chaosTxt'></i>
                     </div>
-                    <div className='text-3xl' id='username1'>
-                        User Name
+                    <div>
+                        <div className='text-3xl' id='usernameDiv'>
+                            {localStorage.getItem('name')}
+                        </div>
+                        <div id='joinedDate' className='pt-2'>
+                            Joined {reformatDate(joinedDateWithoutTime)}
+                        </div>
                     </div>
                 </article>
 
@@ -368,6 +449,12 @@ function AccountBody() {
         </article>
     </section>
 
+    {/* <BarChartWPM counts={wpmCounts} /> */}
+
+    <div className='pt-8 h-[300px] w-full'>
+        <Bar ref={chartRef} data={data} options={option} />
+    </div>
+
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg pt-8">
         <table className="w-full text-lg text-center rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-sm text-chaosPink uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -410,6 +497,13 @@ function AccountBody() {
                 
             </tbody>
         </table>
+        <button id='update' className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none" onClick={() => {
+            setTimeout(() => {
+                this.updateChart();
+            }, 100)
+        }}>
+            update
+        </button>
     </div></>
     )
 }    

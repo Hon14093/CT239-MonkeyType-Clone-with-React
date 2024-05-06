@@ -21,6 +21,7 @@ class MTmain_test extends Component {
         if (wordsClicked) {
             wordsClicked.click();
         }
+        document.getElementById('resetGame1').click();
 
         // set the cursor at the corret position upong loading the website
         const cursor = document.getElementById('cursor');

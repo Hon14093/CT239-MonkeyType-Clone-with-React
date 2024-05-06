@@ -48,17 +48,13 @@ export const WPM = (input, text, averageChars, correctChars, time, acc, deletedE
     console.log('errors: ' + errors);
 
     const one = Math.floor((correctChars / averageChars) * (60 / time) * (1 - errors / input.length));
-    const two = Math.floor((correctChars / 5) * (60 / time) * (100 / acc));
-    const wpm = Math.floor((one + two) / 2);
-
-    const gross = (input.length / averageChars);
+    const two = Math.floor((correctChars / averageChars) * (60 / time) * (100 / acc));
+    // const wpm = Math.floor((one + two) / 2);
+    
+    const gross = (input.length / 5);
     const netWPM = Math.floor((gross - errors) / (time / 60));
 
-
-    const wpm3 = Math.floor((correctChars / text.length) * (text.length / (time / 60)));
-    const wpm4 = Math.floor((correctChars / time) * 60);
-
-    // netWPMdiv.innerHTML = netWPM;
+    const wpm = netWPM
     netWPMdiv.innerHTML = wpm;
     // console.log('uncorrected: ' + uncorrectedErrors);
     // console.log('distance: ' + distance);
@@ -68,6 +64,5 @@ export const WPM = (input, text, averageChars, correctChars, time, acc, deletedE
     console.log('one: ' + one);
     console.log('two: ' + two);
     console.log('netWPM: ' + netWPM);
-    console.log('three: ' + wpm3);
-    console.log('four: ' + wpm4);
+
 }

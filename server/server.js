@@ -29,7 +29,8 @@ app.post('/login', (req, res) => {
                 user: {
                     id: data[0].id,
                     username: data[0].username,
-                    email: data[0].email
+                    email: data[0].email,
+                    joinedDate: data[0].joinedDate
                     // Add other user information fields as needed
                 }
             });
@@ -39,12 +40,13 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const sql = 'INSERT INTO account(`id`, `username`, `email`, `password`) VALUES (?)';
+    const sql = 'INSERT INTO account(`id`, `username`, `email`, `password`, `joinedDate`) VALUES (?)';
     const values = [
         req.body.id,
         req.body.user_name,
         req.body.email,
-        req.body.password
+        req.body.password,
+        req.body.joinedDate
     ]
 
     db.query(sql, [values], (err, data) => {

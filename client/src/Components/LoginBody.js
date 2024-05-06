@@ -10,6 +10,7 @@ function LoginBody() {
     const navigate = useNavigate();
 
     let id = generateRandomID(10);
+    let joinedDate = getCurrentDate();
 
     const handleSubmitRegister = (e) => {
         let passwordValue = document.getElementById('password').value;
@@ -28,14 +29,17 @@ function LoginBody() {
             return;
         }
 
+        console.log(joinedDate)
+
         e.preventDefault();
-        axios.post('http://localhost:8081/register', {id, user_name, email, password})
+        axios.post('http://localhost:8081/register', {id, user_name, email, password, joinedDate})
         .then(result => {
             console.log(result);
             navigate('/');
             localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('name', user_name);
             localStorage.setItem('accountID', id);
+            localStorage.setItem('joinedDate', joinedDate);
         })
         .catch(err => {
             if (err.response && err.response.status === 400) {
@@ -56,11 +60,21 @@ function LoginBody() {
                 localStorage.setItem('isLoggedIn', true);
                 localStorage.setItem('name', result.data.user.username);
                 localStorage.setItem('accountID', result.data.user.id);
+                localStorage.setItem('joinedDate', result.data.user.joinedDate);
             }
         })
         .catch(err => console.log(err));
     }
     
+    function getCurrentDate () {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
+    }
+
     return (
         <div className='flex justify-around items-center'>
             <section className='gap-2 grid grid-cols-1'>
