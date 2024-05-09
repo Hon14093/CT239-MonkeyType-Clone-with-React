@@ -21,11 +21,13 @@ function LoginBody() {
 
         if (passwordValue !== retypeValue) {
             alert('Verify password failed');
+            e.preventDefault(); // prevent info from being cleared
             return;
         }
 
         if (emailValue !== retypeMailValue) {
             alert('Verify email failed');
+            e.preventDefault();
             return;
         }
 
@@ -61,6 +63,9 @@ function LoginBody() {
                 localStorage.setItem('name', result.data.user.username);
                 localStorage.setItem('accountID', result.data.user.id);
                 localStorage.setItem('joinedDate', result.data.user.joinedDate);
+
+            } else if (result.data.message === "Wrong email or password") {
+                alert('Wrong email or password');
             }
         })
         .catch(err => console.log(err));

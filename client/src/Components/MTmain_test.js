@@ -391,8 +391,19 @@ class MTmain_test extends Component {
                         <div className='text-chaosTxt'>text type</div>
                         <div className='text-chaosPink'>
                             {this.state.selectLang} <br/>
-                            {this.state.mode} 
-                        </div>
+                            <div className='flex'>
+                                {this.state.mode} 
+                                {this.state.mode === 'time' && (
+                                    <div className='pl-1'> {this.state.currentTimeValue}</div>
+                                )}
+                                {this.state.mode === 'words' && (
+                                    <div className='pl-1'> {this.state.currentValueWords}</div>
+                                )}
+                                {this.state.mode === 'quote' && (
+                                    <div className='pl-1'> {this.state.currentQuoteLength}</div>
+                                )}
+                                </div>
+                            </div>
                     </div>
 
                     <div>

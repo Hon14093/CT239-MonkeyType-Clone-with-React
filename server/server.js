@@ -31,11 +31,17 @@ app.post('/login', (req, res) => {
                     username: data[0].username,
                     email: data[0].email,
                     joinedDate: data[0].joinedDate
-                    // Add other user information fields as needed
+                    
                 }
             });
-        } else return res.json("Failed");
-    })
+        } else  {
+            // Account does not exist
+            return res.json({
+                status: "Failed",
+                message: "Wrong email or password"
+            });
+        }
+    });
 
 })
 
