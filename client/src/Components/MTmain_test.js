@@ -35,6 +35,8 @@ class MTmain_test extends Component {
         if (renderLanguage) {
             wordsBox.style.top = renderLanguage.style.top + 'px';
         }
+
+        localStorage.setItem('vd_ID', 'VD0001');
     }
 
     constructor(props) {
@@ -104,6 +106,22 @@ class MTmain_test extends Component {
         if (input) {
             input.focus();
         }
+
+        const vd_ID = ['VD0001', 'VD0002', 'VD0003', 'VD0004'];
+        switch (event.target.value) {
+            case 'english':
+                localStorage.setItem('vd_ID', vd_ID[0]);
+                break;
+            case 'english1k':
+                localStorage.setItem('vd_ID', vd_ID[1]);
+                break;
+            case 'english5k':
+                localStorage.setItem('vd_ID', vd_ID[2]);
+                break;
+            case 'english10k':
+                localStorage.setItem('vd_ID', vd_ID[3]);
+                break;
+        }
     }
 
     render() {
@@ -115,6 +133,7 @@ class MTmain_test extends Component {
         const timeConfigID = ['CF0001', 'CF0002', 'CF0003', 'CF0004'];
         const wordsConfigID = ['CF0005', 'CF0006', 'CF0007', 'CF0008'];
         const quoteConfigID = ['CF0009', 'CF0010', 'CF0011', 'CF0012'];
+        
 
         const options = {
             responsive: true,
@@ -327,6 +346,7 @@ class MTmain_test extends Component {
                             <option value="english">english</option>
                             <option value="english1k">english 1k</option>
                             <option value="english5k">english 5k</option>
+                            <option value="english10k">english 10k</option>
                         </select>
                     </div>
                 </div>
@@ -388,7 +408,7 @@ class MTmain_test extends Component {
 
                 <div id='stats' className='grid grid-flow-col items-start justify-around'>
                     <div>
-                        <div className='text-chaosTxt'>text type</div>
+                        <div className='text-chaosTxt'>test type</div>
                         <div className='text-chaosPink'>
                             {this.state.selectLang} <br/>
                             <div className='flex'>

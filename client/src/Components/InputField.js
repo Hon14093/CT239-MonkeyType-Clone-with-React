@@ -69,12 +69,13 @@ const InputField = ({mode, seconds}) => {
         const id = localStorage.getItem('accountID');
         const modeID = localStorage.getItem('modeID');
         const configID = localStorage.getItem('configID');
+        const vd_ID = localStorage.getItem('vd_ID');
         const wpm = document.getElementById('netWPM').innerHTML;
         const accuracy = acc;
         const timeTaken = window.timeTaken;
         const date = getFormattedDate();
 
-        axios.post('http://localhost:8081/save', {recordID, id, modeID, configID, wpm, accuracy, timeTaken, date})
+        axios.post('http://localhost:8081/save', {recordID, id, modeID, configID, vd_ID, wpm, accuracy, timeTaken, date})
         .then(result => {
             console.log(result);
         })

@@ -80,12 +80,13 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/save', (req, res) => {
-    const sql = 'INSERT INTO record(`recordID`, `id`, `mode_id`, `config_id`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
+    const sql = 'INSERT INTO record(`recordID`, `id`, `mode_id`, `config_id`, `vd_ID`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
     const values = [
         req.body.recordID,
         req.body.id,
         req.body.modeID,
         req.body.configID,
+        req.body.vd_ID,
         req.body.wpm,
         req.body.accuracy,
         req.body.timeTaken,

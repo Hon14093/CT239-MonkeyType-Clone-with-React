@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import English from './languages/English';
 import English1k from './languages/English1k';
 import English5k from './languages/English5k';
+import English10k from './languages/English10k';
+
+// not used anymore
 
 const SelectLanguage = ({ value }) => {
     const [selectedValue, setSelectedValue] = useState('');
@@ -24,6 +27,8 @@ const SelectLanguage = ({ value }) => {
                 return <English1k value={value} />
             case 'english5k':
                 return <English5k value={value} />
+            case 'english10k':
+                return <English10k value={value} />
             default:
                 return <English value={value} />
         }
@@ -37,6 +42,7 @@ const SelectLanguage = ({ value }) => {
                     <option value="english">english</option>
                     <option value="english1k">english 1k</option>
                     <option value="english5k">english 5k</option>
+                    <option value="english10k">english 11k</option>
                 </select>
             </div>
 
