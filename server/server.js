@@ -27,7 +27,7 @@ app.post('/login', (req, res) => {
             return res.json({
                 status: "Success",
                 user: {
-                    id: data[0].id,
+                    id: data[0].account_id,
                     username: data[0].username,
                     email: data[0].email,
                     joinedDate: data[0].joinedDate
@@ -46,7 +46,7 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const sql = 'INSERT INTO account(`id`, `username`, `email`, `password`, `joinedDate`) VALUES (?)';
+    const sql = 'INSERT INTO account(`account_id`, `username`, `email`, `password`, `joinedDate`) VALUES (?)';
     const values = [
         req.body.id,
         req.body.user_name,
@@ -59,7 +59,7 @@ app.post('/register', (req, res) => {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY') {
                 // Handle duplicate entry error (email already exists)
-                return res.status(400).json({ error: 'Email already exists' });
+                return res.status(400).json({ error: 'Account already exists' });
             } else {
                 // Handle other types of errors
                 return res.status(500).json({ error: 'Internal server error' });
@@ -80,13 +80,13 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/save', (req, res) => {
-    const sql = 'INSERT INTO record(`recordID`, `id`, `mode_id`, `config_id`, `vd_ID`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
+    const sql = 'INSERT INTO record(`recordID`, `id`, `mode_id`, `config_id`, `vd_id`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
     const values = [
         req.body.recordID,
         req.body.id,
         req.body.modeID,
         req.body.configID,
-        req.body.vd_ID,
+        req.body.vd_id,
         req.body.wpm,
         req.body.accuracy,
         req.body.timeTaken,
@@ -110,10 +110,11 @@ app.post('/save', (req, res) => {
 
 app.get('/record', (req, res) => {
     // const sql = 'SELECT * FROM record r WHERE r.id = (?)';
-    const sql = 'SELECT r.wpm, r.accuracy, m.mode_name, c.config_name, r.timeTaken, r.date ' +
+    const sql = 'SELECT r.wpm, r.accuracy, m.mode_name, c.config_name, v.vd_name, r.timeTaken, r.date ' +
                 'FROM record r ' +
                 'JOIN mode m ON r.mode_id = m.mode_id ' +
                 'JOIN config c ON r.config_id = c.config_id ' +
+                'JOIN vocab_difficulty v ON v.vd_id = r.vd_id ' +
                 'WHERE r.id = (?) ' +
                 'ORDER BY r.date DESC'
 
@@ -128,7 +129,7 @@ app.get('/record', (req, res) => {
 })
 
 app.get('/stat', (req, res) => {
-    const sql = 'SELECT COUNT(*) as startedTests, AVG(wpm) as average, SUM(timeTaken) as timeTyping ' +
+    const sql = 'SELECT COUNT(*) as completedTests, AVG(wpm) as average, SUM(timeTaken) as timeTyping ' +
                 'FROM record r WHERE r.id = (?)'
 
     const id = req.query.id;

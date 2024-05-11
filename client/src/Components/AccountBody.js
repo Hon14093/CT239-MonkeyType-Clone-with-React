@@ -73,7 +73,6 @@ function AccountBody() {
         
         try {
             console.log('Fetching data');
-            // const result = await axios.get('http://localhost:8081/record', {id});
             const result = await axios.get(`http://localhost:8081/record?id=${id}`);
             setRecordData(result.data);
             console.log(result.data);
@@ -88,7 +87,7 @@ function AccountBody() {
             const result = await axios.get(`http://localhost:8081/stat?id=${id}`);
             console.log('Fetch Stat: ', result.data);
             
-            document.getElementById('startedTests').innerHTML = result.data[0].startedTests;
+            document.getElementById('completedTests').innerHTML = result.data[0].completedTests;
             document.getElementById('average').innerHTML = Math.floor(result.data[0].average);
             document.getElementById('timeTyping').innerHTML = secondsToHourFormat(result.data[0].timeTyping);
 
@@ -227,6 +226,7 @@ function AccountBody() {
         return reformattedDate;
     }
 
+    // provide data for bar chart
     function barChartData() {
         recordData.forEach(record => {
             const wpm = record.wpm;
@@ -274,8 +274,8 @@ function AccountBody() {
                 <article className='grid grid-cols-3 gap-8 grid-flow-row pl-4' id='stats'>
 
                     <div>
-                        tests started
-                        <p className='text-[2rem]' id='startedTests'>
+                        tests completed
+                        <p className='text-[2rem]' id='completedTests'>
                             -
                         </p>
                     </div>
@@ -472,6 +472,9 @@ function AccountBody() {
                         Config
                     </th>
                     <th scope="col" className="px-6 py-3 text-chaosPink">
+                        Language
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-chaosPink">
                         Time
                     </th>
                     <th scope="col" className="px-6 py-3 text-chaosPink">
@@ -488,6 +491,7 @@ function AccountBody() {
                                 <td className="px-6 py-4 text-white">{record.accuracy}</td>
                                 <td className="px-6 py-4 text-white">{record.mode_name}</td>
                                 <td className="px-6 py-4 text-white">{record.config_name}</td>
+                                <td className="px-6 py-4 text-white">{record.vd_name}</td>
                                 <td className="px-6 py-4 text-white">{record.timeTaken}</td>
                                 <td className="px-6 py-4 text-white">{record.date.replace('T17:00:00.000Z', '')}</td>
                             </tr>
@@ -497,13 +501,6 @@ function AccountBody() {
                 
             </tbody>
         </table>
-        <button id='update' className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none" onClick={() => {
-            setTimeout(() => {
-                this.updateChart();
-            }, 100)
-        }}>
-            update
-        </button>
     </div></>
     )
 }    
