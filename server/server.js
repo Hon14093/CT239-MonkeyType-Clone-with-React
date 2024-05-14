@@ -80,10 +80,10 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/save', (req, res) => {
-    const sql = 'INSERT INTO record(`recordID`, `id`, `mode_id`, `config_id`, `vd_id`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
+    const sql = 'INSERT INTO record(`recordID`, `account_id`, `mode_id`, `config_id`, `vd_id`, `wpm`, `accuracy`, `timeTaken`, `date`) VALUES(?)';
     const values = [
         req.body.recordID,
-        req.body.id,
+        req.body.accountID,
         req.body.modeID,
         req.body.configID,
         req.body.vd_id,
@@ -115,7 +115,7 @@ app.get('/record', (req, res) => {
                 'JOIN mode m ON r.mode_id = m.mode_id ' +
                 'JOIN config c ON r.config_id = c.config_id ' +
                 'JOIN vocab_difficulty v ON v.vd_id = r.vd_id ' +
-                'WHERE r.id = (?) ' +
+                'WHERE r.account_id = (?) ' +
                 'ORDER BY r.date DESC'
 
     const id = req.query.id; // Access id from query parameters
@@ -130,7 +130,7 @@ app.get('/record', (req, res) => {
 
 app.get('/stat', (req, res) => {
     const sql = 'SELECT COUNT(*) as completedTests, AVG(wpm) as average, SUM(timeTaken) as timeTyping ' +
-                'FROM record r WHERE r.id = (?)'
+                'FROM record r WHERE r.account_id = (?)'
 
     const id = req.query.id;
     db.query(sql, id, (err, result) => {
@@ -157,7 +157,7 @@ app.get('/time', (req, res) => {
                     ) AS highest_acc
                 FROM record AS r
                 WHERE config_id IN ('CF0001', 'CF0002', 'CF0003', 'CF0004')
-                AND id = ?
+                AND account_id = ?
                 GROUP BY config_id`;
 
     const id = req.query.id;
@@ -191,7 +191,7 @@ app.get('/words', (req, res) => {
                     ) AS highest_acc
                 FROM record AS r
                 WHERE config_id IN ('CF0005', 'CF0006', 'CF0007', 'CF0008')
-                AND id = ?
+                AND account_id = ?
                 GROUP BY config_id`;
 
     const id = req.query.id;
@@ -213,7 +213,7 @@ app.get('/quote', (req, res) => {
                     ) AS highest_acc
                 FROM record AS r
                 WHERE config_id IN ('CF0009', 'CF0010', 'CF0011', 'CF0012')
-                AND id = ?
+                AND account_id = ?
                 GROUP BY config_id`;
 
     const id = req.query.id;

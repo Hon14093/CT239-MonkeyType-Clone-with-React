@@ -21,7 +21,7 @@ export const WPM = (input, text, averageChars, correctChars, time, acc, deletedE
         // Fill the DP table
         for (let i = 1; i <= length1; i++) {
             for (let j = 1; j <= length2; j++) {
-                const cost = str1[i-1] === str2[j-1] ? 0 : 1;
+                
                 if (str1[i - 1] === str2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1]; // No edit needed if characters are the same
                 } else {
@@ -38,31 +38,22 @@ export const WPM = (input, text, averageChars, correctChars, time, acc, deletedE
     }
 
     const distance = editDistance(input, text);
+    console.log('distance: ' + distance);
+
     const netWPMdiv = document.getElementById('netWPM');
 
     const wordsDiv = document.querySelector('#words');
     const uncorrectedErrors = wordsDiv.querySelectorAll('.text-red-500').length;
-    const correctChars2 = wordsDiv.querySelectorAll('.text-green-500').length;
 
-    const errors = ((distance === uncorrectedErrors) ? distance : uncorrectedErrors) + deletedErrors;
+    const errors = ((distance === uncorrectedErrors) ? distance : uncorrectedErrors);
     console.log('errors: ' + errors);
-
-    const one = Math.floor((correctChars / averageChars) * (60 / time) * (1 - errors / input.length));
-    const two = Math.floor((correctChars / averageChars) * (60 / time) * (100 / acc));
-    // const wpm = Math.floor((one + two) / 2);
     
-    const gross = (input.length / 5);
+    const gross = input.length / 5;
     const netWPM = Math.floor((gross - errors) / (time / 60));
 
     const wpm = netWPM
     netWPMdiv.innerHTML = wpm;
-    // console.log('uncorrected: ' + uncorrectedErrors);
-    // console.log('distance: ' + distance);
-    // console.log('time: ' + time);
-
-    console.log('correctChars and correctChars2: ' + [correctChars, correctChars2]);
-    console.log('one: ' + one);
-    console.log('two: ' + two);
-    console.log('netWPM: ' + netWPM);
+    console.log(input)
+    console.log(text)
 
 }

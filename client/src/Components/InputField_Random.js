@@ -39,14 +39,12 @@ export const handleKeyboardInput = (e) => {
 
     let correctCountInt = parseInt(correctCount.innerHTML);
     let incorrectCountInt = parseInt(incorrectCount.innerHTML);
-    
-    let acc = (correctCountInt / (correctCountInt + incorrectCountInt)) * 100;
-    // console.log([correctCountInt, incorrectCountInt])
-    // console.log(acc);
 
     if (key === window.key) {
         randomCharacter();
         correctCount.innerHTML++;
+
+        let acc = (correctCountInt / (correctCountInt + incorrectCountInt)) * 100;
 
         if (incorrectCount.innerHTML !== '0') {
             document.getElementById('accRandom').innerHTML = acc.toFixed(2) + '%';
@@ -54,8 +52,13 @@ export const handleKeyboardInput = (e) => {
         
     } else {
         incorrectCount.innerHTML++;
-        if (incorrectCount.innerHTML !== '0') {
+
+        let acc = (correctCountInt / (correctCountInt + incorrectCountInt)) * 100;
+
+        if (incorrectCount.innerHTML !== '0' && !isNaN(acc)) {
             document.getElementById('accRandom').innerHTML = acc.toFixed(2) + '%';
+        } else {
+            document.getElementById('accRandom').innerHTML = '0.00%';
         }
     }
 }

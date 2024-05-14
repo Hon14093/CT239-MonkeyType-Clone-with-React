@@ -61,7 +61,7 @@ function LoginBody() {
                 navigate('/');
                 localStorage.setItem('isLoggedIn', true);
                 localStorage.setItem('name', result.data.user.username);
-                localStorage.setItem('accountID', result.data.user.account_id);
+                localStorage.setItem('accountID', result.data.user.id);
                 localStorage.setItem('joinedDate', result.data.user.joinedDate);
 
             } else if (result.data.message === "Wrong email or password") {

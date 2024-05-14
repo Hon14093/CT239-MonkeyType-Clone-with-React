@@ -66,7 +66,7 @@ const InputField = ({mode, seconds}) => {
         // e.preventDefault();
 
         const recordID = generateRandomID(15);
-        const id = localStorage.getItem('accountID');
+        const accountID = localStorage.getItem('accountID');
         const modeID = localStorage.getItem('modeID');
         const configID = localStorage.getItem('configID');
         const vd_id = localStorage.getItem('vd_ID');
@@ -75,7 +75,7 @@ const InputField = ({mode, seconds}) => {
         const timeTaken = window.timeTaken;
         const date = getFormattedDate();
 
-        axios.post('http://localhost:8081/save', {recordID, id, modeID, configID, vd_id, wpm, accuracy, timeTaken, date})
+        axios.post('http://localhost:8081/save', {recordID, accountID, modeID, configID, vd_id, wpm, accuracy, timeTaken, date})
         .then(result => {
             console.log(result);
         })
@@ -190,10 +190,6 @@ const InputField = ({mode, seconds}) => {
         // }
         
         console.log(window.wpmArray);
-    }
-
-    function calculateNetWPM() {
-
     }
     
     function gameOver() {

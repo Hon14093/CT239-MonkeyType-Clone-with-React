@@ -44,6 +44,16 @@ const SelectRandomMode = () => {
         }
     }
 
+    function handleResetStat() {
+        let correctCount = document.getElementById('correctCount');
+        let incorrectCount = document.getElementById('incorrectCount');
+
+        correctCount.innerHTML = 0;
+        incorrectCount.innerHTML = 0;
+        document.getElementById('accRandom').innerHTML = '100.00%';
+        
+    }
+
     return (
         <div id='renderLanguage'>
             <div className="keyboard flex flex-col gap-2 items-center">
@@ -107,6 +117,16 @@ const SelectRandomMode = () => {
                 </div>
             </div>
 
+            <input
+                id='inputField'
+                ref={inputRef}
+                type="text"
+                className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
+                onKeyDown={(event) => {
+                    handleKeyboardInput(event);
+                }}
+            />
+
             <div className="flex gap-10 justify-center mt-6 text-chaosPink">
                 <div className="flex">
                     <p className="mr-3">acc:</p>
@@ -118,17 +138,13 @@ const SelectRandomMode = () => {
                     /
                     <p id="incorrectCount" className="text-red-500">0</p>
                 </div>
+
+                <button className='flex Ani duration-400 rounded-lg text-chaosTxt text-lg pt-[0.65rem]' id='resetGame' onClick={handleResetStat}>
+                    <i className='fa-solid fa-arrow-rotate-right'></i>
+                </button>
             </div>
+
             
-            <input
-                id='inputField'
-                ref={inputRef}
-                type="text"
-                className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
-                onKeyDown={(event) => {
-                    handleKeyboardInput(event);
-                }}
-            />
         </div>
         
     )

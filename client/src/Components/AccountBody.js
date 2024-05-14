@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import BarChartWPM from './functions/new_test/BarChartWPM';
 import { Bar } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Legend, plugins, scales } from 'chart.js';
 
 // SELECT *
 // FROM record r
@@ -30,11 +32,11 @@ function AccountBody() {
 
     const data = {
         labels: wpmRanges,
+        color: '#e769c3',
         datasets: [
             {
                 label: 'wpm',
                 data: wpmCounts,
-                // data: [0,2,1,2,3,4,5,6,7,8,9],
                 backgroundColor: '#e769c3',
                 borderWidth: 1
             }
@@ -45,6 +47,26 @@ function AccountBody() {
     const option = {
         responsive: true,
         maintainAspectRatio: false,
+        color: '#e769c3',
+        scales: {
+            x: {
+                ticks: {
+                    color: '#e769c3'
+                }
+            }, 
+            y:  {
+                ticks: {
+                    color: '#e769c3'
+                }
+            }
+        },
+        plugins: {
+            datalabels: {
+                labels: {
+                    display: false,
+                }
+            }
+        }
     }
 
     useEffect(() => {        
@@ -452,7 +474,7 @@ function AccountBody() {
     {/* <BarChartWPM counts={wpmCounts} /> */}
 
     <div className='pt-8 h-[300px] w-full'>
-        <Bar ref={chartRef} data={data} options={option} />
+        <Bar ref={chartRef} data={data} options={option} plugins={[ChartDataLabels]} />
     </div>
 
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg pt-8">
