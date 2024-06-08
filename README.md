@@ -1,4 +1,4 @@
-# CrabType
+# CrabType - Simple Speed Typing Game
 ## MonkeyType clone made with React.js and Express.js
 Instructor: Miss Trương Thị Thanh Tuyền <br>
 Grade: **10.0 - A**
@@ -32,5 +32,5 @@ npm start
 ```
 
 ## 2. Technologies:
-- Front-end: React.js, Tailwind CSS, React Chart.js, axios
+- Front-end: React.js, Tailwind CSS, React Chart.js, HTML5, axios
 - Back-end: Node.js, Express.js, MySQL, cors, nodemon
