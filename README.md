@@ -1,7 +1,7 @@
 # CrabType - Simple Speed Typing Game
 ## MonkeyType clone made with React.js and Express.js
 Instructor: Miss Trương Thị Thanh Tuyền <br>
-Grade: **10.0 - A**
+Grade: **10.0 - A 😎**
 
 ## 1. Installation:
 - ### Front-end:
