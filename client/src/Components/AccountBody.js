@@ -1,9 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import BarChartWPM from './functions/new_test/BarChartWPM';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Legend, plugins, scales } from 'chart.js';
 
 // SELECT *
 // FROM record r
