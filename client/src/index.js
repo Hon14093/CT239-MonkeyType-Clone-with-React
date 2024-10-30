@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
+import PasswordRecoveryPage from './pages/PasswordRecoveryPage';
 import { BrowserRouter } from 'react-router-dom';
 
 import {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "Account",
     element: <AccountPage />,
+  },
+  {
+    path: "Password",
+    element: <PasswordRecoveryPage />
   },
 ]);
 

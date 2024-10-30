@@ -53,8 +53,8 @@ export const WPM = (input, text, averageChars, correctChars, time, acc, deletedE
 
     const wpm = netWPM
     netWPMdiv.innerHTML = wpm;
-    console.log(input)
-    console.log(text)
+    // console.log(input)
+    // console.log(text)
 
 }
 

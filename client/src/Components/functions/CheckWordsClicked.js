@@ -12,7 +12,7 @@ export const checkWordsClicked = () => {
     const wordsNum = document.getElementById('wordsNum');
     const config = document.getElementById('config');
 
-    console.log('Click Words');
+    // console.log('Click Words');
     // remove class hidden
     puncAndNum.classList.remove('hidden');
     left.classList.remove('hidden');

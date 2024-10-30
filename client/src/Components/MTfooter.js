@@ -12,17 +12,6 @@ class MTfooter extends Component {
                         <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>enter</p>
                         = restart test
                     </div>
-
-                    {/* <div className='flex justify-center'>
-                        <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>esc</p>
-                        or
-                        <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>ctrl</p>
-                        +
-                        <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>shift</p>
-                        +
-                        <p className='bg-slate-500 text-chaosBG mx-2 px-2 rounded-sm'>p</p>
-                        = command line
-                    </div> */}
                 </div>
 
                 <ul className='flex'>

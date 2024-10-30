@@ -1,6 +1,5 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import CapsLockWarning from './functions/CapLockDetect'
-import RandomFunction from './functions/RandomFunction'
 import InputField from './InputField'
 import ChoosingMode from './functions/ChoosingMode'
 
@@ -8,18 +7,41 @@ import { toggleButton } from './functions/ToggleFunction'
 import { checkWordsClicked } from './functions/CheckWordsClicked'
 import { checkQuoteClicked } from './functions/CheckQuoteClicked'
 import { checkTimeClicked } from './functions/CheckTimeClicked'
+import { checkRandomClicked } from './functions/CheckRandomClicked'
 import { reset } from './functions/Reset'
 import { resetGame } from './functions/ResetGame'
 import { Line } from 'react-chartjs-2'
 
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
 class MTmain extends Component {
 
     componentDidMount() {
-        // initialize button click upon loading the website
+        // initialize button click for words mode upon loading the website
         const wordsClicked = document.getElementById('wordsButton');
         if (wordsClicked) {
             wordsClicked.click();
         }
+        document.getElementById('resetGame1').click();
 
         // set the cursor at the corret position upong loading the website
         const cursor = document.getElementById('cursor');
@@ -33,6 +55,8 @@ class MTmain extends Component {
         if (renderLanguage) {
             wordsBox.style.top = renderLanguage.style.top + 'px';
         }
+
+        localStorage.setItem('vd_ID', 'VD0001');
     }
 
     constructor(props) {
@@ -102,12 +126,34 @@ class MTmain extends Component {
         if (input) {
             input.focus();
         }
+
+        const vd_ID = ['VD0001', 'VD0002', 'VD0003', 'VD0004'];
+        switch (event.target.value) {
+            case 'english':
+                localStorage.setItem('vd_ID', vd_ID[0]);
+                break;
+            case 'english1k':
+                localStorage.setItem('vd_ID', vd_ID[1]);
+                break;
+            case 'english5k':
+                localStorage.setItem('vd_ID', vd_ID[2]);
+                break;
+            case 'english10k':
+                localStorage.setItem('vd_ID', vd_ID[3]);
+                break;
+        }
     }
 
     render() {
-        const wordsButtonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
         const timeButtonIds = ['button15', 'button30', 'button60', 'button120', 'buttonWrench'];
-        const quoteButtonIds = ['all', 'short', 'medium', 'long', 'extended'];
+        const wordsButtonIds = ['button10', 'button25', 'button50', 'button100', 'buttonWrench'];
+        const quoteButtonIds = ['short', 'medium', 'long', 'extended'];
+
+        const modeID = ['M0001', 'M0002', 'M0003', 'M0004'];
+        const timeConfigID = ['CF0001', 'CF0002', 'CF0003', 'CF0004'];
+        const wordsConfigID = ['CF0005', 'CF0006', 'CF0007', 'CF0008'];
+        const quoteConfigID = ['CF0009', 'CF0010', 'CF0011', 'CF0012'];
+        
 
         const options = {
             responsive: true,
@@ -156,9 +202,12 @@ class MTmain extends Component {
                     <button id='timeButton' onClick={() => { 
                         checkTimeClicked(); 
                         toggleButton('button15', timeButtonIds); 
-                        reset();
+                        reset('random');
                         this.handleTimeClick('15');
-                        this.handleModeChange('time')
+                        this.handleModeChange('time');
+
+                        localStorage.setItem('modeID', modeID[0]);
+                        localStorage.setItem('configID', timeConfigID[0]);
                     }}>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-clock mr-2'></i>
@@ -170,9 +219,12 @@ class MTmain extends Component {
                     <button id='wordsButton' onClick={() => { 
                         checkWordsClicked(); 
                         toggleButton('button10', wordsButtonIds); 
-                        reset();
+                        reset('random');
                         this.handleWordsClick('10');
-                        this.handleModeChange('words')
+                        this.handleModeChange('words');
+
+                        localStorage.setItem('modeID', modeID[1]);
+                        localStorage.setItem('configID', wordsConfigID[0]);
                     }}>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-a mr-2'></i>
@@ -184,9 +236,12 @@ class MTmain extends Component {
                     <button id='quoteButton' onClick={() => { 
                         checkQuoteClicked(); 
                         toggleButton('short', quoteButtonIds);
-                        reset();
+                        reset('random');
                         this.handleQuoteClick('short');
-                        this.handleModeChange('quote')
+                        this.handleModeChange('quote');
+
+                        localStorage.setItem('modeID', modeID[2]);
+                        localStorage.setItem('configID', quoteConfigID[0]);
                     }}>
                         <div className='Ani duration-400'>
                             <i className='fa-solid fa-quote-left mr-2'></i>
@@ -194,7 +249,21 @@ class MTmain extends Component {
                         </div>
                     </button>
 
-                    <RandomFunction />
+                    {/* Random Mode */}
+                    <button id='randomButton' onClick={() => { 
+                        checkRandomClicked(); 
+                        // reset('');
+                        this.handleModeChange('random');
+                        localStorage.setItem('modeID', modeID[3]);
+                        localStorage.setItem('configID', 'CF0013');
+                    }}>
+                        <div className='Ani duration-400'>
+                        <i className='fas fa-fw fa-mountain mr-2'></i>
+                            random
+                        </div>
+                    </button>
+
+                    {/* <RandomFunction /> */}
                     
                     <button>
                         <div className='Ani duration-400'>
@@ -211,12 +280,13 @@ class MTmain extends Component {
 
                     <div className='hidden' id='timeNum'>
                         <div className='flex gap-4'>
-                            {timeButtonIds.map((buttonId) => (
+                            {timeButtonIds.map((buttonId, index) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, timeButtonIds);
                                         reset();
                                         this.handleTimeClick(buttonId.substring(6))
+                                        localStorage.setItem('configID', timeConfigID[index])
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -232,12 +302,13 @@ class MTmain extends Component {
 
                     <div id='wordsNum'>
                         <div className='flex gap-4'>
-                            {wordsButtonIds.map((buttonId) => (
+                            {wordsButtonIds.map((buttonId, index) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, wordsButtonIds);
                                         reset();
                                         this.handleWordsClick(buttonId.substring(6))
+                                        localStorage.setItem('configID', wordsConfigID[index])
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -253,12 +324,13 @@ class MTmain extends Component {
 
                     <div className='hidden' id='quoteLength'>
                         <div className='flex gap-4'>
-                            {quoteButtonIds.map((buttonId) => (
+                            {quoteButtonIds.map((buttonId, index) => (
                                 <button key={buttonId} id={buttonId} className='Ani duration-400'
                                     onClick={() => {
                                         toggleButton(buttonId, quoteButtonIds);
                                         reset();
                                         this.handleQuoteClick(buttonId)
+                                        localStorage.setItem('configID', quoteConfigID[index])
                                     }}>
 
                                     {buttonId === 'buttonWrench' ? (
@@ -294,6 +366,7 @@ class MTmain extends Component {
                             <option value="english">english</option>
                             <option value="english1k">english 1k</option>
                             <option value="english5k">english 5k</option>
+                            <option value="english10k">english 10k</option>
                         </select>
                     </div>
                 </div>
@@ -307,7 +380,7 @@ class MTmain extends Component {
                         wordsValue={this.state.currentValueWords} 
                     />
 
-                    <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow'></div>
+                    <div id='cursor' className='animate__animated animate__flash animate__infinite infinite animate__slow block'></div>
 
                     <InputField 
                         mode={this.state.mode}
@@ -355,11 +428,22 @@ class MTmain extends Component {
 
                 <div id='stats' className='grid grid-flow-col items-start justify-around'>
                     <div>
-                        <div className='text-chaosTxt'>text type</div>
+                        <div className='text-chaosTxt'>test type</div>
                         <div className='text-chaosPink'>
                             {this.state.selectLang} <br/>
-                            {this.state.mode} 
-                        </div>
+                            <div className='flex'>
+                                {this.state.mode} 
+                                {this.state.mode === 'time' && (
+                                    <div className='pl-1'> {this.state.currentTimeValue}</div>
+                                )}
+                                {this.state.mode === 'words' && (
+                                    <div className='pl-1'> {this.state.currentValueWords}</div>
+                                )}
+                                {this.state.mode === 'quote' && (
+                                    <div className='pl-1'> {this.state.currentQuoteLength}</div>
+                                )}
+                                </div>
+                            </div>
                     </div>
 
                     <div>

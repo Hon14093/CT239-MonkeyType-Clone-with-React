@@ -226,6 +226,24 @@ app.get('/quote', (req, res) => {
     })
 })
 
+app.post('validatePW', (req, res) => {
+    const sql = 'SELECT password FROM account WHERE `email` = ?';
+
+    db.query(sql, req.body.email, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
+app.post('/passwordChange', (req, res) => {
+    const sql = '';
+
+
+})
+
 app.listen(8081, () => {
     console.log('Server is running');
 })

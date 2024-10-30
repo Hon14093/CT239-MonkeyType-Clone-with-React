@@ -12,7 +12,7 @@ export const checkRandomClicked = () => {
     const wordsNum = document.getElementById('wordsNum');
     const config = document.getElementById('config');
 
-    console.log('Click Random');
+    // console.log('Click Random');
     puncAndNum.classList.add('hidden');
     left.classList.add('hidden');
     right.classList.add('hidden');

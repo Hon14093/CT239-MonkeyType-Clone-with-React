@@ -9,7 +9,8 @@ export const toggleButton = (clickedButtonId, buttonId) => {
 
             if (isClickedButton) {
                 let clickedButtonId = buttonId;
-                console.log(clickedButtonId); // output is the amount of words chosen
+                // console.log(clickedButtonId); 
+                // output is the amount of words chosen
             }
         }
     })

@@ -64,7 +64,7 @@ function LineChart() {
         tension: 0.3,
         scales: {
             y: {
-                type: 'linear',
+                // type: 'linear',
                 display: true,
                 position: 'left',
             },

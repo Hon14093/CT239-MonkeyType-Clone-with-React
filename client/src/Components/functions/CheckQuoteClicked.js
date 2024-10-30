@@ -12,7 +12,7 @@ export const checkQuoteClicked = () => {
     const wordsNum = document.getElementById('wordsNum');
     const config = document.getElementById('config');
 
-    console.log('Click Quote');
+    // console.log('Click Quote');
     puncAndNum.classList.add('hidden');
     left.classList.add('hidden');
     right.classList.remove('hidden');

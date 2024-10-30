@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import generateRandomID from './functions/GenerateID';
+import { Link } from 'react-router-dom';
 
 function LoginBody() {
     const [user_name, setName] = useState();
@@ -132,7 +133,11 @@ function LoginBody() {
             <section className='grid gap-1 grid-cols-1'>
                 <div className='text-white flex justify-between'>
                     <p>login</p>
-                    <button className='text-slate-500 hover:text-white Ani duration-400'>Forgot password?</button>
+                    <Link to="/Password">
+                        <button className='text-slate-500 hover:text-white Ani duration-400'>
+                            Forgot password?
+                        </button>
+                    </Link>
                 </div>
 
                 <form onSubmit={handleSubmitLogin}>
