@@ -430,6 +430,8 @@ const InputField = ({mode, seconds}) => {
             ref={inputRef}
             id='inputField'
             type="text"
+            autoComplete='off'
+            autoCorrect='off'
             className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none time"
             onKeyDown={(event) => {
                 handleInputChange(event);
@@ -443,6 +445,8 @@ const InputField = ({mode, seconds}) => {
             ref={inputRef}
             id='inputField'
             type="text"
+            autoComplete='off'
+            autoCorrect='off'
             className="opacity-0 absolute top-0 left-0 w-0 h-0 p-0 m-0 overflow-hidden focus:outline-none"
             onKeyDown={(event) => {
                 handleInputChange(event);
