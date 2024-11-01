@@ -1,9 +1,7 @@
 import React from 'react'
 import MTheader from '../Components/MTheader'
+import PasswordBody from '../Components/bodies/PasswordBody'
 import MTfooter from '../Components/MTfooter'
-import PasswordBody from '../Components/PasswordBody'
-
-import LoginBody from '../Components/LoginBody'
 
 function PasswordRecoveryPage() {
     return (

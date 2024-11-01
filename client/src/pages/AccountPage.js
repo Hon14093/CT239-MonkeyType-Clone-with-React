@@ -1,6 +1,6 @@
 import React from 'react'
 import MTheader from '../Components/MTheader'
-import AccountBody from '../Components/AccountBody'
+import AccountBody from '../Components/bodies/AccountBody'
 import MTfooter from '../Components/MTfooter'
 
 function AccountPage() {

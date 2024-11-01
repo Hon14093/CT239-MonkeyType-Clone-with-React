@@ -1,9 +1,9 @@
 import './App.css';
 import MTheader from './Components/MTheader';
-import MTmain from './Components/MTmain';
+import MTmain from './Components/bodies/MTmain';
 import MTfooter from './Components/MTfooter';
 
-import MTmain_Test from './Components/MTmain_test';
+import MTmain_Test from './Components/bodies/MTmain_test';
 
 function App() {
 

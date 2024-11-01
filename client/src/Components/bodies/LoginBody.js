@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import generateRandomID from './functions/GenerateID';
+import generateRandomID from '../functions/GenerateID';
 import { Link } from 'react-router-dom';
 
 function LoginBody() {

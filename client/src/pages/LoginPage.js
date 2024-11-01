@@ -1,6 +1,6 @@
 import React from 'react'
 import MTheader from '../Components/MTheader'
-import LoginBody from '../Components/LoginBody'
+import LoginBody from '../Components/bodies/LoginBody'
 import MTfooter from '../Components/MTfooter'
 
 function LoginPage() {

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import CapsLockWarning from './functions/CapLockDetect';
-import InputField from './InputField';
-import ChoosingMode from './functions/ChoosingMode';
+import CapsLockWarning from '../functions/CapLockDetect';
+import InputField from '../InputField';
+import ChoosingMode from '../functions/ChoosingMode';
 
-import { toggleButton } from './functions/ToggleFunction';
-import { checkWordsClicked } from './functions/CheckWordsClicked';
-import { checkQuoteClicked } from './functions/CheckQuoteClicked';
-import { checkTimeClicked } from './functions/CheckTimeClicked';
-import { checkRandomClicked } from './functions/CheckRandomClicked';
-import { reset } from './functions/Reset';
-import { resetGame } from './functions/ResetGame';
+import { toggleButton } from '../functions/ToggleFunction';
+import { checkWordsClicked } from '../functions/CheckClickEvent/CheckWordsClicked';
+import { checkQuoteClicked } from '../functions/CheckClickEvent/CheckQuoteClicked';
+import { checkTimeClicked } from '../functions/CheckClickEvent/CheckTimeClicked';
+import { checkRandomClicked } from '../functions/CheckClickEvent/CheckRandomClicked';
+import { reset } from '../functions/Reset';
+import { resetGame } from '../functions/ResetGame';
 import { Line } from 'react-chartjs-2';
 
 import {
