@@ -13,6 +13,28 @@ import { reset } from './functions/Reset'
 import { resetGame } from './functions/ResetGame'
 import { Line } from 'react-chartjs-2'
 
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+
 class MTmain_test extends Component {
 
     componentDidMount() {
@@ -54,6 +76,7 @@ class MTmain_test extends Component {
                 datasets: [{
                     label: 'wpm',
                     data: [5, 7, 16, 19, 2, 10, 2, 3, 1, 10], // wpm
+                    borderColor: 'rgb(75, 192, 192)', 
                     yAxisID: 'y'
                 }]       
             }

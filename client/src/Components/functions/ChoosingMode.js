@@ -4,7 +4,7 @@ import RenderWords from "../RenderWords";
 
 const ChoosingMode = ({ mode, quoteLength, language, wordsValue }) => {
 
-    // console.log('current mode: ' + mode);
+    console.log('current mode: ' + mode);
 
     switch (mode) {
         case 'words':

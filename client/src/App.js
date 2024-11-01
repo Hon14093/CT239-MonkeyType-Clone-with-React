@@ -3,6 +3,8 @@ import MTheader from './Components/MTheader';
 import MTmain from './Components/MTmain';
 import MTfooter from './Components/MTfooter';
 
+import MTmain_Test from './Components/MTmain_test';
+
 function App() {
 
     return (
@@ -14,6 +16,7 @@ function App() {
 
                 <main className='typingMain text-white font-mT'>
                     <MTmain />
+                    {/* <MTmain_Test /> */}
                 </main>
                 
                 <footer>

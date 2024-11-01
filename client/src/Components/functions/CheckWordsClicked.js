@@ -22,7 +22,6 @@ export const checkWordsClicked = () => {
     quote.classList.remove('text-chaosPink');
     random.classList.remove('text-chaosPink');
     time.classList.remove('text-chaosPink');
-
     words.classList.add('text-chaosPink');
 
     // config

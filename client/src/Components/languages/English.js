@@ -9,7 +9,7 @@ const words = [
 export default function English({ value }) {
     const selectedWords = SelectedWords(words, value);
     window.content = selectedWords.join(' ');
-    // console.log(window.content);
+    console.log(window.content);
     const wordsBox = document.getElementById('words');
     if (wordsBox) {
         reset();

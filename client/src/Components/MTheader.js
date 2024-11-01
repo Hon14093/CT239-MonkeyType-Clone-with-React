@@ -58,7 +58,7 @@ function MTheader() {
                     </div>
 
                     <div className='container-lg bg-pastel-200 size-9 rounded-lg pt-1.5'>
-                        <Link to="/" className='text-black pl-2.5 '>
+                        <Link to="/Line" className='text-black pl-2.5 '>
                             <i className='fa-solid fa-md fa-gear Ani duration-400'></i>
                         </Link>
                     </div>

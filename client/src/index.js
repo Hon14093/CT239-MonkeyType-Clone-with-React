@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import LoginPage from './pages/LoginPage';
 import AccountPage from './pages/AccountPage';
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage';
+import LineChart from './Components/functions/test/LineChart';
 import { BrowserRouter } from 'react-router-dom';
 
 import {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "Password",
     element: <PasswordRecoveryPage />
+  },
+  {
+    path: "Line",
+    element: <LineChart />
   },
 ]);
 

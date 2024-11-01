@@ -277,6 +277,7 @@ const InputField = ({mode, seconds}) => {
         document.getElementById('timeTaken').innerHTML = elapsedTime + 's';
 
         for (let i=1; i<=elapsedTime; i++) {
+            console.log('error')
             window.timeArray.push(i);
 
             let randomErrorNum = Math.floor(Math.random() * 8) + 1;
