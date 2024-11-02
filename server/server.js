@@ -226,7 +226,7 @@ app.get('/quote', (req, res) => {
     })
 })
 
-app.post('validatePW', (req, res) => {
+app.post('/validatePW', (req, res) => {
     const sql = 'SELECT password FROM account WHERE `email` = ?';
 
     db.query(sql, req.body.email, (err, result) => {

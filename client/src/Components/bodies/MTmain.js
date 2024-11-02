@@ -50,7 +50,7 @@ const MTmain = () => {
         datasets: [{
             label: 'wpm',
             data: [5, 7, 16, 19, 2, 10, 2, 3, 1, 10],
-            borderColor: 'rgb(75, 192, 192)', 
+            borderColor: '#e769c3', 
             yAxisID: 'y'
         }]
     });

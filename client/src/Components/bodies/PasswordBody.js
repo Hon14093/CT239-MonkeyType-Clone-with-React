@@ -1,16 +1,33 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { editDistance } from '../functions/EditDistance';
+import { checkPW } from '../functions/CheckPW';
 
 function PasswordBody() {
     const [email, setEmail] = useState();
     const [rememberedPW, setRememberedPW] = useState();
     const [newPW, setNewPW] = useState();
 
+    const comparePW = (pw1, pw2) => {
+        let distance = editDistance(pw1, pw2);
+        console.log('distance: ' + distance);
+
+        if (distance >= 5) {
+            console.log('No');
+        } else {
+            console.log('Yes');
+        }
+    }
+
     const validatingPW = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8081/validatePW', {email})
+        axios.post('http://localhost:8081/validatePW', { email })
         .then(result => {
-            console.log(result);
+            const oldPW = result.data[0].password;
+            console.log([oldPW, newPW]);
+            comparePW(oldPW, newPW);
+
+            checkPW(newPW);
         })
         .catch(err => console.log(err));
     }

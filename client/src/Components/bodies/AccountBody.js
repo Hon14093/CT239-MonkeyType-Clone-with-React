@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { exportCSV } from '../functions/ExportCSV';
 
 import {
     Chart as ChartJS,
@@ -38,6 +39,7 @@ function AccountBody() {
     const quoteConfigID = ['CF0009', 'CF0010', 'CF0011', 'CF0012'];
     const quoteAcc = ['accCF9', 'accCF10', 'accCF11', 'accCF12'];
     const [recordData, setRecordData] = useState([]);
+    const [visibleRows, setVisibleRows] = useState(10); // to display the first 10 rows
     const chartRef = useRef(null);
 
     const joinedDateWithoutTime = localStorage.getItem('joinedDate').replace('T17:00:00.000Z', '');
@@ -48,7 +50,7 @@ function AccountBody() {
     ];  
     const wpmCounts = new Array(wpmRanges.length).fill(0);
 
-    const data = {
+    const [data, setData] = useState({
         labels: wpmRanges,
         color: '#e769c3',
         datasets: [
@@ -58,9 +60,8 @@ function AccountBody() {
                 backgroundColor: '#e769c3',
                 borderWidth: 1
             }
-
         ]
-    }
+    })
 
     const option = {
         responsive: true,
@@ -87,6 +88,10 @@ function AccountBody() {
         }
     }
 
+    const loadMore = () => {
+        setVisibleRows((prev) => prev + 10); // increase the visible rows by 10
+    };
+
     useEffect(() => {        
         fetchDataTable();
         fetchStat();
@@ -94,25 +99,19 @@ function AccountBody() {
         fetchWordsStat();
         fetchQuoteStat();
 
-        setTimeout(() => {
-            chartRef.current.update();
-        }, 500);
-
     }, [chartRef]);
 
     useEffect(() => {
         if (recordData.length > 0) {
             barChartData();
-            console.log(wpmCounts);
-            console.log(data)
         }
 
     }, [recordData])
 
+
     const fetchDataTable = async () => {
         
         try {
-            console.log('Fetching data');
             const result = await axios.get(`http://localhost:8081/record?id=${id}`);
             setRecordData(result.data);
             console.log(result.data);
@@ -173,8 +172,6 @@ function AccountBody() {
     }
 
     const fetchWordsStat = async () => {
-
-        console.log('Fetching data for');
         try {
             const result = await axios.get(`http://localhost:8081/words?id=${id}`);
             console.log('Words Stat: ', result.data);
@@ -268,6 +265,8 @@ function AccountBody() {
 
     // provide data for bar chart
     function barChartData() {
+        wpmCounts.fill(0);
+
         recordData.forEach(record => {
             const wpm = record.wpm;
             let foundRange = false;
@@ -287,11 +286,16 @@ function AccountBody() {
                 console.warn(`WPM value ${wpm} doesn't fall into any defined range!`);
             }
         });
+
+        if (chartRef.current) {
+            chartRef.current.data.datasets[0].data = [...wpmCounts];
+            chartRef.current.update();
+        }
     }
 
     return (
     <>
-    <div className='flex items-start gap-[2rem]'>
+    <section className='flex items-start gap-[2rem]'>
 
         <div className='grid gap-8' id='profile'>
             <section className='grid grid-cols-2 col-span-2 gap-2 p-4 bg-chaosSecond rounded-lg' id='details'>
@@ -437,7 +441,8 @@ function AccountBody() {
                 </article>
             </section>
         </div>
-    </div>
+
+    </section>
 
     <section className='bg-chaosSecond rounded-lg grid grid-cols-4 content-center p-8 gap-14 mt-8'>
         <article className='justify-self-center grid justify-items-center'>
@@ -489,10 +494,15 @@ function AccountBody() {
         </article>
     </section>
 
-    {/* <BarChartWPM counts={wpmCounts} /> */}
-
     <div className='pt-8 h-[300px] w-full'>
         <Bar ref={chartRef} data={data} options={option} plugins={[ChartDataLabels]} />
+    </div>
+
+    <div className='pt-8 text-right'>
+        <button onClick={() => exportCSV(recordData)} className='mb-2 p-2 rounded bg-chaosBG hover:bg-white hover:text-chaosBG Ani duration-400 w-64'>
+            <i className="fa-solid fa-file-csv pr-2"></i>
+            Export CSV
+        </button>
     </div>
 
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg pt-8">
@@ -524,9 +534,9 @@ function AccountBody() {
             </thead>
             <tbody>
                 {
-                    recordData.map((record, i) => {
+                    recordData.slice(0, visibleRows).map((record, i)=> {
                         return (
-                            <tr key={i} className="odd:bg-white odd:dark:bg-gray-900 even:bg-chaosSecond  border-b dark:border-gray-700">
+                            <tr key={i} className="odd:bg-white odd:dark:bg-gray-900 even:bg-chaosSecond border-b dark:border-gray-700">
                                 <td className="px-6 py-4 text-white">{record.wpm}</td>
                                 <td className="px-6 py-4 text-white">{record.accuracy}</td>
                                 <td className="px-6 py-4 text-white">{record.mode_name}</td>
@@ -541,9 +551,19 @@ function AccountBody() {
                 
             </tbody>
         </table>
+
+        {visibleRows < recordData.length && (
+                <button
+                    onClick={loadMore}
+                    className="flex justify-center mx-auto mt-4 px-4 py-2 rounded bg-chaosBG hover:bg-white hover:text-chaosBG Ani duration-400 w-full"
+                >
+                    Load more
+                </button>
+            )}
+
     </div></>
     )
 }    
-
+// mb-2 p-2 rounded bg-chaosBG hover:bg-white hover:text-chaosBG Ani duration-400 w-60
 
 export default AccountBody
