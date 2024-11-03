@@ -433,7 +433,7 @@ const MTmain = () => {
                             onClick={
                             () => resetGame(mode, selectLang, currentQuoteLength, currentValueWords, currentTimeValue)
                         }>
-                            <i className='fa-solid fa-arrow-rotate-right'></i>
+                            <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </Tippy>
 
