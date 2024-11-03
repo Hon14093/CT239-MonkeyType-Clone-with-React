@@ -11,6 +11,10 @@ import { checkRandomClicked } from '../functions/CheckClickEvent/CheckRandomClic
 import { reset } from '../functions/Reset';
 import { resetGame } from '../functions/ResetGame';
 import { Line } from 'react-chartjs-2';
+import exportResult from '../functions/ExportResult';
+
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 import {
     Chart as ChartJS,
@@ -377,54 +381,73 @@ const MTmain = () => {
             </article>
 
             <article className='grid gap-4 grid-rows-auto' id='lineChart'>
-                <div className='grid gap-4' id='result'>
-                    <div>
-                        <div className='flex flex-wrap w-[125px]'>
-                            <div className='text-chaosTxt topText'>wpm</div>
-                            <div className='text-chaosPink bottomText' id='netWPM'>50</div>
-                        </div>
+                <div id='capture'>
+                    <div className='grid gap-4' id='result'>
+                        <div>
+                            <div className='flex flex-wrap w-[125px]'>
+                                <div className='text-chaosTxt topText'>wpm</div>
+                                <div className='text-chaosPink bottomText' id='netWPM'>50</div>
+                            </div>
 
-                        <div className='flex flex-wrap w-[125px]'>
-                            <div className='text-chaosTxt topText'>acc</div>
-                            <div className='text-chaosPink bottomText' id='accuracy'>1%</div>
-                        </div>
-                    </div>
-
-                    <div className='h-[200px] w-full'>
-                        <Line ref={chartReference} data={data} options={options} />
-                    </div>
-                </div> 
-
-                <div id='stats' className='grid grid-flow-col items-start justify-around'>
-                    <div>
-                        <div className='text-chaosTxt'>test type</div>
-                        <div className='text-chaosPink'>
-                            {selectLang} <br/>
-                            <div className='flex'>
-                                {mode}
-                                {mode === 'time' && <div className='pl-1'>{currentTimeValue}</div>}
-                                {mode === 'words' && <div className='pl-1'>{currentValueWords}</div>}
-                                {mode === 'quote' && <div className='pl-1'>{currentQuoteLength}</div>}
+                            <div className='flex flex-wrap w-[125px]'>
+                                <div className='text-chaosTxt topText'>acc</div>
+                                <div className='text-chaosPink bottomText' id='accuracy'>1%</div>
                             </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <div className='text-chaosTxt'>characters</div>
-                        <div className='text-[2rem] text-chaosPink' id='charactersCount'>-</div>
-                    </div>
+                        <div className='h-[200px] w-full'>
+                            <Line ref={chartReference} data={data} options={options} />
+                        </div>
+                    </div> 
 
-                    <div>
-                        <div className='text-chaosTxt'>time</div>
-                        <div className='text-[2rem] text-chaosPink' id='timeTaken'>-</div>
+                    <div id='stats' className='grid grid-flow-col items-start justify-around'>
+                        <div>
+                            <div className='text-chaosTxt'>test type</div>
+                            <div className='text-chaosPink'>
+                                {selectLang} <br/>
+                                <div className='flex'>
+                                    {mode}
+                                    {mode === 'time' && <div className='pl-1'>{currentTimeValue}</div>}
+                                    {mode === 'words' && <div className='pl-1'>{currentValueWords}</div>}
+                                    {mode === 'quote' && <div className='pl-1'>{currentQuoteLength}</div>}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className='text-chaosTxt'>characters</div>
+                            <div className='text-[2rem] text-chaosPink' id='charactersCount'>-</div>
+                        </div>
+
+                        <div>
+                            <div className='text-chaosTxt'>time</div>
+                            <div className='text-[2rem] text-chaosPink' id='timeTaken'>-</div>
+                        </div>
                     </div>
                 </div>
 
-                <button className='flex Ani duration-400 py-4 px-8 mt-4 mx-auto rounded-lg text-chaosTxt' id='resetGame' onClick={
-                    () => resetGame(mode, selectLang, currentQuoteLength, currentValueWords, currentTimeValue)
-                }>
-                    <i className='fa-solid fa-arrow-rotate-right'></i>
-                </button>
+                <div className='mx-auto flex'>
+                    <Tippy content='Next test' placement='bottom'>
+                        <button 
+                            className='Ani duration-400 py-4 px-8 mt-4 rounded-lg text-chaosTxt' id='resetGame' 
+                            onClick={
+                            () => resetGame(mode, selectLang, currentQuoteLength, currentValueWords, currentTimeValue)
+                        }>
+                            <i className='fa-solid fa-arrow-rotate-right'></i>
+                        </button>
+                    </Tippy>
+
+                    <Tippy content='Export screenshot' placement='bottom'>
+                        <button 
+                            className='Ani duration-400 py-4 px-8 mt-4 rounded-lg text-chaosTxt' id='captureButton' 
+                            onClick={
+                                () => exportResult()
+                            }
+                        >
+                            <i class="fa-solid fa-image"></i>
+                        </button>
+                    </Tippy>
+                </div>
 
                 <button
                     id='update'

@@ -499,7 +499,7 @@ function AccountBody() {
     </div>
 
     <div className='pt-8 text-right'>
-        <button onClick={() => exportCSV(recordData)} className='mb-2 p-2 rounded bg-chaosBG hover:bg-white hover:text-chaosBG Ani duration-400 w-64'>
+        <button onClick={() => exportCSV(recordData)} className='mb-2 p-2 rounded bg-chaosBG hover:bg-white hover:text-chaosBG Ani duration-400 w-80'>
             <i className="fa-solid fa-file-csv pr-2"></i>
             Export CSV
         </button>
